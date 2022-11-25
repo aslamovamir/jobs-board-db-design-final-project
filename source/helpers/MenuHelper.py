@@ -42,8 +42,8 @@ class MenuHelper:
 
     
     # prints an error message in case of exceptions and displays those exceptions
-    def DisplayErrorException(exception: str):
-        print(f"\nFailure! Something went wrong for some reason. Please address the following exception: {exception}")
+    def DisplayErrorException(exception: str, errorSource: str):
+        print(f"\nFailure! Something went wrong for some reason. \nPlease address the following exception in {errorSource}: {exception}")
 
     
     # prints the copyright information

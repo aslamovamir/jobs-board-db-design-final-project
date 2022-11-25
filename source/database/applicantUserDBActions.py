@@ -1,5 +1,6 @@
 import sqlite3
 from QueryHelpers.QueryHelper import QueryHelper
+from helpers.MenuHelper import MenuHelper
 
 
 # class for the ApplicantUserDBActions
@@ -39,8 +40,7 @@ class ApplicantUserDBActions:
 
 
         except Exception as e:
-            print("\nFailure! Insertion of a new Applicant User row in the database failed for some reason.",
-                    f"\nPlease address the following exception: {e}\n")
+            MenuHelper.DisplayErrorException(exception=e, errorSource="ApplicantUserDBActions::InsertNewApplicantUser")
             return False
 
 
@@ -60,8 +60,8 @@ class ApplicantUserDBActions:
             try:
                 output = QueryHelper.ConvertTupleToDict(query=DatabaseCursor.fetchall(), dictKeys=keys)
             except Exception as e:
-                print("\nFailure! Call of the ConvertTupleToDict method in QueryAllApplicantUserRows method failed for some reason.\n",
-                    f"Please address the following exception: {e}\n")
+                MenuHelper.DisplayErrorException(exception=e, 
+                    errorSource="ApplicantUserDBActions::QueryAllApplicantUserRows::QueryHelper.ConvertTupleToDict")
 
 
             # commit the query operation to the database
@@ -74,8 +74,7 @@ class ApplicantUserDBActions:
             return output
 
         except Exception as e:
-            print("\nFailure! Querying of all Applicant User rows in the database failed for some reason.",
-                    f"\nPlease address the following exception: {e}\n")
+            MenuHelper.DisplayErrorException(exception=e, errorSource="ApplicantUserDBActions::QueryAllApplicantUserRows")
             return False
 
 # newUser = {

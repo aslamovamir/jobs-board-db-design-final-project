@@ -1,3 +1,5 @@
+from helpers.MenuHelper import MenuHelper
+
 class QueryHelper:
 
     # method to convert an SQL tuple to a list of dictionary items
@@ -22,7 +24,6 @@ class QueryHelper:
             return output
 
         except Exception as e:
-            print("\nFailure! ConvertTupleToDict method in QueryHelper failed for some reason.\n",
-                f"Please address the following exceptionL: {e}")
+            MenuHelper.DisplayErrorException(exception=e, errorSource="QueryHelper::ConvertTupleToDict")
 
         
