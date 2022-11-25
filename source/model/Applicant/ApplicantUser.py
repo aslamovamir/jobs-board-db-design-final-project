@@ -11,7 +11,6 @@ class ApplicantUser:
     FirstName: str
     LastName: str
     Email: str
-    DateRegistered: str
     Profile: ApplicantProfile = None
     _lastLoginTimestamp: datetime = field(default_factory=datetime.now)
     _SignUpTimestamp: datetime = field(default_factory=datetime.now)

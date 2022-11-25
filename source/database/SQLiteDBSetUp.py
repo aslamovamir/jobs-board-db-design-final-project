@@ -1,12 +1,9 @@
 import sqlite3
 from dataclasses import dataclass
-from model.Applicant.ApplicantUser import ApplicantUser
-from model.Applicant.ApplicantProfile import ApplicantProfile
-from model.Company.CompanyUser import CompanyUser
-from model.Company.CompanyProfile import CompanyProfile
 
 
-#NOTE: Methods of this class must be run only once: they are run when running the app for
+# NOTE: 
+# Methods of this class must be run only once: they are run when running the app for
 # the first time internally by developers to set up the database and the neceassary tables 
 
 # class for the database set-up
@@ -14,18 +11,58 @@ from model.Company.CompanyProfile import CompanyProfile
 class DatabaseSetUp:
 
     # method to create an SQL table for the ApplicantUser entity
-    def CreateApplicantUserTable(applicantUser: ApplicantUser) -> bool:
-        pass
+    def CreateApplicantUserTable() -> bool:
+        
+        try:
+            # database connection object to the JobsBoard database
+            DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
+            # database cursor object to manipulate SQL queries
+            DatabaseCursor = sqlite3.Cursor()
+
+            # query to create a new table for the Applicant User
+            DatabaseCursor.execute("""
+                CREATE TABLE ApplicantUser (
+                    pk INTEGER PRIMARY KEY,
+                    ID TEXT,
+                    Username VARCHAR(50),
+                    Email VARCHAR(50),
+                    FirstName VARCHAR(50),
+                    LastName VARCHAR(50),
+                    DateRegistered TIMESTAMP,
+                    DateLastLogin TIMESTAMP
+                );
+            """
+            )
+
+            # commit the query operation to the database
+            DatabaseConnection.commit()
+
+            # for safety, close the database connection
+            DatabaseConnection.close()
+
+            # return True as success confirmation
+            return True
+
+        except Exception as e:
+            # MenuHelper.DisplayErrorException(exception=e)
+            return False
+
+
 
     # method to create an SQL table for the ApplicantProfile entity
-    def CreateApplicantProfileTable(applicantProfile: ApplicantProfile) -> bool:
+    def CreateApplicantProfileTable() -> bool:
         pass
 
     # method to create an SQL table for the CompanyUser entity
-    def CreateCompanyUserTable(companyUser: CompanyUser) -> bool:
+    def CreateCompanyUserTable() -> bool:
         pass
 
     # method to create an SQL table for the CompanyProfile entity
-    def CreateCompanyProfileTable(companyProfile: CompanyProfile) -> bool:
+    def CreateCompanyProfileTable() -> bool:
         pass
+
+
+
+
+# DatabaseSetUp.CreateApplicantUserTable()
 
