@@ -15,3 +15,41 @@ class Main:
     # copyright
     print("\n\nCopyright: © JobsBoard, November 2022.")
     MenuHelper.HelpDefineSectionBreak()
+
+    # entry
+    print("\nWelcome to JobsBoard!")
+    while True:
+        try:
+            MenuHelper.HelpRequestInput()
+
+            # menu options for the user
+            menuOptions: list[str] = [
+                "About JobsBoard",
+                "Log In",
+                "Sign Up",]
+
+            # display menu options to the user
+            MenuHelper.HelpDisplayMenuOptions(menuOptions)
+
+            # take in the menu option entered
+            decision: int = MenuHelper.HelpInputOption()
+
+            # check the menu option selected and redirect the user correspondignly
+            if decision == 1:
+                MenuHelper.HelpDisplaySelectedOption(selectedOption=menuOptions[decision-1])
+            
+            elif decision == 2:
+                MenuHelper.HelpDisplaySelectedOption(selectedOption=menuOptions[decision-1])
+            
+            elif decision == 3:
+                MenuHelper.HelpDisplaySelectedOption(selectedOption=menuOptions[decision-1])
+            
+            elif decision == -1:
+                MenuHelper.HelpInformMenuQuit()
+                break
+
+            else:
+                MenuHelper.HelpWarnInvalidInput()
+        
+        except Exception as e:
+            MenuHelper.HelpWarnInvalidInput()
