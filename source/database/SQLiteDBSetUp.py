@@ -60,3 +60,5 @@ class DatabaseSetUp:
     # method to create an SQL table for the CompanyProfile entity
     def CreateCompanyProfileTable() -> bool:
         pass
+
+DatabaseSetUp.CreateApplicantUserTable()
