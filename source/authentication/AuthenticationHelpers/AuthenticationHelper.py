@@ -1,6 +1,8 @@
+
+
 class AuthenticationHelper:
     
-    # this method will validate the password and return True, if it is valid, False otherwise
+    # this method will validate the password
     def ValidatePassword(password: str) -> bool:
         checkLength = False
         checkUpperCase = False
@@ -21,3 +23,20 @@ class AuthenticationHelper:
             return True
         else:
             return False
+
+    
+    # this method will validate the email address
+    def ValidateEmail(email: str) -> bool:
+        try:
+            if len(email) == 0:
+                return False
+            
+            split: str = email.split('@')
+            print(split)
+            
+
+            return True
+        
+        except:
+            return False
+

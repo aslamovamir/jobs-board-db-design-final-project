@@ -49,3 +49,8 @@ class MenuHelper:
     # prints the copyright information
     def DisplayCopyright():
         print("\n\nCopyright: © JobsBoard, November 2022.\nAll rights reserved.\nFor any queries, consult author and engineer: Amir Aslamov.\n")
+
+    
+    # validates that input is not empty
+    def ValidateEmptyInput(input: str) -> bool:
+        return len(input) == 0
