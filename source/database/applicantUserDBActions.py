@@ -55,8 +55,8 @@ class ApplicantUserDBActions:
             DatabaseCursor.execute("SELECT * FROM ApplicantUser;")
             
             # keys for the columns of the ApplicantUser table
-            keys = ['pk', 'ID', 'Username', 'Email', 'FirstName', 'LastName', 'DateRegistered', 'DateLastLogin']
-            output = []
+            keys: list() = ['pk', 'ID', 'Username', 'Email', 'FirstName', 'LastName', 'DateRegistered', 'DateLastLogin']
+            output: list() = []
             try:
                 output = QueryHelper.ConvertTupleToDict(query=DatabaseCursor.fetchall(), dictKeys=keys)
             except Exception as e:
@@ -77,3 +77,16 @@ class ApplicantUserDBActions:
             print("\nFailure! Querying of all Applicant User rows in the database failed for some reason.",
                     f"\nPlease address the following exception: {e}\n")
             return False
+
+# newUser = {
+#     'Id': 'wadd21123!21#3#3443###',
+#     'Username': 'testUsername',
+#     'Email': 'testEmail',
+#     'FirstName': 'TestFirstName',
+#     'LastName': 'TestLastName',
+# }
+
+# ApplicantUserDBActions.InsertNewApplicantUser(applicantUser=newUser)
+result = ApplicantUserDBActions.QueryAllApplicantUserRows()
+for row in result:
+    print(row)

@@ -11,7 +11,7 @@ class QueryHelper:
 
         try:
             # final output
-            output = []
+            output: list[dict()] = []
 
             for i in range(1, len(query)):
                 convertedRow: dict() = {}
