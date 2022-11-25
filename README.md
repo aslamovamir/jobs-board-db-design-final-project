@@ -12,10 +12,10 @@ For any queries, consult author and engineer: Amir Aslamov.
 It helps both app users efficiently connect with each other by centralising the platform of information exchange based on their respective
 profiles for potential match, managing the job openings, job applications and interview schedules.
 
-Using © JobsBoard, companies can create job postings with detailed information on the opportunity, manage applicatios for them, review them,
-and finally connect with them for an interview. © JobsBoard helps manage interviews with the favoured applicants. For applicants, © JobsBoard
-manages all job postings, and helps applicant users apply for them. It also helps them share their profile information with companies, 
-schedule itnerviews with the companies favoured.
+Using © JobsBoard, companies can create job postings with detailed information on the opportunity, manage applications for them, review these,
+applications and finally connect with them for an interview. © JobsBoard helps manage interviews with the favoured applicants. For applicants, 
+© JobsBoard manages all job postings, and helps applicant users apply for them. It also helps them share their profile information with companies, 
+schedule interviews with the companies favoured.
 
 # Technical Information
 © JobsBoard is a console application built in Python programming language (Python 3.9). For the backend data storage, it uses SQLite.
