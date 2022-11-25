@@ -1,5 +1,6 @@
 from helpers.MenuHelper import MenuHelper
 from actions.DisplayAboutApp import DisplayAboutApp
+from authentication.Signup import Signup
 
 
 # this is the main run file
@@ -20,14 +21,13 @@ class Main:
     print("\nWelcome to JobsBoard!")
     while True:
         try:
-            MenuHelper.RequestInput()
-
             # menu options for the user
             menuOptions: list[str] = [
                 "About JobsBoard",
                 "Log In",
                 "Sign Up",]
 
+            MenuHelper.RequestInput()
             # display menu options to the user
             MenuHelper.DisplayMenuOptions(menuOptions)
 
@@ -44,6 +44,7 @@ class Main:
             
             elif decision == 3:
                 MenuHelper.DisplaySelectedOption(selectedOption=menuOptions[decision-1])
+                Signup.SignUp()
             
             elif decision == -1:
                 MenuHelper.InformMenuQuit()
