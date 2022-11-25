@@ -1,5 +1,5 @@
 from helpers.MenuHelper import MenuHelper
-
+from actions.DisplayAboutApp import DisplayAboutApp
 
 
 # this is the main run file
@@ -9,11 +9,11 @@ class Main:
     MenuHelper.HelpDefineSectionBreak()
     print("\nWelcome to JobsBoard!",
         "\n\nJobsBoard is a commercial application designed to serve 2 types of players in the job market:\n",
-        "1) Applicants and 2) Companies.\n\nWe do recognize the trouble of finding jobs at the right company",
+        "1) Applicants\n 2) Companies.\n\nWe do recognize the trouble of finding jobs at the right company",
         " and the trouble of finding\nthe right job candidate for job openings. Therefore, JobsBoard helps ",
         "faciliate this \ninterconnection between the right job candidate and the right company.")
     # copyright
-    print("\n\nCopyright: © JobsBoard, November 2022.")
+    MenuHelper.HelpDisplayCopyright()
     MenuHelper.HelpDefineSectionBreak()
 
     # entry
@@ -37,6 +37,7 @@ class Main:
             # check the menu option selected and redirect the user correspondignly
             if decision == 1:
                 MenuHelper.HelpDisplaySelectedOption(selectedOption=menuOptions[decision-1])
+                DisplayAboutApp()
             
             elif decision == 2:
                 MenuHelper.HelpDisplaySelectedOption(selectedOption=menuOptions[decision-1])

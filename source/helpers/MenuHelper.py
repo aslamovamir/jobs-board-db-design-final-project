@@ -6,7 +6,7 @@ class MenuHelper:
 
     # helps to print a line to distinguish between different sections in program
     def HelpDefineSectionBreak():
-        print("---------------------------------------------------------------------------------------------")
+        print("----------------------------------------------------------------------------------------------")
     
 
     # takes in a list of otions and prints in a formatted way
@@ -45,3 +45,8 @@ class MenuHelper:
     # prints an error message in case of exceptions and displays those exceptions
     def HelpDisplayErrorException(exception: str):
         print(f"\nFailure! Something went wrong for some reason. Please address the following exception: {exception}")
+
+    
+    # prints the copyright information
+    def HelpDisplayCopyright():
+        print("\n\nCopyright: © JobsBoard, November 2022.\nAll rights reserved.\nFor any queries, consult author and engineer: Amir Aslamov.\n")
