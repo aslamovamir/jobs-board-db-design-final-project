@@ -12,12 +12,11 @@ class DatabaseSetUp:
 
     # method to create an SQL table for the ApplicantUser entity
     def CreateApplicantUserTable() -> bool:
-        
         try:
             # database connection object to the JobsBoard database
             DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
             # database cursor object to manipulate SQL queries
-            DatabaseCursor = sqlite3.Cursor()
+            DatabaseCursor = DatabaseConnection.cursor()
 
             # query to create a new table for the Applicant User
             DatabaseCursor.execute("""
@@ -61,9 +60,3 @@ class DatabaseSetUp:
     # method to create an SQL table for the CompanyProfile entity
     def CreateCompanyProfileTable() -> bool:
         pass
-
-
-
-
-DatabaseSetUp.CreateApplicantUserTable()
-
