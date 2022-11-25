@@ -1,8 +1,7 @@
 # jobs-board-db-design-final-project
 JobsBoard App - USF COP4710 Database Design
 Final Project
-
-Copyright: © JobsBoard, November 2022.\n
+Copyright: © JobsBoard, November 2022.
 All rights reserved.
 For any queries, consult author and engineer: Amir Aslamov.
 
