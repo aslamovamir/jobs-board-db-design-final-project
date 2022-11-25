@@ -4,7 +4,7 @@ from helpers.MenuHelper import MenuHelper
 # displays general information about the JobsBoard app
 def DisplayAboutApp():
 
-    MenuHelper.HelpDefineSectionBreak()
+    MenuHelper.DefineSectionBreak()
     # display general information about the JobsBoard app
     print("\n© JobsBoard is a commercial app designed to help job-seekers to find jobs ",
         "and companies to\nfind job applicants for their job openings. It helps both app ",
@@ -20,5 +20,5 @@ def DisplayAboutApp():
         "with the companies\nfavoured.\n")
 
     # copyright
-    MenuHelper.HelpDisplayCopyright()
-    MenuHelper.HelpDefineSectionBreak()
+    MenuHelper.DisplayCopyright()
+    MenuHelper.DefineSectionBreak()

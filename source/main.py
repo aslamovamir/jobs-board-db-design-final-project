@@ -6,21 +6,21 @@ from actions.DisplayAboutApp import DisplayAboutApp
 class Main:
     
     # basic introduction
-    MenuHelper.HelpDefineSectionBreak()
+    MenuHelper.DefineSectionBreak()
     print("\nWelcome to JobsBoard!",
         "\n\nJobsBoard is a commercial application designed to serve 2 types of players in the job market:\n",
         "1) Applicants\n 2) Companies.\n\nWe do recognize the trouble of finding jobs at the right company",
         " and the trouble of finding\nthe right job candidate for job openings. Therefore, JobsBoard helps ",
         "faciliate this \ninterconnection between the right job candidate and the right company.")
     # copyright
-    MenuHelper.HelpDisplayCopyright()
-    MenuHelper.HelpDefineSectionBreak()
+    MenuHelper.DisplayCopyright()
+    MenuHelper.DefineSectionBreak()
 
     # entry
     print("\nWelcome to JobsBoard!")
     while True:
         try:
-            MenuHelper.HelpRequestInput()
+            MenuHelper.RequestInput()
 
             # menu options for the user
             menuOptions: list[str] = [
@@ -29,28 +29,28 @@ class Main:
                 "Sign Up",]
 
             # display menu options to the user
-            MenuHelper.HelpDisplayMenuOptions(menuOptions)
+            MenuHelper.DisplayMenuOptions(menuOptions)
 
             # take in the menu option entered
-            decision: int = MenuHelper.HelpInputOption()
+            decision: int = MenuHelper.InputOption()
 
             # check the menu option selected and redirect the user correspondignly
             if decision == 1:
-                MenuHelper.HelpDisplaySelectedOption(selectedOption=menuOptions[decision-1])
+                MenuHelper.DisplaySelectedOption(selectedOption=menuOptions[decision-1])
                 DisplayAboutApp()
             
             elif decision == 2:
-                MenuHelper.HelpDisplaySelectedOption(selectedOption=menuOptions[decision-1])
+                MenuHelper.DisplaySelectedOption(selectedOption=menuOptions[decision-1])
             
             elif decision == 3:
-                MenuHelper.HelpDisplaySelectedOption(selectedOption=menuOptions[decision-1])
+                MenuHelper.DisplaySelectedOption(selectedOption=menuOptions[decision-1])
             
             elif decision == -1:
-                MenuHelper.HelpInformMenuQuit()
+                MenuHelper.InformMenuQuit()
                 break
 
             else:
-                MenuHelper.HelpWarnInvalidInput()
+                MenuHelper.WarnInvalidInput()
         
         except Exception as e:
-            MenuHelper.HelpWarnInvalidInput()
+            MenuHelper.WarnInvalidInput()

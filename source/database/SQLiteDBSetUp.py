@@ -7,8 +7,7 @@ from model.Company.CompanyProfile import CompanyProfile
 
 
 #NOTE: Methods of this class must be run only once: they are run when running the app for
-# the first time internally by developers to set up the table and the neceassary tables 
-# in the sql database
+# the first time internally by developers to set up the database and the neceassary tables 
 
 # class for the database set-up
 @dataclass
