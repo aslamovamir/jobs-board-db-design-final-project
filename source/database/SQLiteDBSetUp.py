@@ -44,7 +44,8 @@ class DatabaseSetUp:
             return True
 
         except Exception as e:
-            # MenuHelper.DisplayErrorException(exception=e)
+            print("\nFailure! Creation of the Applicant Table in the database failed for some reason.",
+                f"\nPlease address the following exception: {e}\n")
             return False
 
 
@@ -64,5 +65,5 @@ class DatabaseSetUp:
 
 
 
-# DatabaseSetUp.CreateApplicantUserTable()
+DatabaseSetUp.CreateApplicantUserTable()
 
