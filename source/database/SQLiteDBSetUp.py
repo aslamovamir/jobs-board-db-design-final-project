@@ -1,5 +1,4 @@
 import sqlite3
-from dataclasses import dataclass
 
 
 # NOTE: 
@@ -7,7 +6,6 @@ from dataclasses import dataclass
 # the first time internally by developers to set up the database and the neceassary tables 
 
 # class for the database set-up
-@dataclass
 class DatabaseSetUp:
 
     # method to create an SQL table for the ApplicantUser entity

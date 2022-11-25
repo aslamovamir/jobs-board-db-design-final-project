@@ -1,8 +1,6 @@
-from dataclasses import dataclass
 import hashlib
 
 
-@dataclass
 class CompanyModelHelper:
 
     # helper method to create a user id encrypted for the CompanyUser class

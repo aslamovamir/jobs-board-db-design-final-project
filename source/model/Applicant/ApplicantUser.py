@@ -8,9 +8,9 @@ from datetime import datetime
 class ApplicantUser:
     Id: str
     Username: str
+    Email: str
     FirstName: str
     LastName: str
-    Email: str
     Profile: ApplicantProfile = None
     _lastLoginTimestamp: datetime = field(default_factory=datetime.now)
     _SignUpTimestamp: datetime = field(default_factory=datetime.now)

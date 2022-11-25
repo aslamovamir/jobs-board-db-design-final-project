@@ -18,4 +18,4 @@ applications and finally connect with them for an interview. © JobsBoard helps 
 schedule interviews with the companies favoured.
 
 # Technical Information
-© JobsBoard is a console application built in Python programming language (Python 3.9). For the backend data storage, it uses SQLite.
+© JobsBoard is a console application built in Python programming language (Python 3.9). For the backend data storage, it uses SQLite3.
