@@ -1,4 +1,6 @@
 import sqlite3
+from QueryHelpers.QueryHelper import QueryHelper
+
 
 # class for the ApplicantUserDBActions
 class ApplicantUserDBActions:
@@ -18,7 +20,7 @@ class ApplicantUserDBActions:
                     VALUES (:id, :username, :email, :first_name, :last_name, CURRENT_TIMESTAMP);
                 """, 
                 {
-                    'id': applicantUser['Id'], 
+                    'id': applicantUser['ID'], 
                     'username': applicantUser['Username'], 
                     'email': applicantUser["Email"],
                     'first_name': applicantUser['FirstName'], 
@@ -51,8 +53,17 @@ class ApplicantUserDBActions:
             DatabaseCursor = DatabaseConnection.cursor()
 
             DatabaseCursor.execute("SELECT * FROM ApplicantUser;")
-            # TO-DO: GET ALL THE ROWS AND RETURN AS A LIST OF DICT VALUES
-            print(DatabaseCursor.fetchall())
+            
+            # keys for the columns of the ApplicantUser table
+            keys = ['pk', 'ID', 'Username', 'Email', 'FirstName', 'LastName', 'DateRegistered', 'DateLastLogin']
+            output = []
+            try:
+                output = QueryHelper.ConvertTupleToDict(query=DatabaseCursor.fetchall(), dictKeys=keys)
+            except Exception as e:
+                print("\nFailure! Call of the ConvertTupleToDict method in QueryAllApplicantUserRows method failed for some reason.\n",
+                    f"Please address the following exception: {e}\n")
+
+
             # commit the query operation to the database
             DatabaseConnection.commit()
 
@@ -60,20 +71,9 @@ class ApplicantUserDBActions:
             DatabaseConnection.close()
 
             # return True as success confirmation
-            return True
+            return output
 
         except Exception as e:
             print("\nFailure! Querying of all Applicant User rows in the database failed for some reason.",
                     f"\nPlease address the following exception: {e}\n")
             return False
-
-# newUser = {
-#     'Id': 'wadd21123!21#3#3443###',
-#     'Username': 'testUsername',
-#     'Email': 'testEmail',
-#     'FirstName': 'TestFirstName',
-#     'LastName': 'TestLastName',
-# }
-
-# ApplicantUserDBActions.InsertNewApplicantUser(applicantUser=newUser)
-# ApplicantUserDBActions.QueryAllApplicantUserRows()

@@ -6,10 +6,11 @@ from CompanyProfile import CompanyProfile
 # general Company user entity
 @dataclass
 class CompanyUser:
-    Id: str
+    pk: str
+    ID: str
     Username: str
     CompanyName: str
     Email: str
     Profile: CompanyProfile = None
-    _lastLoginTimestamp: datetime = field(default_factory=datetime.now)
-    _SignUpTimestamp: datetime = field(default_factory=datetime.now)
+    DateRegistered: datetime = field(default_factory=datetime.now)
+    DateLastLogin: datetime = field(default_factory=datetime.now)

@@ -6,11 +6,12 @@ from datetime import datetime
 # general Applicant user entity
 @dataclass
 class ApplicantUser:
-    Id: str
+    pk: str
+    ID: str
     Username: str
     Email: str
     FirstName: str
     LastName: str
     Profile: ApplicantProfile = None
-    _lastLoginTimestamp: datetime = field(default_factory=datetime.now)
-    _SignUpTimestamp: datetime = field(default_factory=datetime.now)
+    DateRegistered: datetime = field(default_factory=datetime.now)
+    DateLastLogin: datetime = field(default_factory=datetime.now)
