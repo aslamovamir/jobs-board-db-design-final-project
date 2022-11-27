@@ -32,8 +32,17 @@ class AuthenticationHelper:
                 return False
             
             split: str = email.split('@')
-            print(split)
-            
+            if len(split) == 2:
+                domainSplit: str = split[1].split('.')
+                if len(domainSplit) == 2:
+                    if len(domainSplit[1]) != 0:
+                        return True
+                    else:
+                        return False
+                else:
+                    return False
+            else:
+                return False
 
             return True
         
