@@ -19,8 +19,10 @@ class CompanyUser:
 
     # constructor
     def __init__(self, Username: str, Password: str, Email: str, CompanyName: str) -> None:
-        # we never statically store the password of the user for security purposes - instead, we hash password with username
+        # we never statically store the password of the user for security purposes - 
+        # instead, we hash password with username and pass to ID
         self.ID = CompanyModelHelper.CreateCompanyUserId(username=Username, password=Password)
+        
         self.Username = Username
         self.Email = Email
         self.CompanyName = CompanyName
