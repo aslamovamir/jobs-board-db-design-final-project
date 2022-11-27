@@ -22,7 +22,6 @@ class CompanyUser:
         # we never statically store the password of the user for security purposes - 
         # instead, we hash password with username and pass to ID
         self.ID = CompanyModelHelper.CreateCompanyUserId(username=Username, password=Password)
-        
         self.Username = Username
         self.Email = Email
         self.CompanyName = CompanyName

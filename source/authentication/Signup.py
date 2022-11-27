@@ -28,12 +28,11 @@ class Signup:
                 # check the menu option selected and redirect the user correspondignly
                 if decision == 1:
                     MenuHelper.DisplaySelectedOption(selectedOption=options[decision-1])
-                    if Signup.RegisterNewApplicantUser():
-                        pass
+                    Signup.RegisterNewApplicantUser()
             
                 elif decision == 2:
                     MenuHelper.DisplaySelectedOption(selectedOption=options[decision-1])
-                    pass
+                    Signup.RegisterNewCompanyUser()
                 
                 elif decision == -1:
                     MenuHelper.InformMenuQuit()
@@ -261,8 +260,10 @@ class Signup:
                 CompanyName=companyName
             )
 
-            # TO_DO: ADD THE METHOD CALL TO INSERT A NEW COMPANY USER
-            pass
+            print(newUser.Username)
+            print(newUser.ID)
+            print(newUser.CompanyName)
+            print(newUser.Email)
 
         except Exception as e:
             MenuHelper.DisplayErrorException(exception=e, errorSource="Signup::RegisterNewCompanyUser")
