@@ -1,6 +1,6 @@
 from helpers.MenuHelper import MenuHelper
 from authentication.AuthenticationHelpers.AuthenticationHelper import AuthenticationHelper
-# from model.Applicant import ApplicantUser
+from model.Applicant import ApplicantUser
 # from model.Company import CompanyUser
 
 
@@ -145,11 +145,7 @@ class Signup:
                 return True
 
             
-            print(username)
-            print(password)
-            print(email)
-            print(firstName)
-            print(lastName)
+            # newUser = ApplicantUser()
 
 
             return True
