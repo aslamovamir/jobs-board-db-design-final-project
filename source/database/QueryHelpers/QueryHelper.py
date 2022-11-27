@@ -10,12 +10,11 @@ class QueryHelper:
         # validate that the size of the tuple is the same as that of keys
         if len(query[0]) != len(dictKeys):
             return None
-
         try:
             # final output
             output: list[dict()] = []
 
-            for i in range(1, len(query)):
+            for i in range(len(query)):
                 convertedRow: dict() = {}
                 for j in range(len(dictKeys)):
                     convertedRow[dictKeys[j]] = query[i][j]

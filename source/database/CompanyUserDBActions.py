@@ -19,14 +19,14 @@ class CompanyUserDBActions:
             # insert a new user row into the table
             # the value for the column "DateLogin" is skipped so its default value becomes Null
             DatabaseCursor.execute("""
-                INSERT INTO CompanyUser (ID, Username, Email, CompanyName, DateRegistered)
-                    VALUES (:id, :username, :email, :company_name, CURRENT_TIMESTAMP);
+                INSERT INTO CompanyUser (ID, Username, CompanyName, Email, DateRegistered)
+                    VALUES (:id, :username, :company_name, :email, CURRENT_TIMESTAMP);
                 """, 
                 {
                     'id': companyUser.ID, 
                     'username': companyUser.Username, 
-                    'email': companyUser.Email,
-                    'company_name': companyUser.CompanyName
+                    'company_name': companyUser.CompanyName,
+                    'email': companyUser.Email
                 }
             )
             
@@ -56,7 +56,7 @@ class CompanyUserDBActions:
             DatabaseCursor.execute("SELECT * FROM CompanyUser;")
             
             # keys for the columns of the CompanyUser table
-            keys: list() = ['pk', 'ID', 'Username', 'Email', 'CompanyName', 'DateRegistered', 'DateLastLogin']
+            keys: list() = ['pk', 'ID', 'Username', 'CompanyName', 'Email', 'DateRegistered', 'DateLastLogin']
             output: list() = []
             try:
                 output = QueryHelper.ConvertTupleToDict(query=DatabaseCursor.fetchall(), dictKeys=keys)
