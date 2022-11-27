@@ -163,7 +163,7 @@ class Signup:
                     MenuHelper.InformFailureOperation()
                     return False
             except Exception as e:
-                MenuHelper.DisplayErrorException(exception=e)
+                MenuHelper.DisplayErrorException(exception=e, errorSource="Signup::RegisterNewApplicantUser::InsertNewApplicantUser")
                 return False
 
         except Exception as e:
@@ -265,5 +265,5 @@ class Signup:
             pass
 
         except Exception as e:
-            MenuHelper.DisplayErrorException(exception=e, errorSource="Signup::RegisterNewUser")
+            MenuHelper.DisplayErrorException(exception=e, errorSource="Signup::RegisterNewCompanyUser")
             return False   
