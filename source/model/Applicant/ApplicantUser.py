@@ -1,10 +1,11 @@
 from dataclasses import dataclass, field
-from ApplicantProfile import ApplicantProfile
-from ApplicantModelHelper import ApplicantModelHelper
+from model.Applicant.ApplicantProfile import ApplicantProfile
+from model.Applicant.ApplicantModelHelper import ApplicantModelHelper
 from datetime import datetime
 
 
 # general Applicant user entity
+@dataclass
 class ApplicantUser:
     ID: str
     Username: str

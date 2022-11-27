@@ -1,6 +1,6 @@
 from helpers.MenuHelper import MenuHelper
 from authentication.AuthenticationHelpers.AuthenticationHelper import AuthenticationHelper
-from model.Applicant import ApplicantUser
+from model.Applicant.ApplicantUser import ApplicantUser
 # from model.Company import CompanyUser
 
 
@@ -144,9 +144,15 @@ class Signup:
             if terminateOperation:
                 return True
 
-            
-            # newUser = ApplicantUser()
+            # create a new ApplicantUser object with the input parameters
+            newUser: ApplicantUser = ApplicantUser(
+                Username=username, 
+                Password=password,
+                Email=email,
+                FirstName=firstName,
+                LastName=lastName)
 
+            
 
             return True
 
