@@ -50,36 +50,54 @@ class Signup:
     def RegisterNewApplicantUser() -> bool:
 
         MenuHelper.DefineSectionBreak()
-        # TO-DO: ADD THE INPUT FROM THE MENU HELPER TO ALLOW THE USER QUIT OUT OF INPUT STREAMS
+        terminateOperation: bool = False
         try:
             # username
             while True:
                 try:
-                    username: str = input("\nPlease enter a username: ")
+                    print("\nPlease enter a username")
+                    username: str = MenuHelper.InputStream()
+                    if username == "-1":
+                        terminateOperation = True
+                        break
                     if MenuHelper.ValidateEmptyInput(input=username):
                         MenuHelper.WarnInvalidInput()
                         continue
                     break
                 except:
                     MenuHelper.WarnInvalidInput()
+            
+            if terminateOperation:
+                return True
 
             # password
             while True:
                 try: 
                     print("\nNOTE: Password must be of size between 8 and 12, have at least one uppercase letter,",
                     "one digit and one special character.")
-                    password: str = input("\nPlease enter a password:")
+                    print("Please enter a password")
+                    password: str = MenuHelper.InputStream()
+                    if password == "-1":
+                        terminateOperation = True
+                        break
                     if not AuthenticationHelper.ValidatePassword(password=password):
                         MenuHelper.WarnInvalidInput()
                         continue
                     break
                 except:
                     MenuHelper.WarnInvalidInput()
+            
+            if terminateOperation:
+                return True
 
             # email address
             while True:
                 try:
-                    email: str = input("\nPlease enter your email address: ")
+                    print("\nPlease enter your email address")
+                    email: str = MenuHelper.InputStream()
+                    if email == "-1":
+                        terminateOperation = True
+                        break
                     if not AuthenticationHelper.ValidateEmail(email=email):
                         MenuHelper.WarnInvalidInput()
                         continue
@@ -87,10 +105,17 @@ class Signup:
                 except:
                     MenuHelper.WarnInvalidInput()
 
+            if terminateOperation:
+                return True
+
             # first name
             while True:
                 try:
-                    firstName: str = input("\nPlease enter your first name: ")
+                    print("\nPlease enter your first name")
+                    firstName: str = MenuHelper.InputStream()
+                    if firstName == "-1":
+                        terminateOperation = True
+                        break
                     if MenuHelper.ValidateEmptyInput(input=firstName):
                         MenuHelper.WarnInvalidInput()
                         continue
@@ -98,10 +123,17 @@ class Signup:
                 except:
                     MenuHelper.WarnInvalidInput()
 
+            if terminateOperation:
+                return True
+
             # last name
             while True:
                 try:
-                    lastName: str = input("\nPlease enter your last neme: ")
+                    print("\nPlease enter your last name")
+                    lastName: str = MenuHelper.InputStream()
+                    if lastName == "-1":
+                        terminateOperation = True
+                        break
                     if MenuHelper.ValidateEmptyInput(input=lastName):
                         MenuHelper.WarnInvalidInput()
                         continue
@@ -109,6 +141,8 @@ class Signup:
                 except:
                     MenuHelper.WarnInvalidInput()
             
+            if terminateOperation:
+                return True
 
             
             print(username)

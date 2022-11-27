@@ -31,6 +31,11 @@ class MenuHelper:
         return int(input("Enter (-1 to Quit): "))
 
     
+    # inputs a string stream
+    def InputStream() -> str:
+        return input("Enter (-1 to Quit): ")
+
+    
     # displays the menu option selected for confirmation purposes
     def DisplaySelectedOption(selectedOption: str):
         print("Selected: ", selectedOption)
