@@ -17,6 +17,8 @@ class ApplicantUser:
     DateRegistered: datetime = field(default_factory=datetime.now)
     DateLastLogin: datetime = field(default_factory=datetime.now)
 
+
+    # constructor
     def __init__(self, Username: str, Password: str, Email: str, FirstName: str, LastName: str) -> None:
         # we never statically store the password of the user for security purposes - instead, we hash password with username
         self.ID = ApplicantModelHelper.CreateApplicantUserId(username=Username, password=Password)

@@ -2,7 +2,7 @@ from helpers.MenuHelper import MenuHelper
 from authentication.AuthenticationHelpers.AuthenticationHelper import AuthenticationHelper
 from model.Applicant.ApplicantUser import ApplicantUser
 from database.ApplicantUserDBActions import ApplicantUserDBActions
-# from model.Company import CompanyUser
+from model.Company.CompanyUser import CompanyUser
 
 
 class Signup:
@@ -51,6 +51,7 @@ class Signup:
 
         MenuHelper.DefineSectionBreak()
         terminateOperation: bool = False
+
         try:
             # username
             while True:
@@ -150,7 +151,8 @@ class Signup:
                 Password=password,
                 Email=email,
                 FirstName=firstName,
-                LastName=lastName)
+                LastName=lastName
+            )
 
             # now try to insert the new user object into the database
             try:
@@ -165,6 +167,103 @@ class Signup:
                 return False
 
         except Exception as e:
-            MenuHelper.DisplayErrorException(exception=e, errorSource="Signup::RegisterNewUser")
+            MenuHelper.DisplayErrorException(exception=e, errorSource="Signup::RegisterNewApplicantUser")
             return False
-                
+
+
+    # method to add a new CompanyUser
+    def RegisterNewCompanyUser() -> bool:
+
+        MenuHelper.DefineSectionBreak()
+        terminateOperation: bool = False
+
+        try:
+            # username
+            while True:
+                try:
+                    print("\nPlease enter a username")
+                    username: str = MenuHelper.InputStream()
+                    if username == "-1":
+                        terminateOperation = True
+                        break
+                    if MenuHelper.ValidateEmptyInput(input=username):
+                        MenuHelper.WarnInvalidInput()
+                        continue
+                    break
+                except:
+                    MenuHelper.WarnInvalidInput()
+            
+            if terminateOperation:
+                return True
+
+            # password
+            while True:
+                try: 
+                    print("\nNOTE: Password must be of size between 8 and 12, have at least one uppercase letter,",
+                    "one digit and one special character.")
+                    print("Please enter a password")
+                    password: str = MenuHelper.InputStream()
+                    if password == "-1":
+                        terminateOperation = True
+                        break
+                    if not AuthenticationHelper.ValidatePassword(password=password):
+                        MenuHelper.WarnInvalidInput()
+                        continue
+                    break
+                except:
+                    MenuHelper.WarnInvalidInput()
+            
+            if terminateOperation:
+                return True
+
+            # email address
+            while True:
+                try:
+                    print("\nPlease enter company email address")
+                    email: str = MenuHelper.InputStream()
+                    if email == "-1":
+                        terminateOperation = True
+                        break
+                    if not AuthenticationHelper.ValidateEmail(email=email):
+                        MenuHelper.WarnInvalidInput()
+                        continue
+                    break
+                except:
+                    MenuHelper.WarnInvalidInput()
+
+            if terminateOperation:
+                return True
+
+            # company name
+            while True:
+                try:
+                    print("\nPlease enter company name")
+                    companyName: str = MenuHelper.InputStream()
+                    if companyName == "-1":
+                        terminateOperation = True
+                        break
+                    if MenuHelper.ValidateEmptyInput(input=companyName):
+                        MenuHelper.WarnInvalidInput()
+                        continue
+                    break
+                except:
+                    MenuHelper.WarnInvalidInput()
+
+            if terminateOperation:
+                return True   
+
+
+            # create a new CompanyUser object with the input parameters
+            newUser: CompanyUser = CompanyUser(
+                Username=username,
+                Password=password,
+                Email=email,
+                CompanyName=companyName
+            )
+
+            # TO_DO: ADD THE METHOD CALL TO INSERT A NEW COMPANY USER
+            pass
+
+        except Exception as e:
+            MenuHelper.DisplayErrorException(exception=e, errorSource="Signup::RegisterNewUser")
+            return False   
