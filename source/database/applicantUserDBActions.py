@@ -1,13 +1,14 @@
 import sqlite3
 from QueryHelpers.QueryHelper import QueryHelper
 from helpers.MenuHelper import MenuHelper
+from model.Applicant.ApplicantUser import ApplicantUser
 
 
 # class for the ApplicantUserDBActions
 class ApplicantUserDBActions:
 
     # method to execute an SQL query to insert a new Applicant User row into the ApplicantUser table
-    def InsertNewApplicantUser(applicantUser: dict()) -> bool:
+    def InsertNewApplicantUser(applicantUser: ApplicantUser) -> bool:
         try:
             # database connection object to the JobsBoard database
             DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
@@ -21,11 +22,11 @@ class ApplicantUserDBActions:
                     VALUES (:id, :username, :email, :first_name, :last_name, CURRENT_TIMESTAMP);
                 """, 
                 {
-                    'id': applicantUser['ID'], 
-                    'username': applicantUser['Username'], 
-                    'email': applicantUser["Email"],
-                    'first_name': applicantUser['FirstName'], 
-                    'last_name': applicantUser['LastName'],
+                    'id': applicantUser.ID, 
+                    'username': applicantUser.Username, 
+                    'email': applicantUser.Email,
+                    'first_name': applicantUser.FirstName, 
+                    'last_name': applicantUser.LastName,
                 }
             )
             
