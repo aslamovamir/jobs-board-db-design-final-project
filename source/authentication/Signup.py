@@ -261,20 +261,17 @@ class Signup:
                 CompanyName=companyName
             )
 
-            result = CompanyUserDBActions.QueryAllCompanyUserRows()
-            print(result)
-
             # now try to insert the new user object into the database
-            # try:
-            #     if CompanyUserDBActions.InsertNewCompanyUser(companyUser=newUser):
-            #         MenuHelper.InformSuccessOperation()
-            #         return True
-            #     else:
-            #         MenuHelper.InformFailureOperation()
-            #         return False
-            # except Exception as e:
-            #     MenuHelper.DisplayErrorException(exception=e, errorSource="Signup::RegisterNewCompanyUser::InsertNewCompanyUser")
-            #     return False
+            try:
+                if CompanyUserDBActions.InsertNewCompanyUser(companyUser=newUser):
+                    MenuHelper.InformSuccessOperation()
+                    return True
+                else:
+                    MenuHelper.InformFailureOperation()
+                    return False
+            except Exception as e:
+                MenuHelper.DisplayErrorException(exception=e, errorSource="Signup::RegisterNewCompanyUser::InsertNewCompanyUser")
+                return False
 
         except Exception as e:
             MenuHelper.DisplayErrorException(exception=e, errorSource="Signup::RegisterNewCompanyUser")
