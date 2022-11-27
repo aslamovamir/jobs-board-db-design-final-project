@@ -15,7 +15,7 @@ class CompanyUserDBActions:
             DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
             # database cursor object to manipulate SQL queries
             DatabaseCursor = DatabaseConnection.cursor()
-
+            # query
             # insert a new user row into the table
             # the value for the column "DateLogin" is skipped so its default value becomes Null
             DatabaseCursor.execute("""
@@ -52,7 +52,7 @@ class CompanyUserDBActions:
             DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
             # database cursor object to manipulate SQL queries
             DatabaseCursor = DatabaseConnection.cursor()
-
+            # query
             DatabaseCursor.execute("SELECT * FROM CompanyUser;")
             
             # keys for the columns of the CompanyUser table

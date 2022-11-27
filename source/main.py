@@ -1,6 +1,7 @@
 from helpers.MenuHelper import MenuHelper
 from actions.DisplayAboutApp import DisplayAboutApp
 from authentication.Signup import Signup
+from authentication.Signin import Signin
 
 
 # this is the main run file
@@ -41,6 +42,7 @@ class Main:
             
             elif decision == 2:
                 MenuHelper.DisplaySelectedOption(selectedOption=menuOptions[decision-1])
+                Signin.Signin()
             
             elif decision == 3:
                 MenuHelper.DisplaySelectedOption(selectedOption=menuOptions[decision-1])

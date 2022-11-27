@@ -2,6 +2,7 @@ import sqlite3
 from database.QueryHelpers.QueryHelper import QueryHelper
 from helpers.MenuHelper import MenuHelper
 from model.Applicant.ApplicantUser import ApplicantUser
+from model.Applicant.ApplicantModelHelper import ApplicantModelHelper
 
 
 # class for the ApplicantUserDBActions
@@ -15,7 +16,7 @@ class ApplicantUserDBActions:
             DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
             # database cursor object to manipulate SQL queries
             DatabaseCursor = DatabaseConnection.cursor()
-
+            # query
             # insert a new user row into the table
             # the value for the column "DateLogin" is skipped so its default value becomes Null
             DatabaseCursor.execute("""
@@ -53,7 +54,7 @@ class ApplicantUserDBActions:
             DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
             # database cursor object to manipulate SQL queries
             DatabaseCursor = DatabaseConnection.cursor()
-
+            # query
             DatabaseCursor.execute("SELECT * FROM ApplicantUser;")
             
             # keys for the columns of the ApplicantUser table
@@ -78,3 +79,21 @@ class ApplicantUserDBActions:
         except Exception as e:
             MenuHelper.DisplayErrorException(exception=e, errorSource="ApplicantUserDBActions::QueryAllApplicantUserRows")
             return False
+
+    
+    # method to check if an ApplicantUser exisits with the given username and password
+    def CheckExistsApplicantUser(username: str, password: str) -> bool:
+        id: str = ApplicantModelHelper.CreateApplicantUserId(username=username, password=password)
+
+        # database connection object to the JobsBoard database
+        DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
+        # database cursor object to manipulate SQL queries
+        DatabaseCursor = DatabaseConnection.cursor()
+        # query
+        DatabaseCursor.execute("""SELECT * FROM ApplicantUser WHERE ID = ?""", (id,))
+
+        if len(DatabaseCursor.fetchall()) == 0:
+            print('\nUser with this username and password does not exist.')
+            return False
+        else:
+            return True
