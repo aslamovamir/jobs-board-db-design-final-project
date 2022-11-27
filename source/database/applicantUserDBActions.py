@@ -78,16 +78,3 @@ class ApplicantUserDBActions:
         except Exception as e:
             MenuHelper.DisplayErrorException(exception=e, errorSource="ApplicantUserDBActions::QueryAllApplicantUserRows")
             return False
-
-# newUser = {
-#     'Id': 'wadd21123!21#3#3443###',
-#     'Username': 'testUsername',
-#     'Email': 'testEmail',
-#     'FirstName': 'TestFirstName',
-#     'LastName': 'TestLastName',
-# }
-
-# ApplicantUserDBActions.InsertNewApplicantUser(applicantUser=newUser)
-# result = ApplicantUserDBActions.QueryAllApplicantUserRows()
-# for row in result:
-#     print(row)
