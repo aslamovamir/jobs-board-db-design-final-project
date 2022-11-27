@@ -46,6 +46,16 @@ class MenuHelper:
         print("\nError! Invalid Entry! Please try again.")
 
     
+    # informs of successful operation completion to the user
+    def InformSuccessOperation():
+        print("\nSuccess! Operation successfully completed.\n")
+
+    
+    # informs of unseccessful operation completion to the user
+    def InformFailureOperation():
+        print("\nFalure! Operation unsuccessfully completed.\n")
+
+
     # prints an error message in case of exceptions and displays those exceptions
     def DisplayErrorException(exception: str, errorSource: str):
         print(f"\nFailure! Something went wrong for some reason. \nPlease address the following exception in {errorSource}: {exception}")

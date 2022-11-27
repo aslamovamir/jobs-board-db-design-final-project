@@ -1,7 +1,8 @@
 import sqlite3
-from QueryHelpers.QueryHelper import QueryHelper
+from database.QueryHelpers.QueryHelper import QueryHelper
 from helpers.MenuHelper import MenuHelper
 from model.Applicant.ApplicantUser import ApplicantUser
+from database.SQLiteDBSetUp import DatabaseSetUp
 
 
 # class for the ApplicantUserDBActions
@@ -10,6 +11,8 @@ class ApplicantUserDBActions:
     # method to execute an SQL query to insert a new Applicant User row into the ApplicantUser table
     def InsertNewApplicantUser(applicantUser: ApplicantUser) -> bool:
         try:
+            # DatabaseSetUp.CreateApplicantUserTable()
+
             # database connection object to the JobsBoard database
             DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
             # database cursor object to manipulate SQL queries
@@ -87,6 +90,6 @@ class ApplicantUserDBActions:
 # }
 
 # ApplicantUserDBActions.InsertNewApplicantUser(applicantUser=newUser)
-result = ApplicantUserDBActions.QueryAllApplicantUserRows()
-for row in result:
-    print(row)
+# result = ApplicantUserDBActions.QueryAllApplicantUserRows()
+# for row in result:
+#     print(row)

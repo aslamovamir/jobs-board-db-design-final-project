@@ -1,4 +1,5 @@
 import sqlite3
+from helpers.MenuHelper import MenuHelper
 
 
 # NOTE: 
@@ -41,8 +42,7 @@ class DatabaseSetUp:
             return True
 
         except Exception as e:
-            print("\nFailure! Creation of the Applicant Table in the database failed for some reason.",
-                f"\nPlease address the following exception: {e}\n")
+            MenuHelper.DisplayErrorException(exception=e, errorSource="SQLiteDBSetUp::DatabaseSetUp::CreateApplicantUserTable")
             return False
 
 

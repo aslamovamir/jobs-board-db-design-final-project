@@ -1,6 +1,7 @@
 from helpers.MenuHelper import MenuHelper
 from authentication.AuthenticationHelpers.AuthenticationHelper import AuthenticationHelper
 from model.Applicant.ApplicantUser import ApplicantUser
+from database.ApplicantUserDBActions import ApplicantUserDBActions
 # from model.Company import CompanyUser
 
 
@@ -152,9 +153,21 @@ class Signup:
                 FirstName=firstName,
                 LastName=lastName)
 
-            
+            # now try to insert the new user object into the database
+            # try:
+            #     if ApplicantUserDBActions.InsertNewApplicantUser(applicantUser=newUser):
+            #         MenuHelper.InformSuccessOperation()
+            #         return True
+            #     else:
+            #         MenuHelper.InformFailureOperation()
+            #         return False
+            # except Exception as e:
+            #     MenuHelper.DisplayErrorException(exception=e)
+            #     return False
 
-            return True
+            result = ApplicantUserDBActions.InsertNewApplicantUser(applicantUser=newUser)
+            print(result)
+
 
         except Exception as e:
             MenuHelper.DisplayErrorException(exception=e, errorSource="Signup::RegisterNewUser")
