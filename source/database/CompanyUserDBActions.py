@@ -1,5 +1,6 @@
 import sqlite3
 from model.Company.CompanyUser import CompanyUser
+from model.Company.CompanyModelHelper import CompanyModelHelper
 from helpers.MenuHelper import MenuHelper
 from database.QueryHelpers.QueryHelper import QueryHelper
 
@@ -36,7 +37,6 @@ class CompanyUserDBActions:
             # for safety, close the database connection
             DatabaseConnection.close()
 
-            # return True as success confirmation
             return True
 
 
@@ -77,3 +77,36 @@ class CompanyUserDBActions:
         except Exception as e:
             MenuHelper.DisplayErrorException(exception=e, errorSource="CompanyUserDBActions::QueryAllCompanyUserRows")
             return False
+    
+
+    # method to check if an ApplicantUser exists with the given username and password
+    def CheckExistsGivenUsernamePassword(username: str, password: str) -> bool:
+        id: str = CompanyModelHelper.CreateCompanyUserId(username=username, password=password)
+
+        # database connection object to the JobsBoard database
+        DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
+        # database cursor object to manipulate SQL queries
+        DatabaseCursor = DatabaseConnection.cursor()
+        # query
+        DatabaseCursor.execute("""SELECT * FROM CompanyUser WHERE ID = ?""", (id,))
+
+        if len(DatabaseCursor.fetchall()) == 0:
+            print('\nUser with this username and password does not exist.')
+            return False
+        else:
+            return True
+    
+
+    # method to check if an ApplicantUser exists with the given username
+    def CheckExistsGivenUsername(username: str) -> bool:
+        # database connection object to the JobsBoard database
+        DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
+        # database cursor object to manipulate SQL queries
+        DatabaseCursor = DatabaseConnection.cursor()
+        # query
+        DatabaseCursor.execute("""SELECT * FROM CompanyUser WHERE Username = ?""", (username,))
+
+        if len(DatabaseCursor.fetchall()) == 0:
+            return False
+        else:
+            return True

@@ -73,7 +73,6 @@ class ApplicantUserDBActions:
             # for safety, close the database connection
             DatabaseConnection.close()
 
-            # return True as success confirmation
             return output
 
         except Exception as e:

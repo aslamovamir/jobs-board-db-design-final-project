@@ -61,8 +61,13 @@ class Signup:
                     if username == "-1":
                         terminateOperation = True
                         break
+                    # check for empty input
                     if MenuHelper.ValidateEmptyInput(input=username):
                         MenuHelper.WarnInvalidInput()
+                        continue
+                    # check if user already exists with the given username
+                    if ApplicantUserDBActions.CheckExistsGivenUsername(username=username):
+                        print("\nError! User already exists with the given username. Please try a new username.")
                         continue
                     break
                 except:
@@ -186,8 +191,13 @@ class Signup:
                     if username == "-1":
                         terminateOperation = True
                         break
+                    # check for empty input
                     if MenuHelper.ValidateEmptyInput(input=username):
                         MenuHelper.WarnInvalidInput()
+                        continue
+                    # check if user already exists with the given username
+                    if CompanyUserDBActions.CheckExistsGivenUsername(username=username):
+                        print("\nError! User already exists with the given username. Please try a new username.")
                         continue
                     break
                 except:

@@ -57,14 +57,8 @@ class Signin:
                     if username == "-1":
                         terminateOperation = True
                         break
-                    # check if empty input
                     if MenuHelper.ValidateEmptyInput(input=username):
                         MenuHelper.WarnInvalidInput()
-                        continue
-                    # check if user already exists with the given username
-                    if ApplicantUserDBActions.CheckExistsGivenUsername(username=username):
-                        print("User already exists with the given username. Please try a new username.")
-                        MenuHelper.InformFailureOperation()
                         continue
                     break
                 except:
