@@ -46,17 +46,47 @@ class DatabaseSetUp:
             return False
 
 
-
     # method to create an SQL table for the ApplicantProfile entity
     def CreateApplicantProfileTable() -> bool:
         pass
 
+
     # method to create an SQL table for the CompanyUser entity
     def CreateCompanyUserTable() -> bool:
-        pass
+        try:
+            # database connection object to the JobsBoard database
+            DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
+            # database cursor object to manipulate SQL queries
+            DatabaseCursor = DatabaseConnection.cursor()
+
+            # query to create a new table for the Applicant User
+            DatabaseCursor.execute("""
+                CREATE TABLE CompanyUser (
+                    pk INTEGER PRIMARY KEY,
+                    ID TEXT,
+                    Username VARCHAR(50),
+                    CompanyName VARCHAR(50),
+                    Email VARCHAR(50),
+                    DateRegistered TIMESTAMP,
+                    DateLastLogin TIMESTAMP
+                );
+            """
+            )
+
+            # commit the query operation to the database
+            DatabaseConnection.commit()
+
+            # for safety, close the database connection
+            DatabaseConnection.close()
+
+            # return True as success confirmation
+            return True
+
+        except Exception as e:
+            MenuHelper.DisplayErrorException(exception=e, errorSource="SQLiteDBSetUp::DatabaseSetUp::CreateCompanyUserTable")
+            return False
+
 
     # method to create an SQL table for the CompanyProfile entity
     def CreateCompanyProfileTable() -> bool:
         pass
-
-DatabaseSetUp.CreateApplicantUserTable()

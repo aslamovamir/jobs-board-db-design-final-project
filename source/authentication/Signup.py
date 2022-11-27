@@ -46,7 +46,6 @@ class Signup:
                 MenuHelper.WarnInvalidInput()
 
 
-
     # method to add a new ApplicantUser
     def RegisterNewApplicantUser() -> bool:
 
@@ -154,20 +153,16 @@ class Signup:
                 LastName=lastName)
 
             # now try to insert the new user object into the database
-            # try:
-            #     if ApplicantUserDBActions.InsertNewApplicantUser(applicantUser=newUser):
-            #         MenuHelper.InformSuccessOperation()
-            #         return True
-            #     else:
-            #         MenuHelper.InformFailureOperation()
-            #         return False
-            # except Exception as e:
-            #     MenuHelper.DisplayErrorException(exception=e)
-            #     return False
-
-            result = ApplicantUserDBActions.InsertNewApplicantUser(applicantUser=newUser)
-            print(result)
-
+            try:
+                if ApplicantUserDBActions.InsertNewApplicantUser(applicantUser=newUser):
+                    MenuHelper.InformSuccessOperation()
+                    return True
+                else:
+                    MenuHelper.InformFailureOperation()
+                    return False
+            except Exception as e:
+                MenuHelper.DisplayErrorException(exception=e)
+                return False
 
         except Exception as e:
             MenuHelper.DisplayErrorException(exception=e, errorSource="Signup::RegisterNewUser")
