@@ -85,7 +85,7 @@ class MenuHelper:
     
     # asks the user for change confirmation
     def ConfirmChanges() -> bool:
-        if input("\nWould you like to save changes? Y/N") == "Y":
+        if input("\nWould you like to save changes? Y/N: ") == "Y":
             return True
         else:
             return False

@@ -82,80 +82,120 @@ class ApplicantUserDBActions:
     
     # method to check if an ApplicantUser exists with the given username and password
     def CheckExistsGivenUsernamePassword(username: str, password: str) -> bool:
-        id: str = ApplicantModelHelper.CreateApplicantUserId(username=username, password=password)
+        try:
+            id: str = ApplicantModelHelper.CreateApplicantUserId(username=username, password=password)
 
-        # database connection object to the JobsBoard database
-        DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
-        # database cursor object to manipulate SQL queries
-        DatabaseCursor = DatabaseConnection.cursor()
-        # query
-        DatabaseCursor.execute("""SELECT * FROM ApplicantUser WHERE ID = ?""", (id,))
+            # database connection object to the JobsBoard database
+            DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
+            # database cursor object to manipulate SQL queries
+            DatabaseCursor = DatabaseConnection.cursor()
+            # query
+            DatabaseCursor.execute("""SELECT * FROM ApplicantUser WHERE ID = ?;""", (id,))
 
-        if len(DatabaseCursor.fetchall()) == 0:
-            # for safety, close the database connection
-            DatabaseConnection.close()
+            if len(DatabaseCursor.fetchall()) == 0:
+                # for safety, close the database connection
+                DatabaseConnection.close()
 
-            print('\nUser with this username and password does not exist.')
+                print('\nUser with this username and password does not exist.')
+                return False
+            else:
+                # if the user exists, we update the DateLastLogin to capture the time the user's account has been accessed
+                DatabaseCursor.execute("""UPDATE ApplicantUser SET DateLastLogin=CURRENT_TIMESTAMP WHERE ID = ?;""", (id,))
+                # commit the query to the database
+                DatabaseConnection.commit()
+                # for safety, close the database connection
+                DatabaseConnection.close()
+                return True
+
+        except Exception as e:
+            MenuHelper.DisplayErrorException(exception=e, errorSource="ApplicantUserDBActions::CheckExistsGivenUsernamePassword")
             return False
-        else:
-            # if the user exists, we update the DateLastLogin to capture the time the user's account has been accessed
-            DatabaseCursor.execute("""UPDATE ApplicantUser SET DateLastLogin=CURRENT_TIMESTAMP WHERE ID = ?""", (id,))
-            # commit the query to the database
-            DatabaseConnection.commit()
-            # for safety, close the database connection
-            DatabaseConnection.close()
-            return True
-    
+
 
     # method to check if an ApplicantUser exists with the given username
     def CheckExistsGivenUsername(username: str) -> bool:
-        # database connection object to the JobsBoard database
-        DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
-        # database cursor object to manipulate SQL queries
-        DatabaseCursor = DatabaseConnection.cursor()
-        # query
-        DatabaseCursor.execute("""SELECT * FROM ApplicantUser WHERE Username = ?""", (username,))
+        try:
+            # database connection object to the JobsBoard database
+            DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
+            # database cursor object to manipulate SQL queries
+            DatabaseCursor = DatabaseConnection.cursor()
+            # query
+            DatabaseCursor.execute("""SELECT * FROM ApplicantUser WHERE Username = ?;""", (username,))
 
-        if len(DatabaseCursor.fetchall()) == 0:
-            # for safety, close the database connection
-            DatabaseConnection.close()
+            if len(DatabaseCursor.fetchall()) == 0:
+                # for safety, close the database connection
+                DatabaseConnection.close()
+                return False
+            else:
+                # for safety, close the database connection
+                DatabaseConnection.close()
+                return True
+        except Exception as e:
+            MenuHelper.DisplayErrorException(exception=e, errorSource="ApplicantUserDBActions::CheckExistsGivenUsername")
             return False
-        else:
-            # for safety, close the database connection
-            DatabaseConnection.close()
-            return True
 
     
     # method to return the ApplicantUser with the given id
     def ReturnApplicantUser(id: str) -> ApplicantUser:
-        # database connection object to the JobsBoard database
-        DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
-        # database cursor object to manipulate SQL queries
-        DatabaseCursor = DatabaseConnection.cursor()
+        try:
+            # database connection object to the JobsBoard database
+            DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
+            # database cursor object to manipulate SQL queries
+            DatabaseCursor = DatabaseConnection.cursor()
 
-        # query
-        DatabaseCursor.execute("""SELECT * FROM ApplicantUser WHERE ID = ?""", (id,))
-        # query results
-        records = DatabaseCursor.fetchall()
+            # query
+            DatabaseCursor.execute("""SELECT * FROM ApplicantUser WHERE ID = ?;""", (id,))
+            # query results
+            records = DatabaseCursor.fetchall()
 
-        # for safety, close the database connection
-        DatabaseConnection.close()
+            # for safety, close the database connection
+            DatabaseConnection.close()
 
-        if len(records) == 1:
-            # TO_DO: CREATE A DB METHOD TO UPDATE THE DATELASTLOGIN COLUMN FOR THE USER
+            if len(records) == 1:
+                # TO_DO: CREATE A DB METHOD TO UPDATE THE DATELASTLOGIN COLUMN FOR THE USER
 
-            # keys for the columns of the ApplicantUser table
-            keys: list() = ['pk', 'ID', 'Username', 'Email', 'FirstName', 'LastName', 'DateRegistered', 'DateLastLogin']
-            dictResult: dict() = QueryHelper.ConvertTupleToDict(query=records, dictKeys=keys)[0]
+                # keys for the columns of the ApplicantUser table
+                keys: list() = ['pk', 'ID', 'Username', 'Email', 'FirstName', 'LastName', 'DateRegistered', 'DateLastLogin']
+                dictResult: dict() = QueryHelper.ConvertTupleToDict(query=records, dictKeys=keys)[0]
 
-            return ApplicantUser(
-                Username=dictResult['Username'],
-                Password="",
-                Email=dictResult['Email'],
-                FirstName=dictResult['FirstName'],
-                LastName=dictResult['LastName'],
-                DateRegistered=dictResult['DateRegistered'],
-                DateLastLogin=dictResult['DateLastLogin']
+                return ApplicantUser(
+                    Username=dictResult['Username'],
+                    Password="",
+                    Email=dictResult['Email'],
+                    FirstName=dictResult['FirstName'],
+                    LastName=dictResult['LastName'],
+                    DateRegistered=dictResult['DateRegistered'],
+                    DateLastLogin=dictResult['DateLastLogin']
+                )
+            else:
+                raise Exception("\nError! There are applicant users with duplicate ID's.")
+        
+        except Exception as e:
+            MenuHelper.DisplayErrorException(exception=e, errorSource="ApplicantUserDBActions::ReturnApplicantUser")
+            return False
+
+    
+    # method to update account information of an applicant user
+    def UpdateAccountInfo(loggedUser: ApplicantUser) -> bool:
+        try:
+            # database connection object to the JobsBoard database
+            DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
+            # database cursor object to manipulate SQL queries
+            DatabaseCursor = DatabaseConnection.cursor()
+
+            DatabaseCursor.execute("""UPDATE ApplicantUser SET Email = ?, FirstName = ?, LastName = ? WHERE Username = ?;""", 
+                (loggedUser.Email, loggedUser.FirstName, loggedUser.LastName, loggedUser.Username,)
             )
-        else:
-            raise Exception("\nError! There are applicant users with duplicate ID's.")
+
+            # commit the query operation to the database
+            DatabaseConnection.commit()
+
+            # for safety, close the database connection
+            DatabaseConnection.close()
+
+            # return True as success confirmation
+            return True
+
+        except Exception as e:
+            MenuHelper.DisplayErrorException(exception=e, errorSource="ApplicantUserDBActions::UpdateAccountInfo")
+            return False

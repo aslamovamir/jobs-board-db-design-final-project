@@ -64,7 +64,7 @@ class UpdateAccount:
                             if MenuHelper.ValidateEmptyInput(input=firstName):
                                 MenuHelper.WarnInvalidInput()
                                 continue
-                            print("Success! Your first name changed to: ", email)
+                            print("Success! Your first name changed to: ", firstName)
                             break
                         except:
                             MenuHelper.WarnInvalidInput()
@@ -84,7 +84,7 @@ class UpdateAccount:
                             if MenuHelper.ValidateEmptyInput(input=lastName):
                                 MenuHelper.WarnInvalidInput()
                                 continue
-                            print("Success! Your email last name changed to: ", email)
+                            print("Success! Your email last name changed to: ", lastName)
                             break
                         except:
                             MenuHelper.WarnInvalidInput()
@@ -114,7 +114,8 @@ class UpdateAccount:
                     # To-DO: UPDATE THE USER's ACCOUNT PARAMETERS WITH THE DATABASE ACTION
                     pass
                 else:
-                    pass
+                    MenuHelper.InformMenuQuit()
+                    break
             except:
                 MenuHelper.WarnInvalidInput()
                 
