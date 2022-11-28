@@ -158,3 +158,29 @@ class CompanyUserDBActions:
             )
         else:
             raise Exception("\nError! There are applicant users with duplicate ID's.")
+
+    
+    # method to update account information of a company user
+    def UpdateAccountInfo(loggedUser: CompanyUser) -> bool:
+        try:
+            # database connection object to the JobsBoard database
+            DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
+            # database cursor object to manipulate SQL queries
+            DatabaseCursor = DatabaseConnection.cursor()
+
+            DatabaseCursor.execute("""UPDATE CompanyUser SET Email = ?, CompanyName = ? WHERE Username = ?;""", 
+                (loggedUser.Email, loggedUser.CompanyName, loggedUser.Username,)
+            )
+
+            # commit the query operation to the database
+            DatabaseConnection.commit()
+
+            # for safety, close the database connection
+            DatabaseConnection.close()
+
+            # return True as success confirmation
+            return True
+
+        except Exception as e:
+            MenuHelper.DisplayErrorException(exception=e, errorSource="ApplicantUserDBActions::UpdateAccountInfo")
+            return False
