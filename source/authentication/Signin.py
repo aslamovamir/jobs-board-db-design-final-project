@@ -7,6 +7,7 @@ from model.Applicant.ApplicantModelHelper import ApplicantModelHelper
 from model.Company.CompanyUser import CompanyUser
 from model.Company.CompanyModelHelper import CompanyModelHelper
 from actions.DisplayAccountInfo import DisplayAccountInfo
+from actions.UpdateAccount import UpdateAccount
 
 
 # class for Signin
@@ -205,6 +206,7 @@ class Signin:
             
                 elif decision == 2:
                     MenuHelper.DisplaySelectedOption(selectedOption=options[decision-1])
+                    UpdateAccount.UpdateApplicantAccount(loggedUser=loggedUser)
                     pass
                 
                 # TO_DO: IMPLEMENT LOGOUT

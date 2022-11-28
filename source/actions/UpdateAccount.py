@@ -1,7 +1,7 @@
 from model.Applicant.ApplicantUser import ApplicantUser
 from model.Company.CompanyUser import CompanyUser
 from helpers.MenuHelper import MenuHelper
-from authentication.AuthenticationHelpers import AuthenticationHelper
+from authentication.AuthenticationHelpers.AuthenticationHelper import AuthenticationHelper
 
 
 # class for the UpdateAccount
@@ -97,7 +97,10 @@ class UpdateAccount:
 
             except Exception as e:
                 MenuHelper.DisplayErrorException(exception=e, errorSource="UpdateAccount::UpdateApplicantAccount")
-            
+
+        if terminateOperation:
+            return True
+ 
         # To-DO: UPDATE THE USER's ACCOUNT PARAMETERS WITH THE DATABASE ACTION
         print("NEW: ")
         print(email)
