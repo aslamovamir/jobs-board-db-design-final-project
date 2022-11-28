@@ -91,9 +91,14 @@ class CompanyUserDBActions:
         DatabaseCursor.execute("""SELECT * FROM CompanyUser WHERE ID = ?""", (id,))
 
         if len(DatabaseCursor.fetchall()) == 0:
+            # for safety, close the database connection
+            DatabaseConnection.close()
+
             print('\nUser with this username and password does not exist.')
             return False
         else:
+            # for safety, close the database connection
+            DatabaseConnection.close()
             return True
     
 
@@ -106,7 +111,12 @@ class CompanyUserDBActions:
         # query
         DatabaseCursor.execute("""SELECT * FROM CompanyUser WHERE Username = ?""", (username,))
 
+
         if len(DatabaseCursor.fetchall()) == 0:
+            # for safety, close the database connection
+            DatabaseConnection.close()
             return False
         else:
+            # for safety, close the database connection
+            DatabaseConnection.close()
             return True

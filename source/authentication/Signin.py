@@ -1,6 +1,7 @@
 from helpers.MenuHelper import MenuHelper
 from authentication.AuthenticationHelpers.AuthenticationHelper import AuthenticationHelper
 from database.ApplicantUserDBActions import ApplicantUserDBActions
+from database.CompanyUserDBActions import CompanyUserDBActions
 
 
 # class for Signin
@@ -30,6 +31,7 @@ class Signin:
             
                 elif decision == 2:
                     MenuHelper.DisplaySelectedOption(selectedOption=options[decision-1])
+                    Signin.LoginCompanyUser()
                     pass
                 
                 elif decision == -1:
@@ -97,10 +99,71 @@ class Signin:
                     return
             except Exception as e:
                 MenuHelper.DisplayErrorException(exception=e, errorSource="Signin::LoginApplicantUser::CheckExistsApplicantUser")
+                return      
+
+        except Exception as e:
+            MenuHelper.DisplayErrorException(exception=e, errorSource="Signin::LoginApplicantUser")
+            return False
+
+    
+    # method to signin CompanyUser
+    def LoginCompanyUser():
+        MenuHelper.DefineSectionBreak()
+        terminateOperation: bool = False
+
+        try:
+            # username
+            while True:
+                try:
+                    print("\nPlease enter company username")
+                    username: str = MenuHelper.InputStream()
+                    if username == "-1":
+                        terminateOperation = True
+                        break
+                    if MenuHelper.ValidateEmptyInput(input=username):
+                        MenuHelper.WarnInvalidInput()
+                        continue
+                    break
+                except:
+                    MenuHelper.WarnInvalidInput()
+            
+            if terminateOperation:
+                return True
+
+            # password
+            while True:
+                try: 
+                    print("\nPlease enter company password")
+                    password: str = MenuHelper.InputStream()
+                    if password == "-1":
+                        terminateOperation = True
+                        break
+                    if not AuthenticationHelper.ValidatePassword(password=password):
+                        MenuHelper.WarnInvalidInput()
+                        continue
+                    break
+                except:
+                    MenuHelper.WarnInvalidInput()
+            
+            if terminateOperation:
+                return True
+
+
+            # check the database if this user with the username and password exists
+            try:
+                if CompanyUserDBActions.CheckExistsGivenUsernamePassword(username=username, password=password):
+                    #TO-DO: create another method to return the user as an object from the database
+                    print("USER EXISTS")
+                    pass
+                else:
+                    MenuHelper.InformFailureOperation()
+                    return
+            except Exception as e:
+                MenuHelper.DisplayErrorException(exception=e, errorSource="Signin::LoginCompanyUser::CheckExistsCompanyUser")
                 return
             
 
 
         except Exception as e:
-            MenuHelper.DisplayErrorException(exception=e, errorSource="Signin::LoginApplicantUser")
+            MenuHelper.DisplayErrorException(exception=e, errorSource="Signin::LoginCompanyUser")
             return False

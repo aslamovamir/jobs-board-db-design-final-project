@@ -91,10 +91,17 @@ class ApplicantUserDBActions:
         # query
         DatabaseCursor.execute("""SELECT * FROM ApplicantUser WHERE ID = ?""", (id,))
 
+        # for safety, close the database connection
+        DatabaseConnection.close()
+
         if len(DatabaseCursor.fetchall()) == 0:
+            # for safety, close the database connection
+            DatabaseConnection.close()
             print('\nUser with this username and password does not exist.')
             return False
         else:
+            # for safety, close the database connection
+            DatabaseConnection.close()
             return True
     
 
@@ -108,6 +115,10 @@ class ApplicantUserDBActions:
         DatabaseCursor.execute("""SELECT * FROM ApplicantUser WHERE Username = ?""", (username,))
 
         if len(DatabaseCursor.fetchall()) == 0:
+            # for safety, close the database connection
+            DatabaseConnection.close()
             return False
         else:
+            # for safety, close the database connection
+            DatabaseConnection.close()
             return True
