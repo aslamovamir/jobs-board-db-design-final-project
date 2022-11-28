@@ -206,8 +206,9 @@ class Signin:
             
                 elif decision == 2:
                     MenuHelper.DisplaySelectedOption(selectedOption=options[decision-1])
-                    UpdateAccount.UpdateApplicantAccount(loggedUser=loggedUser)
-                    pass
+                    updateResult = UpdateAccount.UpdateApplicantAccount(loggedUser=loggedUser) 
+                    if updateResult != None:
+                        loggedUser = updateResult
                 
                 # TO_DO: IMPLEMENT LOGOUT
                 elif decision == -1:
@@ -248,9 +249,10 @@ class Signin:
             
                 elif decision == 2:
                     MenuHelper.DisplaySelectedOption(selectedOption=options[decision-1])
-                    pass
+                    updateResult = UpdateAccount.UpdateCompanyUser(loggedUser=loggedUser)
+                    if updateResult != None:
+                        loggedUser = updateResult
                 
-
                 # TO_DO: IMPLEMENT LOGOUT
                 elif decision == -1:
                     MenuHelper.InformMenuQuit()
