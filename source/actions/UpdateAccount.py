@@ -44,6 +44,7 @@ class UpdateAccount:
                             if not AuthenticationHelper.ValidateEmail(email=email):
                                 MenuHelper.WarnInvalidInput()
                                 continue
+                            print("Success! Your email address changed to: ", email)
                             break
                         except:
                             MenuHelper.WarnInvalidInput()
@@ -63,6 +64,7 @@ class UpdateAccount:
                             if MenuHelper.ValidateEmptyInput(input=firstName):
                                 MenuHelper.WarnInvalidInput()
                                 continue
+                            print("Success! Your first name changed to: ", email)
                             break
                         except:
                             MenuHelper.WarnInvalidInput()
@@ -82,6 +84,7 @@ class UpdateAccount:
                             if MenuHelper.ValidateEmptyInput(input=lastName):
                                 MenuHelper.WarnInvalidInput()
                                 continue
+                            print("Success! Your email last name changed to: ", email)
                             break
                         except:
                             MenuHelper.WarnInvalidInput()
@@ -91,7 +94,7 @@ class UpdateAccount:
 
                 # terminate operation
                 elif decision == -1:
-                    return True     
+                    break   
 
             except Exception as e:
                 MenuHelper.DisplayErrorException(exception=e, errorSource="UpdateAccount::UpdateApplicantAccount")
@@ -99,12 +102,22 @@ class UpdateAccount:
         if terminateOperation:
             return True
  
-        # To-DO: UPDATE THE USER's ACCOUNT PARAMETERS WITH THE DATABASE ACTION
-        print("NEW: ")
-        print(email)
-        print(firstName)
-        print(lastName)
+        while True:
+            try:
+                print("\nThis is your new account information: ")
+                print("Email: ", email)
+                print("First Name: ", firstName)
+                print("Last Name: ", lastName)
 
+                # ask for change confirmation
+                if MenuHelper.ConfirmChanges():
+                    # To-DO: UPDATE THE USER's ACCOUNT PARAMETERS WITH THE DATABASE ACTION
+                    pass
+                else:
+                    pass
+            except:
+                MenuHelper.WarnInvalidInput()
+                
 
     # method to update the account of a company user
     def UpdateCompanyUser(loggedUser: CompanyUser) -> bool:

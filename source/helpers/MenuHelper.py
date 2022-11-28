@@ -81,3 +81,11 @@ class MenuHelper:
     # welcomes the company user
     def WelcomeCompanyUser(loggedUser: CompanyUser):
         print(f"\nWelcome to the company account, {loggedUser.Username}!\n")
+
+    
+    # asks the user for change confirmation
+    def ConfirmChanges() -> bool:
+        if input("\nWould you like to save changes? Y/N") == "Y":
+            return True
+        else:
+            return False
