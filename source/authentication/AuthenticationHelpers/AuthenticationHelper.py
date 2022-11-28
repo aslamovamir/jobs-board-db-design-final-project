@@ -27,7 +27,6 @@ class AuthenticationHelper:
     
     # this method will validate the email address
     def ValidateEmail(email: str) -> bool:
-        print("GOT THIS: ", email)
         try:
             if len(email) == 0:
                 return False

@@ -47,9 +47,9 @@ class UpdateAccount:
                             break
                         except:
                             MenuHelper.WarnInvalidInput()
-                        
-                if terminateOperation:
-                    break
+
+                    if terminateOperation:
+                        break
 
                 # update first name
                 elif decision == 2:
@@ -67,8 +67,8 @@ class UpdateAccount:
                         except:
                             MenuHelper.WarnInvalidInput()
 
-                if terminateOperation:
-                    return True
+                    if terminateOperation:
+                        return True
 
                 # update last name
                 elif decision == 3:
@@ -86,14 +86,12 @@ class UpdateAccount:
                         except:
                             MenuHelper.WarnInvalidInput()
                 
-                if terminateOperation:
-                    return True
+                    if terminateOperation:
+                        return True
 
                 # terminate operation
                 elif decision == -1:
-                    return True
-
-                break     
+                    return True     
 
             except Exception as e:
                 MenuHelper.DisplayErrorException(exception=e, errorSource="UpdateAccount::UpdateApplicantAccount")
