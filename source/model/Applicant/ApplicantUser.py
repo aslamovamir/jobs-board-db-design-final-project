@@ -27,3 +27,13 @@ class ApplicantUser:
         self.Email = Email
         self.FirstName = FirstName
         self.LastName = LastName
+
+    
+    # custom constructor
+    def __init__(self, Username: str, Email: str, FirstName: str, LastName: str, DateRegistered: str, DateLastLogin: str) -> None:
+        self.Username = Username
+        self.Email = Email
+        self.FirstName = FirstName
+        self.LastName = LastName
+        self.DateRegistered = DateRegistered
+        self.DateLastLogin = DateLastLogin

@@ -2,6 +2,8 @@ from helpers.MenuHelper import MenuHelper
 from authentication.AuthenticationHelpers.AuthenticationHelper import AuthenticationHelper
 from database.ApplicantUserDBActions import ApplicantUserDBActions
 from database.CompanyUserDBActions import CompanyUserDBActions
+from model.Applicant.ApplicantUser import ApplicantUser
+from model.Applicant.ApplicantModelHelper import ApplicantModelHelper
 
 
 # class for Signin
@@ -93,6 +95,12 @@ class Signin:
                 if ApplicantUserDBActions.CheckExistsGivenUsernamePassword(username=username, password=password):
                     #TO-DO: create another method to return the user as an object from the database
                     print("USER EXISTS")
+                    loggedApplicantUser: ApplicantUser = ApplicantUserDBActions.ReturnApplicantUser(
+                        id=ApplicantModelHelper.CreateApplicantUserId(username=username, password=password)
+                    )
+                    print("IN LOGIN!")
+                    print(loggedApplicantUser.Username, loggedApplicantUser.Email, loggedApplicantUser.FirstName, 
+                    loggedApplicantUser.LastName, loggedApplicantUser.DateRegistered, loggedApplicantUser.DateLastLogin)
                     pass
                 else:
                     MenuHelper.InformFailureOperation()
@@ -161,8 +169,6 @@ class Signin:
             except Exception as e:
                 MenuHelper.DisplayErrorException(exception=e, errorSource="Signin::LoginCompanyUser::CheckExistsCompanyUser")
                 return
-            
-
 
         except Exception as e:
             MenuHelper.DisplayErrorException(exception=e, errorSource="Signin::LoginCompanyUser")
