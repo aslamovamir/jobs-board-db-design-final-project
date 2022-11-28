@@ -1,3 +1,5 @@
+from model.Applicant.ApplicantUser import ApplicantUser
+from model.Company.CompanyUser import CompanyUser
 
 
 # class for MenuHelper
@@ -69,3 +71,13 @@ class MenuHelper:
     # validates that input is not empty
     def ValidateEmptyInput(input: str) -> bool:
         return len(input) == 0
+    
+
+    # welcomes the applicant user
+    def WelcomeApplicantUser(loggedUser: ApplicantUser):
+        print(f"\nWelcome to your account, {loggedUser.Username}!\n")
+    
+
+    # welcomes the company user
+    def WelcomeCompanyUser(loggedUser: CompanyUser):
+        print(f"\nWelcome to your account, {loggedUser.Username}!\n")

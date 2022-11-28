@@ -6,6 +6,7 @@ from model.Applicant.ApplicantUser import ApplicantUser
 from model.Applicant.ApplicantModelHelper import ApplicantModelHelper
 from model.Company.CompanyUser import CompanyUser
 from model.Company.CompanyModelHelper import CompanyModelHelper
+from actions.DisplayAccountInfo import DisplayAccountInfo
 
 
 # class for Signin
@@ -180,3 +181,43 @@ class Signin:
         except Exception as e:
             MenuHelper.DisplayErrorException(exception=e, errorSource="Signin::LoginCompanyUser")
             return False
+
+    
+    # show menu options for the applicant user
+    def ShowMenuLoggedApplicantUser(loggedUser: ApplicantUser):
+        MenuHelper.DefineSectionBreak()
+        logoutSession: bool = False
+
+        # welcome logged user
+        MenuHelper.WelcomeApplicantUser(loggedUser=loggedUser)
+
+        # menu options
+        options: list[str] = ["Show your account information", "Update your profile", "Log out"]
+
+        while True:
+            try:
+                MenuHelper.RequestInput()
+                MenuHelper.DisplayMenuOptions(options=options)
+
+                # take in the menu option entered
+                decision: int = MenuHelper.InputOption()
+
+                # check the menu option selected and redirect the user correspondignly
+                if decision == 1:
+                    MenuHelper.DisplaySelectedOption(selectedOption=options[decision-1])
+                    DisplayAccountInfo.DisplayApplicantInfo(loggedUser=loggedUser)
+                    pass
+            
+                elif decision == 2:
+                    MenuHelper.DisplaySelectedOption(selectedOption=options[decision-1])
+                    pass
+                
+                elif decision == -1:
+                    MenuHelper.InformMenuQuit()
+                    break
+
+                else:
+                    MenuHelper.WarnInvalidInput()
+
+            except Exception as e:
+                MenuHelper.WarnInvalidInput()
