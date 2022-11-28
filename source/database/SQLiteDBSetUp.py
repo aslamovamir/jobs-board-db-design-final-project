@@ -48,7 +48,41 @@ class DatabaseSetUp:
 
     # method to create an SQL table for the ApplicantProfile entity
     def CreateApplicantProfileTable() -> bool:
-        pass
+        try:
+            # database connection object to the JobsBoard database
+            DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
+            # database cursor object to manipulate SQL queries
+            DatabaseCursor = DatabaseConnection.cursor()
+
+            # query to create a new table for the ApplicantProfile
+            DatabaseCursor.execute("""
+                CREATE TABLE ApplicantProfile (
+                    pk INTEGER PRIMARY KEY,
+                    ApplicantID TEXT,
+                    Title TEXT,
+                    About TEXT,
+                    Gender VARCHAR(50),
+                    Ethnicity VARCHAR(50),
+                    DisabilityStatus TEXT,
+                    Location TEXT,
+                    PhoneNumber VARCHAR(50),
+                    FOREIGN KEY(ApplicantID) REFERENCES ApplicantUser(ID)
+                );
+            """
+            )
+
+            # commit the query operation to the database
+            DatabaseConnection.commit()
+
+            # for safety, close the database connection
+            DatabaseConnection.close()
+
+            # return True as success confirmation
+            return True
+        
+        except Exception as e:
+            MenuHelper.DisplayErrorException(exception=e, errorSource="SQLiteDBSetUp::DatabaseSetUp::CreateApplicantProfileTable")
+            return False
 
 
     # method to create an SQL table for the CompanyUser entity
@@ -89,4 +123,40 @@ class DatabaseSetUp:
 
     # method to create an SQL table for the CompanyProfile entity
     def CreateCompanyProfileTable() -> bool:
-        pass
+        try:
+            # database connection object to the JobsBoard database
+            DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
+            # database cursor object to manipulate SQL queries
+            DatabaseCursor = DatabaseConnection.cursor()
+
+            # query to create a new table for the Company Profile
+            DatabaseCursor.execute("""
+                CREATE TABLE CompanyProfile (
+                    pk INTEGER PRIMARY KEY,
+                    CompanyID TEXT,
+                    About TEXT,
+                    Location TEXT,
+                    Industry TEXT,
+                    ServiceType VARCHAR(50),
+                    CompanyType VARCHAR(50),
+                    AnnualRevenue TEXT,
+                    EmployeeSize INTEGER,
+                    FoundationDate TEXT,
+                    InternationalHires INTEGER,
+                    FOREIGN KEY(CompanyID) REFERENCES CompanyUser(ID)
+                );
+            """
+            )
+
+            # commit the query operation to the database
+            DatabaseConnection.commit()
+
+            # for safety, close the database connection
+            DatabaseConnection.close()
+
+            # return True as success confirmation
+            return True
+        
+        except Exception as e:
+            MenuHelper.DisplayErrorException(exception=e, errorSource="SQLiteDBSetUp::DatabaseSetUp::CreateCompanyProfileTable")
+            return False
