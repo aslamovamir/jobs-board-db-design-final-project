@@ -10,7 +10,7 @@ class DisplayAccountInfo:
     def DisplayApplicantInfo(loggedUser: ApplicantUser):
         MenuHelper.DefineSectionBreak()
 
-        print("Your account information:")
+        print("Your account information:\n")
         print("Your username: ", loggedUser.Username)
         print("Your email: ", loggedUser.Email)
         print("Your first name: ", loggedUser.FirstName)
@@ -25,7 +25,7 @@ class DisplayAccountInfo:
     def DisplayCompanyInfo(loggedUser: CompanyUser):
         MenuHelper.DefineSectionBreak()
 
-        print("Company account information:")
+        print("Company account information:\n")
         print("Company username: ", loggedUser.Username)
         print("Company email: ", loggedUser.Email)
         print("Company name: ", loggedUser.CompanyName)

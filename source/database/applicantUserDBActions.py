@@ -98,6 +98,10 @@ class ApplicantUserDBActions:
             print('\nUser with this username and password does not exist.')
             return False
         else:
+            # if the user exists, we update the DateLastLogin to capture the time the user's account has been accessed
+            DatabaseCursor.execute("""UPDATE ApplicantUser SET DateLastLogin=CURRENT_TIMESTAMP WHERE ID = ?""", (id,))
+            # commit the query to the database
+            DatabaseConnection.commit()
             # for safety, close the database connection
             DatabaseConnection.close()
             return True

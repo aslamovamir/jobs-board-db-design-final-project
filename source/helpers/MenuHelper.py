@@ -80,4 +80,4 @@ class MenuHelper:
 
     # welcomes the company user
     def WelcomeCompanyUser(loggedUser: CompanyUser):
-        print(f"\nWelcome to your account, {loggedUser.Username}!\n")
+        print(f"\nWelcome to the company account, {loggedUser.Username}!\n")

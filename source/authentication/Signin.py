@@ -100,8 +100,7 @@ class Signin:
                         id=ApplicantModelHelper.CreateApplicantUserId(username=username, password=password)
                     )
                     
-                    # TO_DO: SWITCH TO THE MENU OPTIONS FOR LOGGED USERS
-                    pass
+                    Signin.ShowMenuLoggedApplicantUser(loggedUser=loggedApplicantUser)
 
                 else:
                     MenuHelper.InformFailureOperation()
@@ -165,11 +164,7 @@ class Signin:
                         id=CompanyModelHelper.CreateCompanyUserId(username=username, password=password)
                     )
                     
-                    print("HI!")
-                    print(loggedCompanyUser.Username, loggedCompanyUser.Email, loggedCompanyUser.CompanyName, loggedCompanyUser.DateRegistered, loggedCompanyUser.DateLastLogin)
-
-                    # TO_DO: SWITCH TO THE MENU OPTIONS FOR LOGGED USERS
-                    pass
+                    Signin.ShowMenuLoggedCompanyUser(loggedUser=loggedCompanyUser)
                 
                 else:
                     MenuHelper.InformFailureOperation()
@@ -212,6 +207,49 @@ class Signin:
                     MenuHelper.DisplaySelectedOption(selectedOption=options[decision-1])
                     pass
                 
+                # TO_DO: IMPLEMENT LOGOUT
+                elif decision == -1:
+                    MenuHelper.InformMenuQuit()
+                    break
+
+                else:
+                    MenuHelper.WarnInvalidInput()
+
+            except Exception as e:
+                MenuHelper.WarnInvalidInput()
+
+    
+    # show menu options for the company user
+    def ShowMenuLoggedCompanyUser(loggedUser: CompanyUser):
+        MenuHelper.DefineSectionBreak()
+        logoutSession: bool = False
+
+        # welcome logged user
+        MenuHelper.WelcomeCompanyUser(loggedUser=loggedUser)
+
+        # menu options
+        options: list[str] = ["Show company account information", "Update company profile", "Log out"]
+
+        while True:
+            try:
+                MenuHelper.RequestInput()
+                MenuHelper.DisplayMenuOptions(options=options)
+
+                # take in the menu option entered
+                decision: int = MenuHelper.InputOption()
+
+                # check the menu option selected and redirect the user correspondignly
+                if decision == 1:
+                    MenuHelper.DisplaySelectedOption(selectedOption=options[decision-1])
+                    DisplayAccountInfo.DisplayCompanyInfo(loggedUser=loggedUser)
+                    pass
+            
+                elif decision == 2:
+                    MenuHelper.DisplaySelectedOption(selectedOption=options[decision-1])
+                    pass
+                
+
+                # TO_DO: IMPLEMENT LOGOUT
                 elif decision == -1:
                     MenuHelper.InformMenuQuit()
                     break
