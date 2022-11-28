@@ -150,6 +150,7 @@ class CompanyUserDBActions:
 
             return CompanyUser(
                 Username=dictResult['Username'],
+                Password="",
                 Email=dictResult['Email'],
                 CompanyName=dictResult['CompanyName'],
                 DateRegistered=dictResult['DateRegistered'],

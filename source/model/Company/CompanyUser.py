@@ -18,17 +18,11 @@ class CompanyUser:
 
 
     # constructor
-    def __init__(self, Username: str, Password: str, Email: str, CompanyName: str) -> None:
+    def __init__(self, Username: str, Password: str, Email: str, CompanyName: str, 
+            DateRegistered: str, DateLastLogin: str) -> None:
         # we never statically store the password of the user for security purposes - 
         # instead, we hash password with username and pass to ID
         self.ID = CompanyModelHelper.CreateCompanyUserId(username=Username, password=Password)
-        self.Username = Username
-        self.Email = Email
-        self.CompanyName = CompanyName
-
-    
-    # custom constructor
-    def __init__(self, Username: str, Email: str, CompanyName: str, DateRegistered: str, DateLastLogin: str) -> None:
         self.Username = Username
         self.Email = Email
         self.CompanyName = CompanyName

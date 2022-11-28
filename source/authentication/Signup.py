@@ -156,7 +156,9 @@ class Signup:
                 Password=password,
                 Email=email,
                 FirstName=firstName,
-                LastName=lastName
+                LastName=lastName,
+                DateRegistered=None,
+                DateLastLogin=None
             )
 
             # now try to insert the new user object into the database
@@ -268,7 +270,9 @@ class Signup:
                 Username=username,
                 Password=password,
                 Email=email,
-                CompanyName=companyName
+                CompanyName=companyName,
+                DateRegistered=None,
+                DateLastLogin=None
             )
 
             # now try to insert the new user object into the database

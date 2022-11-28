@@ -19,18 +19,10 @@ class ApplicantUser:
 
 
     # constructor
-    def __init__(self, Username: str, Password: str, Email: str, FirstName: str, LastName: str) -> None:
+    def __init__(self, Username: str, Password: str, Email: str, FirstName: str, LastName: str, DateRegistered: str, DateLastLogin: str) -> None:
         # we never statically store the password of the user for security purposes - 
         # instead, we hash password with username and pass to ID
         self.ID = ApplicantModelHelper.CreateApplicantUserId(username=Username, password=Password)
-        self.Username = Username
-        self.Email = Email
-        self.FirstName = FirstName
-        self.LastName = LastName
-
-    
-    # custom constructor
-    def __init__(self, Username: str, Email: str, FirstName: str, LastName: str, DateRegistered: str, DateLastLogin: str) -> None:
         self.Username = Username
         self.Email = Email
         self.FirstName = FirstName

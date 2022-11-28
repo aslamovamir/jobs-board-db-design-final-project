@@ -150,6 +150,7 @@ class ApplicantUserDBActions:
 
             return ApplicantUser(
                 Username=dictResult['Username'],
+                Password="",
                 Email=dictResult['Email'],
                 FirstName=dictResult['FirstName'],
                 LastName=dictResult['LastName'],
