@@ -2,13 +2,14 @@ from model.Applicant.ApplicantUser import ApplicantUser
 from model.Company.CompanyUser import CompanyUser
 from helpers.MenuHelper import MenuHelper
 from authentication.AuthenticationHelpers.AuthenticationHelper import AuthenticationHelper
+from database.ApplicantUserDBActions import ApplicantUserDBActions
 
 
 # class for the UpdateAccount
 class UpdateAccount:
 
     # method to update the account of an applicant user
-    def UpdateApplicantAccount(loggedUser: ApplicantUser) -> bool:
+    def UpdateApplicantAccount(loggedUser: ApplicantUser) -> ApplicantUser:
         MenuHelper.DefineSectionBreak()
         terminateOperation: bool = False
 
@@ -70,7 +71,7 @@ class UpdateAccount:
                             MenuHelper.WarnInvalidInput()
 
                     if terminateOperation:
-                        return True
+                        break
 
                 # update last name
                 elif decision == 3:
@@ -90,7 +91,7 @@ class UpdateAccount:
                             MenuHelper.WarnInvalidInput()
                 
                     if terminateOperation:
-                        return True
+                        break
 
                 # terminate operation
                 elif decision == -1:
@@ -100,7 +101,7 @@ class UpdateAccount:
                 MenuHelper.DisplayErrorException(exception=e, errorSource="UpdateAccount::UpdateApplicantAccount")
 
         if terminateOperation:
-            return True
+            return loggedUser
  
         while True:
             try:
@@ -112,10 +113,21 @@ class UpdateAccount:
                 # ask for change confirmation
                 if MenuHelper.ConfirmChanges():
                     # To-DO: UPDATE THE USER's ACCOUNT PARAMETERS WITH THE DATABASE ACTION
-                    pass
+
+                    # manually change the attributes of the local variable as well
+                    loggedUser.Email = email
+                    loggedUser.FirstName = firstName
+                    loggedUser.LastName = lastName
+
+                    # now attempt to update the column values of the applicant user row in the database
+                    if ApplicantUserDBActions.UpdateAccountInfo(loggedUser=loggedUser):
+                        MenuHelper.InformSuccessOperation()
+                        return loggedUser
+                    else:
+                        raise Exception("\nFailure! Update of the applicant user account information failed when calling the database action method.\n")
                 else:
                     MenuHelper.InformMenuQuit()
-                    break
+                    return loggedUser
             except:
                 MenuHelper.WarnInvalidInput()
                 

@@ -183,9 +183,17 @@ class ApplicantUserDBActions:
             # database cursor object to manipulate SQL queries
             DatabaseCursor = DatabaseConnection.cursor()
 
+            print("\nBEFORE: ")
+            DatabaseCursor.execute("SELECT * FROM ApplicantUser WHERE Username = ?", (loggedUser.Username,))
+            print(DatabaseCursor.fetchall())
+
             DatabaseCursor.execute("""UPDATE ApplicantUser SET Email = ?, FirstName = ?, LastName = ? WHERE Username = ?;""", 
                 (loggedUser.Email, loggedUser.FirstName, loggedUser.LastName, loggedUser.Username,)
             )
+
+            print("\nAFTER: ")
+            DatabaseCursor.execute("SELECT * FROM ApplicantUser WHERE Username = ?", (loggedUser.Username,))
+            print(DatabaseCursor.fetchall())
 
             # commit the query operation to the database
             DatabaseConnection.commit()
