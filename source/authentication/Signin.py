@@ -4,6 +4,8 @@ from database.ApplicantUserDBActions import ApplicantUserDBActions
 from database.CompanyUserDBActions import CompanyUserDBActions
 from model.Applicant.ApplicantUser import ApplicantUser
 from model.Applicant.ApplicantModelHelper import ApplicantModelHelper
+from model.Company.CompanyUser import CompanyUser
+from model.Company.CompanyModelHelper import CompanyModelHelper
 
 
 # class for Signin
@@ -93,15 +95,13 @@ class Signin:
             # check the database if this user with the username and password exists
             try:
                 if ApplicantUserDBActions.CheckExistsGivenUsernamePassword(username=username, password=password):
-                    #TO-DO: create another method to return the user as an object from the database
-                    print("USER EXISTS")
                     loggedApplicantUser: ApplicantUser = ApplicantUserDBActions.ReturnApplicantUser(
                         id=ApplicantModelHelper.CreateApplicantUserId(username=username, password=password)
                     )
-                    print("IN LOGIN!")
-                    print(loggedApplicantUser.Username, loggedApplicantUser.Email, loggedApplicantUser.FirstName, 
-                    loggedApplicantUser.LastName, loggedApplicantUser.DateRegistered, loggedApplicantUser.DateLastLogin)
+                    
+                    # TO_DO: SWITCH TO THE MENU OPTIONS FOR LOGGED USERS
                     pass
+
                 else:
                     MenuHelper.InformFailureOperation()
                     return
@@ -160,9 +160,16 @@ class Signin:
             # check the database if this user with the username and password exists
             try:
                 if CompanyUserDBActions.CheckExistsGivenUsernamePassword(username=username, password=password):
-                    #TO-DO: create another method to return the user as an object from the database
-                    print("USER EXISTS")
+                    loggedCompanyUser: CompanyUser = CompanyUserDBActions.ReturnCompanyUser(
+                        id=CompanyModelHelper.CreateCompanyUserId(username=username, password=password)
+                    )
+                    
+                    print("HI!")
+                    print(loggedCompanyUser.Username, loggedCompanyUser.Email, loggedCompanyUser.CompanyName, loggedCompanyUser.DateRegistered, loggedCompanyUser.DateLastLogin)
+
+                    # TO_DO: SWITCH TO THE MENU OPTIONS FOR LOGGED USERS
                     pass
+                
                 else:
                     MenuHelper.InformFailureOperation()
                     return

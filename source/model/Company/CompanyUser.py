@@ -25,3 +25,12 @@ class CompanyUser:
         self.Username = Username
         self.Email = Email
         self.CompanyName = CompanyName
+
+    
+    # custom constructor
+    def __init__(self, Username: str, Email: str, CompanyName: str, DateRegistered: str, DateLastLogin: str) -> None:
+        self.Username = Username
+        self.Email = Email
+        self.CompanyName = CompanyName
+        self.DateRegistered = DateRegistered
+        self.DateLastLogin = DateLastLogin

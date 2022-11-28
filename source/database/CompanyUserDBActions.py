@@ -120,3 +120,36 @@ class CompanyUserDBActions:
             # for safety, close the database connection
             DatabaseConnection.close()
             return True
+
+    
+    # method to return the CompanyUser with the given id
+    def ReturnCompanyUser(id: str) -> CompanyUser:
+        # database connection object to the JobsBoard database
+        DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
+        # database cursor object to manipulate SQL queries
+        DatabaseCursor = DatabaseConnection.cursor()
+
+        # query
+        DatabaseCursor.execute("""SELECT * FROM CompanyUser WHERE ID = ?""", (id,))
+        # query results
+        records = DatabaseCursor.fetchall()
+
+        # for safety, close the database connection
+        DatabaseConnection.close()
+
+        if len(records) == 1:
+            # TO_DO: CREATE A DB METHOD TO UPDATE THE DATELASTLOGIN COLUMN FOR THE USER
+
+            # keys for the columns of the ApplicantUser table
+            keys: list() = ['pk', 'ID', 'Username', 'CompanyName', 'Email', 'DateRegistered', 'DateLastLogin']
+            dictResult: dict() = QueryHelper.ConvertTupleToDict(query=records, dictKeys=keys)[0]
+
+            return CompanyUser(
+                Username=dictResult['Username'],
+                Email=dictResult['Email'],
+                CompanyName=dictResult['CompanyName'],
+                DateRegistered=dictResult['DateRegistered'],
+                DateLastLogin=dictResult['DateLastLogin']
+            )
+        else:
+            raise Exception("\nError! There are applicant users with duplicate ID's.")
