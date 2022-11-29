@@ -10,7 +10,7 @@ class UpdateProfile:
 
 
     # method to update the profile of an applicant user:
-    def UpdateApplicantProfile(loggedUser: ApplicantUser) -> ApplicantProfile:
+    def UpdateApplicantProfile(loggedUser: ApplicantUser) -> bool:
 
         # if user has profile, initialie the new profile parameters with what the user originally had
         # first check if the user has profile
@@ -232,7 +232,19 @@ class UpdateProfile:
                 # ask for change confirmation
                 if MenuHelper.ConfirmChanges():
                     # TODO: send the local profile object and either add or update the profile row in the database
-                    pass
+                    if not userHasProfile:
+                        try:
+                            if ApplicantUserDBActions.InsertNewProfile(newProfile=newProfile):
+                                MenuHelper.InformSuccessOperation()
+                                return True
+                            else:
+                                MenuHelper.InformFailureOperation()
+                                return False
+                        except Exception as e:
+                            MenuHelper.DisplayErrorException(exception=e, errorSource="UpdateProfile::UpdateApplicantProfile::InsertNewProfile")
+                    else:
+                        # UNFINISHED!
+                        pass
                 else:
                     MenuHelper.InformMenuQuit()
                     # TODO: Return the original profile if the user had a profile

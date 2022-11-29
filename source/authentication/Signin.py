@@ -9,6 +9,7 @@ from model.Company.CompanyModelHelper import CompanyModelHelper
 from actions.DisplayAccountInfo import DisplayAccountInfo
 from actions.UpdateAccount import UpdateAccount
 from actions.UpdateProfile import UpdateProfile
+from actions.DisplayProfileInfo import DisplayProfileInfo
 
 
 # class for Signin
@@ -214,14 +215,13 @@ class Signin:
 
                 elif decision == 3:
                     MenuHelper.DisplaySelectedOption(selectedOption=options[decision-1])
-                    # TO DO: IMPLEMENT SHOW PROFILE INFORMATION ACTION METHOD
-                    pass
+                    DisplayProfileInfo.DisplayApplicantProfile(loggedUser=loggedUser)
                 
                 elif decision == 4:
                     MenuHelper.DisplaySelectedOption(selectedOption=options[decision-1])
                     UpdateProfile.UpdateApplicantProfile(loggedUser=loggedUser)
                 
-                # TO_DO: IMPLEMENT LOGOUT
+                # TODO: IMPLEMENT LOGOUT
                 elif decision == -1:
                     MenuHelper.InformMenuQuit()
                     break

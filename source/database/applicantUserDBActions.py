@@ -3,6 +3,7 @@ from database.QueryHelpers.QueryHelper import QueryHelper
 from helpers.MenuHelper import MenuHelper
 from model.Applicant.ApplicantUser import ApplicantUser
 from model.Applicant.ApplicantModelHelper import ApplicantModelHelper
+from model.Applicant.ApplicantProfile import ApplicantProfile
 from database.SQLiteDBSetUp import DatabaseSetUp
 
 
@@ -153,8 +154,6 @@ class ApplicantUserDBActions:
             DatabaseConnection.close()
 
             if len(records) == 1:
-                # TO_DO: CREATE A DB METHOD TO UPDATE THE DATELASTLOGIN COLUMN FOR THE USER
-
                 # keys for the columns of the ApplicantUser table
                 keys: list() = ['pk', 'ID', 'Username', 'Email', 'FirstName', 'LastName', 'DateRegistered', 'DateLastLogin']
                 dictResult: dict() = QueryHelper.ConvertTupleToDict(query=records, dictKeys=keys)[0]
@@ -262,3 +261,90 @@ class ApplicantUserDBActions:
 
         except Exception as e:
             MenuHelper.DisplayErrorException(exception=e, errorSource="ApplicantUserDBActions::ReturnIDUser")
+
+    
+    # method to insert a new row into the ApplicantProfile table
+    def InsertNewProfile(newProfile: ApplicantProfile) -> bool:
+        try:
+            # database connection object to the JobsBoard database
+            DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
+            # database cursor object to manipulate SQL queries
+            DatabaseCursor = DatabaseConnection.cursor()
+            # query
+            DatabaseCursor.execute("""INSERT INTO ApplicantProfile (
+                ApplicantID, 
+                Title, 
+                About, 
+                Gender, 
+                Ethnicity, 
+                DisabilityStatus,
+                Location,
+                PhoneNumber) VALUES (?, ?, ?, ?, ?, ?, ?, ?);""", (
+                    newProfile.ApplicantID,
+                    newProfile.Title,
+                    newProfile.About,
+                    newProfile.Gender,
+                    newProfile.Ethnicity,
+                    newProfile.DisabilityStatus,
+                    newProfile.Location,
+                    newProfile.PhoneNumber,
+                ))
+            
+            # commit the query operation to the database
+            DatabaseConnection.commit()
+
+            # for safety, close the database connection
+            DatabaseConnection.close()
+
+            # return True as success confirmation
+            return True
+
+        except Exception as e:
+            MenuHelper.DisplayErrorException(exception=e, errorSource="ApplicantUserDBActions::InsertNewProfile")
+
+    
+    # method to retrieve the row as ApplicantProfile object for a user
+    def RetrieveProfile(loggedUser: ApplicantUser) -> ApplicantProfile:
+        try:
+            # database connection object to the JobsBoard database
+            DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
+            # database cursor object to manipulate SQL queries
+            DatabaseCursor = DatabaseConnection.cursor()
+
+            # first fetch the ID of the logged user
+            try:
+                ID: str = ApplicantUserDBActions.ReturnIDUser(loggedUser.Username)
+            except Exception as e:
+                MenuHelper.DisplayErrorException(exception=e, errorSource="ApplicantUserDBActions::RetrieveProfile::ReturnIDUser")
+            
+            # now fetch the row
+            # query
+            DatabaseCursor.execute("""SELECT * FROM ApplicantProfile WHERE ApplicantID = ?;""", (ID,))
+            # query results
+            records = DatabaseCursor.fetchall()
+
+            # for safety, close the database connection
+            DatabaseConnection.close()
+
+            if len(records) == 1:
+                # keys for the columns of the ApplicantUser table
+                keys: list() = ['pk', 'ApplicantID', 'Title', 'About', 'Gender', 'Ethnicity', 
+                    'DisabilityStatus', 'Location', 'PhoneNumber']
+                dictResult: dict() = QueryHelper.ConvertTupleToDict(query=records, dictKeys=keys)[0]
+
+                return ApplicantProfile(
+                    ApplicantID=dictResult['ApplicantID'],
+                    Title=dictResult['Title'],
+                    About=dictResult['About'],
+                    Gender=dictResult['Gender'],
+                    Ethnicity=dictResult['Ethnicity'],
+                    DisabilityStatus=dictResult['DisabilityStatus'],
+                    Location=dictResult['Location'],
+                    PhoneNumber=dictResult['PhoneNumber']
+                )
+            else:
+                raise Exception("\nError! There are applicant profiles with duplicate ApplicantID's.")
+
+
+        except Exception as e:
+            MenuHelper.DisplayErrorException(exception=e, errorSource="ApplicantUserDBActions::RetrieveProfile")
