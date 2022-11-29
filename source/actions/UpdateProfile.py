@@ -40,7 +40,6 @@ class UpdateProfile:
             pass
         
         MenuHelper.DefineSectionBreak()
-        terminateOperation: bool = False
 
          # entry
         print("\nPlease indicate what you would like to update in your account.")
@@ -62,10 +61,10 @@ class UpdateProfile:
                     while True:
                         try:
                             print("\nPlease enter a new title")
-                            newProfile.Title = MenuHelper.InputStream()
-                            if newProfile.Title == "-1":
-                                terminateOperation = True
+                            input = MenuHelper.InputStream()
+                            if input == "-1":
                                 break
+                            newProfile.Title = input
                             if MenuHelper.ValidateEmptyInput(input=newProfile.Title):
                                 MenuHelper.WarnInvalidInput()
                                 continue
@@ -73,19 +72,16 @@ class UpdateProfile:
                             break
                         except:
                             MenuHelper.WarnInvalidInput()
-                    
-                    if terminateOperation:
-                        break
 
                 # update about
                 elif decision == 2:
                     while True:
                         try:
                             print("\nPlease enter a new about section")
-                            newProfile.About = MenuHelper.InputStream()
-                            if newProfile.About == "-1":
-                                terminateOperation = True
+                            input = MenuHelper.InputStream()
+                            if input == "-1":
                                 break
+                            newProfile.About = input
                             if MenuHelper.ValidateEmptyInput(input=newProfile.About):
                                 MenuHelper.WarnInvalidInput()
                                 continue
@@ -93,19 +89,16 @@ class UpdateProfile:
                             break
                         except:
                             MenuHelper.WarnInvalidInput()
-                    
-                    if terminateOperation:
-                        break
                 
                 # update gender
                 elif decision == 3:
                     while True:
                         try:
                             print("\nPlease enter a new gender")
-                            newProfile.Gender = MenuHelper.InputStream()
-                            if newProfile.Gender == "-1":
-                                terminateOperation = True
+                            input = MenuHelper.InputStream()
+                            if input == "-1":
                                 break
+                            newProfile.Gender = input
                             if MenuHelper.ValidateEmptyInput(input=newProfile.Gender):
                                 MenuHelper.WarnInvalidInput()
                                 continue
@@ -113,19 +106,16 @@ class UpdateProfile:
                             break
                         except:
                             MenuHelper.WarnInvalidInput()
-                    
-                    if terminateOperation:
-                        break
-
+                
                 # update ethnicity
                 elif decision == 4:
                     while True:
                         try:
                             print("\nPlease enter a new ethnicity")
-                            newProfile.Ethnicity = MenuHelper.InputStream()
-                            if newProfile.Ethnicity == "-1":
-                                terminateOperation = True
+                            input = MenuHelper.InputStream()
+                            if input == "-1":
                                 break
+                            newProfile.Ethnicity = input
                             if MenuHelper.ValidateEmptyInput(input=newProfile.Ethnicity):
                                 MenuHelper.WarnInvalidInput()
                                 continue
@@ -133,19 +123,16 @@ class UpdateProfile:
                             break
                         except:
                             MenuHelper.WarnInvalidInput()
-                    
-                    if terminateOperation:
-                        break
                 
                 # update disability status
                 elif decision == 5:
                     while True:
                         try:
                             print("\nPlease enter a new disability status")
-                            newProfile.DisabilityStatus = MenuHelper.InputStream()
-                            if newProfile.DisabilityStatus == "-1":
-                                terminateOperation = True
+                            input = MenuHelper.InputStream()
+                            if input == "-1":
                                 break
+                            newProfile.DisabilityStatus = input
                             if MenuHelper.ValidateEmptyInput(input=newProfile.DisabilityStatus):
                                 MenuHelper.WarnInvalidInput()
                                 continue
@@ -154,18 +141,15 @@ class UpdateProfile:
                         except:
                             MenuHelper.WarnInvalidInput()
                     
-                    if terminateOperation:
-                        break
-                
                 # update location
                 elif decision == 6:
                     while True:
                         try:
                             print("\nPlease enter a new location")
-                            newProfile.Location = MenuHelper.InputStream()
-                            if newProfile.Location == "-1":
-                                terminateOperation = True
+                            input = MenuHelper.InputStream()
+                            if input == "-1":
                                 break
+                            newProfile.Location = input
                             if MenuHelper.ValidateEmptyInput(input=newProfile.Location):
                                 MenuHelper.WarnInvalidInput()
                                 continue
@@ -173,19 +157,16 @@ class UpdateProfile:
                             break
                         except:
                             MenuHelper.WarnInvalidInput()
-                    
-                    if terminateOperation:
-                        break
                 
                 # update phone number
                 elif decision == 7:
                     while True:
                         try:
                             print("\nPlease enter a new phone number")
-                            newProfile.PhoneNumber = MenuHelper.InputStream()
-                            if newProfile.PhoneNumber == "-1":
-                                terminateOperation = True
+                            input = MenuHelper.InputStream()
+                            if input == "-1":
                                 break
+                            newProfile.PhoneNumber = input
                             if MenuHelper.ValidateEmptyInput(input=newProfile.PhoneNumber):
                                 MenuHelper.WarnInvalidInput()
                                 continue
@@ -194,9 +175,6 @@ class UpdateProfile:
                         except:
                             MenuHelper.WarnInvalidInput()
                     
-                    if terminateOperation:
-                        break
-
                 # update education
                 elif decision == 8:
                     while True:
@@ -205,7 +183,6 @@ class UpdateProfile:
                             # print("\nPlease enter a new education")
                             # ethnicity = MenuHelper.InputStream()
                             # if ethnicity == "-1":
-                            #     terminateOperation = True
                             #     break
                             # if MenuHelper.ValidateEmptyInput(input=ethnicity):
                             #     MenuHelper.WarnInvalidInput()
@@ -215,9 +192,6 @@ class UpdateProfile:
                             pass
                         except:
                             MenuHelper.WarnInvalidInput()
-                    
-                    if terminateOperation:
-                        break
 
                 # update experience
                 elif decision == 9:
@@ -227,7 +201,6 @@ class UpdateProfile:
                             # print("\nPlease enter a new ethnicity")
                             # ethnicity = MenuHelper.InputStream()
                             # if ethnicity == "-1":
-                            #     terminateOperation = True
                             #     break
                             # if MenuHelper.ValidateEmptyInput(input=ethnicity):
                             #     MenuHelper.WarnInvalidInput()
@@ -237,30 +210,12 @@ class UpdateProfile:
                             pass
                         except:
                             MenuHelper.WarnInvalidInput()
-                    
-                    if terminateOperation:
-                        break
                 
                 elif decision == -1:
-                    terminateOperation = True
                     break
             
             except Exception as e:
                 MenuHelper.WarnInvalidInput()
-            
-            if terminateOperation:
-                if userHasProfile:
-                    # TODO: RETURN THE APPLICANT PROFILE CREATED FROM DB ACTION
-                    pass
-                else:
-                    return None
-
-        if terminateOperation:
-            if userHasProfile:
-                # TODO: RETURN THE APPLICANT PROFILE CREATED FROM DB ACTION
-                pass
-            else:
-                return None
         
         while True:
             try:

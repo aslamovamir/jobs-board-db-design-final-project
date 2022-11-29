@@ -12,7 +12,6 @@ class UpdateAccount:
     # method to update the account of an applicant user
     def UpdateApplicantAccount(loggedUser: ApplicantUser) -> ApplicantUser:
         MenuHelper.DefineSectionBreak()
-        terminateOperation: bool = False
 
         # entry
         print("\nPlease indicate what you would like to update in your account.")
@@ -39,10 +38,10 @@ class UpdateAccount:
                     while True:
                         try:
                             print("\nPlease enter a new email address")
-                            email = MenuHelper.InputStream()
-                            if email == "-1":
-                                terminateOperation = True
+                            input = MenuHelper.InputStream()
+                            if input == "-1":
                                 break
+                            email = input
                             if not AuthenticationHelper.ValidateEmail(email=email):
                                 MenuHelper.WarnInvalidInput()
                                 continue
@@ -51,18 +50,15 @@ class UpdateAccount:
                         except:
                             MenuHelper.WarnInvalidInput()
 
-                    if terminateOperation:
-                        break
-
                 # update first name
                 elif decision == 2:
                     while True:
                         try:
                             print("\nPlease enter a new first name")
-                            firstName = MenuHelper.InputStream()
-                            if firstName == "-1":
-                                terminateOperation = True
+                            input = MenuHelper.InputStream()
+                            if input == "-1":
                                 break
+                            firstName = input
                             if MenuHelper.ValidateEmptyInput(input=firstName):
                                 MenuHelper.WarnInvalidInput()
                                 continue
@@ -71,18 +67,15 @@ class UpdateAccount:
                         except:
                             MenuHelper.WarnInvalidInput()
 
-                    if terminateOperation:
-                        break
-
                 # update last name
                 elif decision == 3:
                     while True:
                         try:
                             print("\nPlease enter a new last name")
-                            lastName = MenuHelper.InputStream()
-                            if lastName == "-1":
-                                terminateOperation = True
+                            input= MenuHelper.InputStream()
+                            if input == "-1":
                                 break
+                            lastName = input
                             if MenuHelper.ValidateEmptyInput(input=lastName):
                                 MenuHelper.WarnInvalidInput()
                                 continue
@@ -90,20 +83,14 @@ class UpdateAccount:
                             break
                         except:
                             MenuHelper.WarnInvalidInput()
-                
-                    if terminateOperation:
-                        break
 
                 # terminate operation
                 elif decision == -1:
-                    terminateOperation = True
+                    # terminateOperation = True
                     break   
 
             except:
                 MenuHelper.WarnInvalidInput()
-
-        if terminateOperation:
-            return loggedUser
  
         while True:
             try:
@@ -135,7 +122,6 @@ class UpdateAccount:
     # method to update the account of a company user
     def UpdateCompanyUser(loggedUser: CompanyUser) -> bool:
         MenuHelper.DefineSectionBreak()
-        terminateOperation: bool = False
 
         # entry
         print("\nPlease indicate what you would like to update in the company account.")
@@ -160,10 +146,10 @@ class UpdateAccount:
                     while True:
                         try:
                             print("\nPlease enter a new email address")
-                            email = MenuHelper.InputStream()
-                            if email == "-1":
-                                terminateOperation = True
+                            input = MenuHelper.InputStream()
+                            if input == "-1":
                                 break
+                            email = input
                             if not AuthenticationHelper.ValidateEmail(email=email):
                                 MenuHelper.WarnInvalidInput()
                                 continue
@@ -172,18 +158,15 @@ class UpdateAccount:
                         except:
                             MenuHelper.WarnInvalidInput()
 
-                    if terminateOperation:
-                        break
-
                 # update company name
                 elif decision == 2:
                     while True:
                         try:
                             print("\nPlease enter a new company name")
-                            companyName = MenuHelper.InputStream()
-                            if companyName == "-1":
-                                terminateOperation = True
+                            input = MenuHelper.InputStream()
+                            if input == "-1":
                                 break
+                            companyName = input
                             if MenuHelper.ValidateEmptyInput(input=companyName):
                                 MenuHelper.WarnInvalidInput()
                                 continue
@@ -192,18 +175,12 @@ class UpdateAccount:
                         except:
                             MenuHelper.WarnInvalidInput()
 
-                    if terminateOperation:
-                        break
-
                 # terminate operation
                 elif decision == -1:
                     break   
 
             except Exception as e:
                 MenuHelper.DisplayErrorException(exception=e, errorSource="UpdateAccount::UpdateCompanyAccount")
-
-        if terminateOperation:
-            return loggedUser
  
         while True:
             try:
