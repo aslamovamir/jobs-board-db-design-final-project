@@ -160,3 +160,40 @@ class DatabaseSetUp:
         except Exception as e:
             MenuHelper.DisplayErrorException(exception=e, errorSource="SQLiteDBSetUp::DatabaseSetUp::CreateCompanyProfileTable")
             return False
+
+    
+    # method to create an SQL table for the JobPosting entity
+    def CreateJobPostingTable() -> bool:
+        try:
+            # database connection object to the JobsBoard database
+            DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
+            # database cursor object to manipulate SQL queries
+            DatabaseCursor = DatabaseConnection.cursor()
+
+            # query to create a new table for the Company Profile
+            DatabaseCursor.execute("""
+                CREATE TABLE JobPosting (
+                    pk INTEGER PRIMARY KEY,
+                    CompanyID TEXT,
+                    PositionName VARCHAR(50),
+                    Pay VARCHAR(50),
+                    Location TEXT,
+                    Description TEXT,
+                    Department VARCHAR(50),
+                    FOREIGN KEY(CompanyID) REFERENCES CompanyUser(ID)
+                );
+            """
+            )
+
+            # commit the query operation to the database
+            DatabaseConnection.commit()
+
+            # for safety, close the database connection
+            DatabaseConnection.close()
+
+            # return True as success confirmation
+            return True
+        
+        except Exception as e:
+            MenuHelper.DisplayErrorException(exception=e, errorSource="SQLiteDBSetUp::DatabaseSetUp::CreateJobPostingTable")
+            return False
