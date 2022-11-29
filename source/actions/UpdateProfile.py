@@ -44,7 +44,7 @@ class UpdateProfile:
 
         # menu options
         options: list[str] = ["Title", "About", "Gender", "Ethnicity", "Disability Status",
-            "Location", "Phone Number", "Education", "Experience"]
+            "Location", "Phone Number"]
 
         while True:
             try:
@@ -172,42 +172,6 @@ class UpdateProfile:
                             break
                         except:
                             MenuHelper.WarnInvalidInput()
-                    
-                # update education
-                elif decision == 8:
-                    while True:
-                        try:
-                            # TODO: MODIFY THE EDUCAION LIST SECTION INPUT CHANGE
-                            # print("\nPlease enter a new education")
-                            # ethnicity = MenuHelper.InputStream()
-                            # if ethnicity == "-1":
-                            #     break
-                            # if MenuHelper.ValidateEmptyInput(input=ethnicity):
-                            #     MenuHelper.WarnInvalidInput()
-                            #     continue
-                            # print("Success! Your ethnicity changed to: ", ethnicity)
-                            # break
-                            pass
-                        except:
-                            MenuHelper.WarnInvalidInput()
-
-                # update experience
-                elif decision == 9:
-                    while True:
-                        try:
-                            # TODO: MODIFY THE EXPERIENCE LIST SECTION INPUT CHANGE
-                            # print("\nPlease enter a new ethnicity")
-                            # ethnicity = MenuHelper.InputStream()
-                            # if ethnicity == "-1":
-                            #     break
-                            # if MenuHelper.ValidateEmptyInput(input=ethnicity):
-                            #     MenuHelper.WarnInvalidInput()
-                            #     continue
-                            # print("Success! Your ethnicity changed to: ", ethnicity)
-                            # break
-                            pass
-                        except:
-                            MenuHelper.WarnInvalidInput()
                 
                 elif decision == -1:
                     break
@@ -225,11 +189,10 @@ class UpdateProfile:
                 print("Disability Status: ", newProfile.DisabilityStatus)
                 print("Location: ", newProfile.Location)
                 print("Phone Number: ", newProfile.PhoneNumber)
-                # TODO: PRINT EDUCATION AND EXPERIENCE LIST
 
                 # ask for change confirmation
                 if MenuHelper.ConfirmChanges():
-                    # TODO: send the local profile object and either add or update the profile row in the database
+                    # send the local profile object and either add or update the profile row in the database
                     if not userHasProfile:
                         try:
                             if ApplicantUserDBActions.InsertNewProfile(newProfile=newProfile):
