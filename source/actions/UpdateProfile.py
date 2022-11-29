@@ -18,29 +18,27 @@ class UpdateProfile:
         try:
             if ApplicantUserDBActions.CheckUserHasProfile(loggedUser=loggedUser):
                 userHasProfile = True
-                print("\nUSER HAS A PROFILE IN THE DB!\n")
         except Exception as e:
             MenuHelper.DisplayErrorException(exception=e, errorSource="UpdateProfile::UpdateApplicantProfile::ApplicantUserDBActions::CheckUserHasProfile")
 
-        # default initial profile object with parameters initialized to None
-        newProfile: ApplicantProfile = ApplicantProfile(
-            ApplicantID=ApplicantUserDBActions.ReturnIDUser(username=loggedUser.Username),
-            Title=None,
-            About=None,
-            Gender=None,
-            Ethnicity=None,
-            DisabilityStatus=None,
-            Location=None,
-            PhoneNumber=None
-        )
 
         if userHasProfile:
             # if the user already has a profile, we fetch the origingal profile
-            # orginalProfile: ApplicantProfile = FINISH!
-            pass
+            newProfile: ApplicantProfile = ApplicantUserDBActions.RetrieveProfile(loggedUser=loggedUser)
+        else:
+            # default initial profile object with parameters initialized to None
+            newProfile: ApplicantProfile = ApplicantProfile(
+                ApplicantID=ApplicantUserDBActions.ReturnIDUser(username=loggedUser.Username),
+                Title=None,
+                About=None,
+                Gender=None,
+                Ethnicity=None,
+                DisabilityStatus=None,
+                Location=None,
+                PhoneNumber=None
+            )
         
         MenuHelper.DefineSectionBreak()
-
          # entry
         print("\nPlease indicate what you would like to update in your account.")
 
@@ -243,13 +241,18 @@ class UpdateProfile:
                         except Exception as e:
                             MenuHelper.DisplayErrorException(exception=e, errorSource="UpdateProfile::UpdateApplicantProfile::InsertNewProfile")
                     else:
-                        # UNFINISHED!
-                        pass
+                        try:
+                            if ApplicantUserDBActions.UpdateProfile(newProfile=newProfile):
+                                MenuHelper.InformSuccessOperation()
+                                return True
+                            else:
+                                MenuHelper.InformFailureOperation()
+                                return False
+                        except Exception as e:
+                            MenuHelper.DisplayErrorException(exception=e, errorSource="UpdateProfile::UpdateApplicantProfile::UpdateProfile")
                 else:
                     MenuHelper.InformMenuQuit()
-                    # TODO: Return the original profile if the user had a profile
-                    # otherwise, return None
-                    pass
+                    return True
 
             except:
                 MenuHelper.WarnInvalidInput()

@@ -218,12 +218,9 @@ class ApplicantUserDBActions:
             if len(queryResult) == 0:
                 return False
             else:
-                print("HERE!")
-                print("QUERY RESULT: ", queryResult[0][0])
                 # now check if there is a row with the given ID in the ApplicantProfile table
                 DatabaseCursor.execute("""SELECT * FROM ApplicantProfile WHERE ApplicantID = ?""", (queryResult[0][0],))
                 queryResult = DatabaseCursor.fetchall()
-                print("RESULT: ", queryResult)
 
                 # for safety, close the database connection
                 DatabaseConnection.close()
@@ -348,3 +345,30 @@ class ApplicantUserDBActions:
 
         except Exception as e:
             MenuHelper.DisplayErrorException(exception=e, errorSource="ApplicantUserDBActions::RetrieveProfile")
+
+    
+    # method to update profile of an applicant user
+    def UpdateProfile(newProfile: ApplicantProfile) -> bool:
+        try:
+            # database connection object to the JobsBoard database
+            DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
+            # database cursor object to manipulate SQL queries
+            DatabaseCursor = DatabaseConnection.cursor()
+
+            DatabaseCursor.execute("""UPDATE ApplicantProfile SET Title = ?, About = ?, Gender = ?, 
+                Ethnicity = ?, DisabilityStatus = ?, Location = ?, PhoneNumber = ? WHERE ApplicantID = ?;""", 
+                (newProfile.Title, newProfile.About, newProfile.Gender, newProfile.Ethnicity, newProfile.DisabilityStatus,
+                    newProfile.Location, newProfile.PhoneNumber, newProfile.ApplicantID,)
+            )
+
+            # commit the query operation to the database
+            DatabaseConnection.commit()
+
+            # for safety, close the database connection
+            DatabaseConnection.close()
+
+            # return True as success confirmation
+            return True
+            
+        except Exception as e:
+            MenuHelper.DisplayErrorException(exception=e, errorSource="ApplicantUserDBActions::UpdateProfile")
