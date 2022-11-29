@@ -18,29 +18,20 @@ class UpdateProfile:
         try:
             if ApplicantUserDBActions.CheckUserHasProfile(loggedUser=loggedUser):
                 userHasProfile = True
+                print("\nUSER HAS A PROFILE IN THE DB!\n")
         except Exception as e:
             MenuHelper.DisplayErrorException(exception=e, errorSource="UpdateProfile::UpdateApplicantProfile::ApplicantUserDBActions::CheckUserHasProfile")
-
-        title: str = None
-        about: str = None
-        gender: str = None
-        ethnicity: str = None
-        disabilityStatus: str = None
-        location: str = None
-        phoneNumber: str = None
-        educationList: list[Education] = None
-        experienceList: list[Experience] = None
 
         # default initial profile object with parameters initialized to None
         newProfile: ApplicantProfile = ApplicantProfile(
             ApplicantID=ApplicantUserDBActions.ReturnIDUser(username=loggedUser.Username),
-            Title=title,
-            About=about,
-            Gender=gender,
-            Ethnicity=ethnicity,
-            DisabilityStatus=disabilityStatus,
-            Location=location,
-            PhoneNumber=phoneNumber
+            Title=None,
+            About=None,
+            Gender=None,
+            Ethnicity=None,
+            DisabilityStatus=None,
+            Location=None,
+            PhoneNumber=None
         )
 
         if userHasProfile:
@@ -72,7 +63,7 @@ class UpdateProfile:
                         try:
                             print("\nPlease enter a new title")
                             newProfile.Title = MenuHelper.InputStream()
-                            if newProfile.title == "-1":
+                            if newProfile.Title == "-1":
                                 terminateOperation = True
                                 break
                             if MenuHelper.ValidateEmptyInput(input=newProfile.Title):
@@ -92,7 +83,7 @@ class UpdateProfile:
                         try:
                             print("\nPlease enter a new about section")
                             newProfile.About = MenuHelper.InputStream()
-                            if about == "-1":
+                            if newProfile.About == "-1":
                                 terminateOperation = True
                                 break
                             if MenuHelper.ValidateEmptyInput(input=newProfile.About):
@@ -112,7 +103,7 @@ class UpdateProfile:
                         try:
                             print("\nPlease enter a new gender")
                             newProfile.Gender = MenuHelper.InputStream()
-                            if gender == "-1":
+                            if newProfile.Gender == "-1":
                                 terminateOperation = True
                                 break
                             if MenuHelper.ValidateEmptyInput(input=newProfile.Gender):
@@ -132,7 +123,7 @@ class UpdateProfile:
                         try:
                             print("\nPlease enter a new ethnicity")
                             newProfile.Ethnicity = MenuHelper.InputStream()
-                            if ethnicity == "-1":
+                            if newProfile.Ethnicity == "-1":
                                 terminateOperation = True
                                 break
                             if MenuHelper.ValidateEmptyInput(input=newProfile.Ethnicity):
@@ -152,7 +143,7 @@ class UpdateProfile:
                         try:
                             print("\nPlease enter a new disability status")
                             newProfile.DisabilityStatus = MenuHelper.InputStream()
-                            if disabilityStatus == "-1":
+                            if newProfile.DisabilityStatus == "-1":
                                 terminateOperation = True
                                 break
                             if MenuHelper.ValidateEmptyInput(input=newProfile.DisabilityStatus):
@@ -172,7 +163,7 @@ class UpdateProfile:
                         try:
                             print("\nPlease enter a new location")
                             newProfile.Location = MenuHelper.InputStream()
-                            if location == "-1":
+                            if newProfile.Location == "-1":
                                 terminateOperation = True
                                 break
                             if MenuHelper.ValidateEmptyInput(input=newProfile.Location):
@@ -192,7 +183,7 @@ class UpdateProfile:
                         try:
                             print("\nPlease enter a new phone number")
                             newProfile.PhoneNumber = MenuHelper.InputStream()
-                            if phoneNumber == "-1":
+                            if newProfile.PhoneNumber == "-1":
                                 terminateOperation = True
                                 break
                             if MenuHelper.ValidateEmptyInput(input=newProfile.PhoneNumber):
@@ -256,6 +247,13 @@ class UpdateProfile:
             
             except Exception as e:
                 MenuHelper.WarnInvalidInput()
+            
+            if terminateOperation:
+                if userHasProfile:
+                    # TODO: RETURN THE APPLICANT PROFILE CREATED FROM DB ACTION
+                    pass
+                else:
+                    return None
 
         if terminateOperation:
             if userHasProfile:
