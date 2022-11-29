@@ -174,6 +174,7 @@ class DatabaseSetUp:
             DatabaseCursor.execute("""
                 CREATE TABLE JobPosting (
                     pk INTEGER PRIMARY KEY,
+                    ID TEXT,
                     CompanyID TEXT,
                     PositionName VARCHAR(50),
                     Pay VARCHAR(50),
