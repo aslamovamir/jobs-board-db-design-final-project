@@ -347,7 +347,7 @@ class CompanyUserDBActions:
             DatabaseCursor = DatabaseConnection.cursor()
 
             DatabaseCursor.execute("""UPDATE CompanyProfile SET About = ?, Location = ?, Industry = ?, ServiceType = ?, CompanyType = ?,
-                AnnualRevenue = ?, EmployeeSize = ? FoundationDate = ? InternationalHires = ? WHERE CompanyID = ?;""", 
+                AnnualRevenue = ?, EmployeeSize = ?, FoundationDate = ?, InternationalHires = ? WHERE CompanyID = ?;""", 
                 (newProfile.About, newProfile.Location, newProfile.Industry, newProfile.ServiceType, newProfile.CompanyType, newProfile.AnnualRevenue, 
                     newProfile.EmployeeSize, newProfile.FoundationDate, newProfile.InternationalHires, newProfile.CompanyID,)
             )
