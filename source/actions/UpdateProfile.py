@@ -268,7 +268,7 @@ class UpdateProfile:
 
                 # take in the menu option entered
                 decision: int = MenuHelper.InputOption()
-                
+
                 # update about
                 if decision == 1:
                     while True:
@@ -431,31 +431,39 @@ class UpdateProfile:
         while True:
             try:
                 print("\nThis is the company's new profile information: ")
-                # TODO: FINISH!
+                print("About: ", newProfile.About)
+                print("Location: ", newProfile.Location)
+                print("Industry: ", newProfile.Industry)
+                print("Service Type: ", newProfile.ServiceType)
+                print("Company Type: ", newProfile.CompanyType)
+                print("Annual Revenue: ", newProfile.AnnualRevenue)
+                print("Employee Size: ", newProfile.EmployeeSize)
+                print("Foundation Date: ", newProfile.FoundationDate)
+                print("International Hires: ", newProfile.InternationalHires)
 
                 # ask for change confirmation
                 if MenuHelper.ConfirmChanges():
                     # send the local profile object and either add or update the profile row in the database
                     if not userHasProfile:
                         try:
-                            if ApplicantUserDBActions.InsertNewProfile(newProfile=newProfile):
+                            if CompanyUserDBActions.InsertNewProfile(newProfile=newProfile):
                                 MenuHelper.InformSuccessOperation()
                                 return True
                             else:
                                 MenuHelper.InformFailureOperation()
                                 return False
                         except Exception as e:
-                            MenuHelper.DisplayErrorException(exception=e, errorSource="UpdateProfile::UpdateApplicantProfile::InsertNewProfile")
+                            MenuHelper.DisplayErrorException(exception=e, errorSource="UpdateProfile::UpdateCompanyProfile::InsertNewProfile")
                     else:
                         try:
-                            if ApplicantUserDBActions.UpdateProfile(newProfile=newProfile):
+                            if CompanyUserDBActions.UpdateProfile(newProfile=newProfile):
                                 MenuHelper.InformSuccessOperation()
                                 return True
                             else:
                                 MenuHelper.InformFailureOperation()
                                 return False
                         except Exception as e:
-                            MenuHelper.DisplayErrorException(exception=e, errorSource="UpdateProfile::UpdateApplicantProfile::UpdateProfile")
+                            MenuHelper.DisplayErrorException(exception=e, errorSource="UpdateProfile::UpdateCompanyProfile::UpdateProfile")
                 else:
                     MenuHelper.InformMenuQuit()
                     return True

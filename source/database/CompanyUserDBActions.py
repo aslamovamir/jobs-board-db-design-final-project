@@ -246,7 +246,7 @@ class CompanyUserDBActions:
             MenuHelper.DisplayErrorException(exception=e, errorSource="CompanyUserDBActions::ReturnIDUser")
 
     
-    # method to insert a new row into the ApplicantProfile table
+    # method to insert a new row into the Company Profile table
     def InsertNewProfile(newProfile: CompanyProfile) -> bool:
         try:
             # database connection object to the JobsBoard database
