@@ -1,15 +1,4 @@
 from dataclasses import dataclass, field
-from datetime import datetime
-
-
-
-# class for Product
-@dataclass
-class Product:
-    ProductName: str
-    About: str
-    MarketPrice: str
-    ApplicationUse: str
 
 
 # Company profile entity
@@ -25,7 +14,6 @@ class CompanyProfile:
     EmployeeSize: str
     FoundationDate: str
     InternationalHires: str
-    Products: list[Product] = field(default_factory=list)
 
 
     # construtor
