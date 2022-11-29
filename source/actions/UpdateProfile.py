@@ -182,7 +182,7 @@ class UpdateProfile:
         
         while True:
             try:
-                print("\nThis is your new profile information: ")
+                print("\nThis is your new profile information:")
                 print("Title: ", newProfile.Title)
                 print("About: ", newProfile.About)
                 print("Gender: ", newProfile.Gender)

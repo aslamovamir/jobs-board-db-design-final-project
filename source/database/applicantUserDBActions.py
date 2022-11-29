@@ -12,7 +12,6 @@ class ApplicantUserDBActions:
     # method to execute an SQL query to insert a new Applicant User row into the ApplicantUser table
     def InsertNewApplicantUser(applicantUser: ApplicantUser) -> bool:
         try:
-
             # database connection object to the JobsBoard database
             DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
             # database cursor object to manipulate SQL queries
