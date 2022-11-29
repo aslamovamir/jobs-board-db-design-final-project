@@ -241,7 +241,7 @@ class UpdateProfile:
         else:
             # default initial profile object with parameters initialized to None
             newProfile: CompanyProfile = CompanyProfile(
-                CompanyID=ApplicantUserDBActions.ReturnIDUser(username=loggedUser.Username),
+                CompanyID=CompanyUserDBActions.ReturnIDUser(username=loggedUser.Username),
                 About=None,
                 Location=None,
                 Industry=None,
