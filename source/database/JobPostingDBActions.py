@@ -30,7 +30,7 @@ class JobPostingDBActions:
                 Location,
                 Description,
                 Department
-                ) VALUES (?, ?, ?, ?, ?, ?);""", (
+                ) VALUES (?, ?, ?, ?, ?, ?, ?);""", (
                     newJobPosting.ID,
                     newJobPosting.CompanyID,
                     newJobPosting.PositionName,
