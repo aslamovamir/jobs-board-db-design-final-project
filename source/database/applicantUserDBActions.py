@@ -174,7 +174,7 @@ class ApplicantUserDBActions:
             MenuHelper.DisplayErrorException(exception=e, errorSource="ApplicantUserDBActions::ReturnApplicantUser")
             return False
 
-    
+
     # method to update account information of an applicant user
     def UpdateAccountInfo(loggedUser: ApplicantUser) -> bool:
         try:
@@ -199,3 +199,60 @@ class ApplicantUserDBActions:
         except Exception as e:
             MenuHelper.DisplayErrorException(exception=e, errorSource="ApplicantUserDBActions::UpdateAccountInfo")
             return False
+
+    
+    # method to check if the applicant user has a profile added to the database
+    def CheckUserHasProfile(loggedUser: ApplicantUser) -> bool:
+        try:
+            # database connection object to the JobsBoard database
+            DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
+            # database cursor object to manipulate SQL queries
+            DatabaseCursor = DatabaseConnection.cursor()
+            # query
+            # first get the ID
+            DatabaseCursor.execute("""SELECT ID FROM ApplicantUser WHERE Username = ?;""", (loggedUser.Username,))
+            queryResult = DatabaseCursor.fetchall()
+
+            # for safety, close the database connection
+            DatabaseConnection.close()
+
+            if len(queryResult) == 0:
+                return False
+            else:
+                # now check if there is a row with the given ID in the ApplicantProfile table
+                DatabaseCursor.execute("""SELECT * FROM ApplicantProfile WHERE ID = ?""", (queryResult[0][0]))
+                queryResult = DatabaseCursor.fetchall()
+
+                if len(queryResult) == 0:
+                    return False
+                elif len(queryResult) == 1:
+                    return True
+                else:
+                    raise Exception("\nFailure! The user has duplicate profiles in the Applicant Profiles table.\n")
+
+        except Exception as e:
+            MenuHelper.DisplayErrorException(exception=e, errorSource="ApplicantUserDBActions::CheckExistsGivenUsername")
+            return False
+
+    
+    # method to return the ID of an applicant user
+    def ReturnIDUser(username: str) -> str:
+        try:
+            # database connection object to the JobsBoard database
+            DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
+            # database cursor object to manipulate SQL queries
+            DatabaseCursor = DatabaseConnection.cursor()
+            # query
+            DatabaseCursor.execute("""SELECT ID FROM ApplicantUser WHERE Username = ?""", (username))
+            queryResult = DatabaseCursor.fetchall()
+
+            # for safety, close the database connection
+            DatabaseConnection.close()
+
+            if len(queryResult) == 1:
+                return queryResult[0][0]
+            else:
+                return None
+
+        except Exception as e:
+            MenuHelper.DisplayErrorException(exception=e, errorSource="ApplicantUserDBActions::ReturnIDUser")

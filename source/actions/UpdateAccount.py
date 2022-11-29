@@ -96,10 +96,11 @@ class UpdateAccount:
 
                 # terminate operation
                 elif decision == -1:
+                    terminateOperation = True
                     break   
 
-            except Exception as e:
-                MenuHelper.DisplayErrorException(exception=e, errorSource="UpdateAccount::UpdateApplicantAccount")
+            except:
+                MenuHelper.WarnInvalidInput()
 
         if terminateOperation:
             return loggedUser

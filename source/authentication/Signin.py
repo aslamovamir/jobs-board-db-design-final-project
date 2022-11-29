@@ -8,6 +8,7 @@ from model.Company.CompanyUser import CompanyUser
 from model.Company.CompanyModelHelper import CompanyModelHelper
 from actions.DisplayAccountInfo import DisplayAccountInfo
 from actions.UpdateAccount import UpdateAccount
+from actions.UpdateProfile import UpdateProfile
 
 
 # class for Signin
@@ -188,7 +189,8 @@ class Signin:
         MenuHelper.WelcomeApplicantUser(loggedUser=loggedUser)
 
         # menu options
-        options: list[str] = ["Show your account information", "Update your profile", "Log out"]
+        options: list[str] = ["Show your account information", "Update your account", 
+            "Show your profile information", "Update your profile information", "Log out"]
 
         while True:
             try:
@@ -209,6 +211,15 @@ class Signin:
                     updateResult = UpdateAccount.UpdateApplicantAccount(loggedUser=loggedUser) 
                     if updateResult != None:
                         loggedUser = updateResult
+
+                elif decision == 3:
+                    MenuHelper.DisplaySelectedOption(selectedOption=options[decision-1])
+                    # TO DO: IMPLEMENT SHOW PROFILE INFORMATION ACTION METHOD
+                    pass
+                
+                elif decision == 4:
+                    MenuHelper.DisplaySelectedOption(selectedOption=options[decision-1])
+                    UpdateProfile.UpdateApplicantProfile(loggedUser=loggedUser)
                 
                 # TO_DO: IMPLEMENT LOGOUT
                 elif decision == -1:
@@ -231,7 +242,7 @@ class Signin:
         MenuHelper.WelcomeCompanyUser(loggedUser=loggedUser)
 
         # menu options
-        options: list[str] = ["Show company account information", "Update company profile", "Log out"]
+        options: list[str] = ["Show company account information", "Update company account", "Log out"]
 
         while True:
             try:
