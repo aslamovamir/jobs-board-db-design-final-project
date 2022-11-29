@@ -4,7 +4,6 @@ from helpers.MenuHelper import MenuHelper
 from model.Applicant.ApplicantUser import ApplicantUser
 from model.Applicant.ApplicantModelHelper import ApplicantModelHelper
 from model.Applicant.ApplicantProfile import ApplicantProfile
-from database.SQLiteDBSetUp import DatabaseSetUp
 
 
 # class for the ApplicantUserDBActions
@@ -204,8 +203,6 @@ class ApplicantUserDBActions:
     # method to check if the applicant user has a profile added to the database
     def CheckUserHasProfile(loggedUser: ApplicantUser) -> bool:
         try:
-            # DatabaseSetUp.CreateApplicantProfileTable()
-
             # database connection object to the JobsBoard database
             DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
             # database cursor object to manipulate SQL queries

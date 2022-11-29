@@ -190,8 +190,6 @@ class CompanyUserDBActions:
     # method to check if the company user has a profile added to the database
     def CheckUserHasProfile(loggedUser: CompanyUser) -> bool:
         try:
-            # DatabaseSetUp.CreateCompanyProfileTable()
-
             # database connection object to the JobsBoard database
             DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
             # database cursor object to manipulate SQL queries
@@ -205,7 +203,7 @@ class CompanyUserDBActions:
                 return False
             else:
                 # now check if there is a row with the given ID in the CompanyProfile table
-                DatabaseCursor.execute("""SELECT * FROM CompanyProfile WHERE ApplicantID = ?""", (queryResult[0][0],))
+                DatabaseCursor.execute("""SELECT * FROM CompanyProfile WHERE CompanyID = ?""", (queryResult[0][0],))
                 queryResult = DatabaseCursor.fetchall()
 
                 # for safety, close the database connection

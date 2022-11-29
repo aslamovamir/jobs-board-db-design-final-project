@@ -1,5 +1,5 @@
 from model.Applicant.ApplicantUser import ApplicantUser
-from model.Applicant.ApplicantProfile import ApplicantProfile, Experience, Education
+from model.Applicant.ApplicantProfile import ApplicantProfile
 from model.Company.CompanyUser import CompanyUser
 from model.Company.CompanyProfile import CompanyProfile
 from helpers.MenuHelper import MenuHelper
@@ -281,7 +281,7 @@ class UpdateProfile:
                             if MenuHelper.ValidateEmptyInput(input=newProfile.About):
                                 MenuHelper.WarnInvalidInput()
                                 continue
-                            print("Success! The company title changed to: ", newProfile.About)
+                            print("Success! The company about section changed to: ", newProfile.About)
                             break
                         except:
                             MenuHelper.WarnInvalidInput()

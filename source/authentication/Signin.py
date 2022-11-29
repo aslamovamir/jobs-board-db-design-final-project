@@ -242,7 +242,8 @@ class Signin:
         MenuHelper.WelcomeCompanyUser(loggedUser=loggedUser)
 
         # menu options
-        options: list[str] = ["Show company account information", "Update company account", "Log out"]
+        options: list[str] = ["Show company account information", "Update company account", 
+            "Show company profile information", "Update company profile information", "Log out"]
 
         while True:
             try:
@@ -263,6 +264,14 @@ class Signin:
                     updateResult = UpdateAccount.UpdateCompanyUser(loggedUser=loggedUser)
                     if updateResult != None:
                         loggedUser = updateResult
+                
+                elif decision == 3:
+                    MenuHelper.DisplaySelectedOption(selectedOption=options[decision-1])
+                    DisplayProfileInfo.DisplayCompanyProfile(loggedUser=loggedUser)
+
+                elif decision == 4:
+                    MenuHelper.DisplaySelectedOption(selectedOption=options[decision-1])
+                    UpdateProfile.UpdateCompanyProfile(loggedUser=loggedUser)
                 
                 # TO_DO: IMPLEMENT LOGOUT
                 elif decision == -1:
