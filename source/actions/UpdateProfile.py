@@ -33,7 +33,7 @@ class UpdateProfile:
 
         # default initial profile object with parameters initialized to None
         newProfile: ApplicantProfile = ApplicantProfile(
-            ApplicantID=ApplicantUserDBActions.ReturnIDUser(username=loggedUser.Username)
+            ApplicantID=ApplicantUserDBActions.ReturnIDUser(username=loggedUser.Username),
             Title=title,
             About=about,
             Gender=gender,
@@ -288,7 +288,7 @@ class UpdateProfile:
 
             except:
                 MenuHelper.WarnInvalidInput()
-                
+
 
     # method to update the profile of a company user
     def UpdateCompanyProfile(loggedUser: CompanyUser) -> bool:

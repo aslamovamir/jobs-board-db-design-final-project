@@ -3,6 +3,7 @@ from database.QueryHelpers.QueryHelper import QueryHelper
 from helpers.MenuHelper import MenuHelper
 from model.Applicant.ApplicantUser import ApplicantUser
 from model.Applicant.ApplicantModelHelper import ApplicantModelHelper
+from database.SQLiteDBSetUp import DatabaseSetUp
 
 
 # class for the ApplicantUserDBActions
@@ -204,6 +205,8 @@ class ApplicantUserDBActions:
     # method to check if the applicant user has a profile added to the database
     def CheckUserHasProfile(loggedUser: ApplicantUser) -> bool:
         try:
+            # DatabaseSetUp.CreateApplicantProfileTable()
+
             # database connection object to the JobsBoard database
             DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
             # database cursor object to manipulate SQL queries
@@ -213,15 +216,18 @@ class ApplicantUserDBActions:
             DatabaseCursor.execute("""SELECT ID FROM ApplicantUser WHERE Username = ?;""", (loggedUser.Username,))
             queryResult = DatabaseCursor.fetchall()
 
-            # for safety, close the database connection
-            DatabaseConnection.close()
-
             if len(queryResult) == 0:
                 return False
             else:
+                print("HERE!")
+                print("QUERY RESULT: ", queryResult[0][0])
                 # now check if there is a row with the given ID in the ApplicantProfile table
-                DatabaseCursor.execute("""SELECT * FROM ApplicantProfile WHERE ID = ?""", (queryResult[0][0]))
+                DatabaseCursor.execute("""SELECT * FROM ApplicantProfile WHERE ApplicantID = ?""", (queryResult[0][0],))
                 queryResult = DatabaseCursor.fetchall()
+                print("RESULT: ", queryResult)
+
+                # for safety, close the database connection
+                DatabaseConnection.close()
 
                 if len(queryResult) == 0:
                     return False
@@ -243,7 +249,7 @@ class ApplicantUserDBActions:
             # database cursor object to manipulate SQL queries
             DatabaseCursor = DatabaseConnection.cursor()
             # query
-            DatabaseCursor.execute("""SELECT ID FROM ApplicantUser WHERE Username = ?""", (username))
+            DatabaseCursor.execute("""SELECT ID FROM ApplicantUser WHERE Username = ?""", (username,))
             queryResult = DatabaseCursor.fetchall()
 
             # for safety, close the database connection
