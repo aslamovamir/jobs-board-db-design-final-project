@@ -1,6 +1,7 @@
 import sqlite3
 from model.Company.CompanyUser import CompanyUser
 from model.Company.CompanyModelHelper import CompanyModelHelper
+from model.Company.CompanyProfile import CompanyProfile
 from helpers.MenuHelper import MenuHelper
 from database.QueryHelpers.QueryHelper import QueryHelper
 
@@ -184,3 +185,183 @@ class CompanyUserDBActions:
         except Exception as e:
             MenuHelper.DisplayErrorException(exception=e, errorSource="ApplicantUserDBActions::UpdateAccountInfo")
             return False
+
+    
+    # method to check if the company user has a profile added to the database
+    def CheckUserHasProfile(loggedUser: CompanyUser) -> bool:
+        try:
+            # DatabaseSetUp.CreateCompanyProfileTable()
+
+            # database connection object to the JobsBoard database
+            DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
+            # database cursor object to manipulate SQL queries
+            DatabaseCursor = DatabaseConnection.cursor()
+            # query
+            # first get the ID
+            DatabaseCursor.execute("""SELECT ID FROM CompanyUser WHERE Username = ?;""", (loggedUser.Username,))
+            queryResult = DatabaseCursor.fetchall()
+
+            if len(queryResult) == 0:
+                return False
+            else:
+                # now check if there is a row with the given ID in the CompanyProfile table
+                DatabaseCursor.execute("""SELECT * FROM CompanyProfile WHERE ApplicantID = ?""", (queryResult[0][0],))
+                queryResult = DatabaseCursor.fetchall()
+
+                # for safety, close the database connection
+                DatabaseConnection.close()
+
+                if len(queryResult) == 0:
+                    return False
+                elif len(queryResult) == 1:
+                    return True
+                else:
+                    raise Exception("\nFailure! The user has duplicate profiles in the Company Profiles table.\n")
+
+        except Exception as e:
+            MenuHelper.DisplayErrorException(exception=e, errorSource="CompanyUserDBActions::CheckExistsGivenUsername")
+            return False
+
+    
+    # method to return the ID of an company user
+    def ReturnIDUser(username: str) -> str:
+        try:
+            # database connection object to the JobsBoard database
+            DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
+            # database cursor object to manipulate SQL queries
+            DatabaseCursor = DatabaseConnection.cursor()
+            # query
+            DatabaseCursor.execute("""SELECT ID FROM CompanyUser WHERE Username = ?""", (username,))
+            queryResult = DatabaseCursor.fetchall()
+
+            # for safety, close the database connection
+            DatabaseConnection.close()
+
+            if len(queryResult) == 1:
+                return queryResult[0][0]
+            else:
+                return None
+
+        except Exception as e:
+            MenuHelper.DisplayErrorException(exception=e, errorSource="CompanyUserDBActions::ReturnIDUser")
+
+    
+    # method to insert a new row into the ApplicantProfile table
+    def InsertNewProfile(newProfile: CompanyProfile) -> bool:
+        try:
+            # database connection object to the JobsBoard database
+            DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
+            # database cursor object to manipulate SQL queries
+            DatabaseCursor = DatabaseConnection.cursor()
+            # query
+            DatabaseCursor.execute("""INSERT INTO CompanyProfile (
+                CompanyID, 
+                About,
+                Location,
+                Industry,
+                ServiceType,
+                CompanyType,
+                AnnualRevenue,
+                EmployeeSize,
+                FoundationDate,
+                InternationalHires
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);""", (
+                    newProfile.CompanyID,
+                    newProfile.About,
+                    newProfile.Location,
+                    newProfile.Industry,
+                    newProfile.ServiceType,
+                    newProfile.CompanyType,
+                    newProfile.AnnualRevenue,
+                    newProfile.EmployeeSize,
+                    newProfile.FoundationDate,
+                    newProfile.InternationalHires
+                ))
+            
+            # commit the query operation to the database
+            DatabaseConnection.commit()
+
+            # for safety, close the database connection
+            DatabaseConnection.close()
+
+            # return True as success confirmation
+            return True
+
+        except Exception as e:
+            MenuHelper.DisplayErrorException(exception=e, errorSource="CompanyUserDBActions::InsertNewProfile")
+
+
+    # method to retrieve the row as CompanyProfile object for a user
+    def RetrieveProfile(loggedUser: CompanyUser) -> CompanyProfile:
+        try:
+            # database connection object to the JobsBoard database
+            DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
+            # database cursor object to manipulate SQL queries
+            DatabaseCursor = DatabaseConnection.cursor()
+
+            # first fetch the ID of the logged user
+            try:
+                ID: str = CompanyUserDBActions.ReturnIDUser(loggedUser.Username)
+            except Exception as e:
+                MenuHelper.DisplayErrorException(exception=e, errorSource="CompanyUserDBActions::RetrieveProfile::ReturnIDUser")
+            
+            # now fetch the row
+            # query
+            DatabaseCursor.execute("""SELECT * FROM CompanyProfile WHERE CompanyID = ?;""", (ID,))
+            # query results
+            records = DatabaseCursor.fetchall()
+
+            # for safety, close the database connection
+            DatabaseConnection.close()
+
+            if len(records) == 1:
+                # keys for the columns of the CompanyUser table
+                keys: list() = ['pk', 'CompanyID', 'About', 'Location', 'Industry', 'ServiceType', 'CompanyType', 
+                    'AnnualRevenue', 'EmployeeSize', 'FoundationDate', 'InternationalHires']
+                dictResult: dict() = QueryHelper.ConvertTupleToDict(query=records, dictKeys=keys)[0]
+
+                return CompanyProfile(
+                    CompanyID=dictResult['CompanyID'],
+                    About=dictResult['About'],
+                    Location=dictResult['Location'],
+                    Industry=dictResult['Industry'],
+                    ServiceType=dictResult['ServiceType'],
+                    CompanyType=dictResult['CompanyType'],
+                    AnnualRevenue=dictResult['AnnualRevenue'],
+                    EmployeeSize=dictResult['EmployeeSize'],
+                    FoundationDate=dictResult['FoundationDate'],
+                    InternationalHires=dictResult['InternationalHires']
+                )
+            else:
+                raise Exception("\nError! There are company profiles with duplicate CompanyID's.")
+
+
+        except Exception as e:
+            MenuHelper.DisplayErrorException(exception=e, errorSource="CompanyUserDBActions::RetrieveProfile")
+
+    
+    # method to update profile of a company user
+    def UpdateProfile(newProfile: CompanyProfile) -> bool:
+        try:
+            # database connection object to the JobsBoard database
+            DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
+            # database cursor object to manipulate SQL queries
+            DatabaseCursor = DatabaseConnection.cursor()
+
+            DatabaseCursor.execute("""UPDATE CompanyProfile SET About = ?, Location = ?, Industry = ?, ServiceType = ?, CompanyType = ?,
+                AnnualRevenue = ?, EmployeeSize = ? FoundationDate = ? InternationalHires = ? WHERE CompanyID = ?;""", 
+                (newProfile.About, newProfile.Location, newProfile.Industry, newProfile.ServiceType, newProfile.CompanyType, newProfile.AnnualRevenue, 
+                    newProfile.EmployeeSize, newProfile.FoundationDate, newProfile.InternationalHires, newProfile.CompanyID,)
+            )
+
+            # commit the query operation to the database
+            DatabaseConnection.commit()
+
+            # for safety, close the database connection
+            DatabaseConnection.close()
+
+            # return True as success confirmation
+            return True
+            
+        except Exception as e:
+            MenuHelper.DisplayErrorException(exception=e, errorSource="CompanyUserDBActions::UpdateProfile")

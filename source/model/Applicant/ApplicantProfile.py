@@ -44,6 +44,7 @@ class ApplicantProfile:
     # constructor
     def __init__(self, ApplicantID: str, Title: str, About: str, Gender: str, Ethnicity: str,
         DisabilityStatus: str, Location: str, PhoneNumber: str) -> None:
+        
         self.ApplicantID = ApplicantID
         self.Title = Title
         self.About = About

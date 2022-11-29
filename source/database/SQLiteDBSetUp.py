@@ -140,9 +140,9 @@ class DatabaseSetUp:
                     ServiceType VARCHAR(50),
                     CompanyType VARCHAR(50),
                     AnnualRevenue TEXT,
-                    EmployeeSize INTEGER,
+                    EmployeeSize TEXT,
                     FoundationDate TEXT,
-                    InternationalHires INTEGER,
+                    InternationalHires VARCHAR(50),
                     FOREIGN KEY(CompanyID) REFERENCES CompanyUser(ID)
                 );
             """
