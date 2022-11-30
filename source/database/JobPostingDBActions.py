@@ -124,7 +124,7 @@ class JobPostingDBActions:
                 return None
         
         except Exception as e:
-            MenuHelper.DisplayErrorException(exception=e, errorSource="ApplicantUserDBActions::ReturnApplicantUser")
+            MenuHelper.DisplayErrorException(exception=e, errorSource="JobPostingDBActions::ReturnJobPostingsCompanyUser")
             return False
 
     
@@ -167,5 +167,5 @@ class JobPostingDBActions:
                 return None
         
         except Exception as e:
-            MenuHelper.DisplayErrorException(exception=e, errorSource="ApplicantUserDBActions::ReturnApplicantUser")
+            MenuHelper.DisplayErrorException(exception=e, errorSource="JobPostingDBActions::ReturnAllJobPostings")
             return False
