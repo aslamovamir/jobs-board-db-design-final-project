@@ -26,3 +26,17 @@ class DisplayAppliedJobs:
             print("Start Date: ", appliedJobs[i].StartDate)
             print("Good Fit Explanation: ", appliedJobs[i].GoodFitExplanation)
             print("Date Applied: ", appliedJobs[i].DateApplied)
+
+        
+        while True:
+            try:
+                print("\nWould you like more information about the poster company or job posting?")
+                decision: str = MenuHelper.InputStream()
+                if decision == "-1":
+                    MenuHelper.InformMenuQuit()
+                    return
+                else:
+                    pass
+
+            except:
+                MenuHelper.WarnInvalidInput()
