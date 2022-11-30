@@ -126,3 +126,46 @@ class JobPostingDBActions:
         except Exception as e:
             MenuHelper.DisplayErrorException(exception=e, errorSource="ApplicantUserDBActions::ReturnApplicantUser")
             return False
+
+    
+    # method to return all job postings currently stored in the database
+    def ReturnAllJobPostings() -> list[JobPosting]:
+        try:
+            # database connection object to the JobsBoard database
+            DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
+            # database cursor object to manipulate SQL queries
+            DatabaseCursor = DatabaseConnection.cursor()
+
+            # query
+            DatabaseCursor.execute("SELECT * FROM JobPosting;")
+            # query results
+            records = DatabaseCursor.fetchall()
+
+            # for safety, close the database connection
+            DatabaseConnection.close()
+
+            if len(records) != 0:
+                # keys for the columns of the JobPosting table
+                keys: list() = ['pk', 'ID', 'CompanyID', 'PositionName', 'Pay', 'Location', 'Description', 'Department']
+                convertResult: list[dict()] = QueryHelper.ConvertTupleToDict(query=records, dictKeys=keys)
+                
+                output: list[JobPosting] = []
+                for dictItem in convertResult:
+                    output.append(
+                        JobPosting(
+                            CompanyID=dictItem['CompanyID'],
+                            PositionName=dictItem['PositionName'],
+                            Pay=dictItem['Pay'],
+                            Location=dictItem['Location'],
+                            Description=dictItem['Description'],
+                            Department=dictItem['Department']
+                        )
+                    )
+                
+                return output
+            else:
+                return None
+        
+        except Exception as e:
+            MenuHelper.DisplayErrorException(exception=e, errorSource="ApplicantUserDBActions::ReturnApplicantUser")
+            return False

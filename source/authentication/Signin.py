@@ -12,6 +12,7 @@ from actions.UpdateProfile import UpdateProfile
 from actions.DisplayProfileInfo import DisplayProfileInfo
 from actions.CreateJobPosting import CreateJobPosting
 from actions.DisplayCreatedJobPostings import DisplayCreatedJobPostings
+from actions.ApplyForJob import ApplyForJob
 
 
 # class for Signin
@@ -193,7 +194,7 @@ class Signin:
 
         # menu options
         options: list[str] = ["Show your account information", "Update your account", 
-            "Show your profile information", "Update your profile information", "Log out"]
+            "Show your profile information", "Update your profile information", "Apply for a job", "Log out"]
 
         while True:
             try:
@@ -223,6 +224,9 @@ class Signin:
                     MenuHelper.DisplaySelectedOption(selectedOption=options[decision-1])
                     UpdateProfile.UpdateApplicantProfile(loggedUser=loggedUser)
                 
+                elif decision == 5:
+                    MenuHelper.DisplaySelectedOption(selectedOption=options[decision-1])
+                    ApplyForJob.ApplyEntree(loggedUser=loggedUser)
                 
                 # TODO: IMPLEMENT LOGOUT
                 elif decision == -1:

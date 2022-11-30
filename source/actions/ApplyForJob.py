@@ -4,10 +4,54 @@ from model.JobPosting.AppliedJobPosting import AppliedJob
 from helpers.MenuHelper import MenuHelper
 from database.ApplicantUserDBActions import ApplicantUserDBActions
 from database.CompanyUserDBActions import CompanyUserDBActions
+from database.JobPostingDBActions import JobPostingDBActions
+from actions.DisplayCreatedJobPostings import DisplayCreatedJobPostings
 
 
 # class for ApplyForJob
 class ApplyForJob:
+
+    def ApplyEntree(loggedUser: ApplicantUser):
+        # show all job postings currently in the database
+        try:
+            allJobs: list[JobPosting] = JobPostingDBActions.ReturnAllJobPostings()
+        except Exception as e:
+            MenuHelper.DisplayErrorException(exception=e, errorSource="ApplyForJob::ApplyEntree")
+
+        # now list all jobs by position name as menu options
+        options: list[str] = DisplayCreatedJobPostings.HelpReturnPositionNamesOptions(jobs=allJobs)
+        while True:
+            try:
+                MenuHelper.RequestInput()
+                MenuHelper.DisplayMenuOptions(options=options)
+
+                # take in the menu option entered
+                decision: int = MenuHelper.InputStream()
+                if decision == "-1":
+                    MenuHelper.InformMenuQuit()
+                    break
+                
+                jobSelectedIndex: int = int(decision)
+                if jobSelectedIndex in range(1, len(allJobs)+1):
+                    MenuHelper.DisplaySelectedOption(selectedOption=options[jobSelectedIndex-1])
+                    # now display all the information about this job
+                    DisplayCreatedJobPostings.HelpDisplayDetailJobPosting(job=allJobs[jobSelectedIndex-1])
+                    # now ask if they would like to apply for this job
+                    decision: str = input("\nWould you like to apply for this job? Y/N: ")
+                    if decision == "Y":
+                        # call the method to apply for this job
+                        try:
+                            if ApplyForJob.ApplyForJob(loggedUser=loggedUser, jobPosting=allJobs[jobSelectedIndex-1]):
+                                MenuHelper.InformSuccessOperation()
+                            else:
+                                MenuHelper.InformFailureOperation()
+                        except Exception as e:
+                            MenuHelper.DisplayErrorException(exception=e, errorSource="ApplyForJob::ApplyEntree:ApplyForJob")
+                else:
+                    MenuHelper.WarnInvalidInput()
+            except:
+                MenuHelper.WarnInvalidInput()
+
 
     # method to apply for a job posting by an applicant user
     def ApplyForJob(loggedUser: ApplicantUser, jobPosting: JobPosting) -> bool:
@@ -54,7 +98,7 @@ class ApplyForJob:
             # sponsorship requirement
             while True:
                 try:
-                    print("\nPlease explain if you woul require any work visa sponsorship")
+                    print("\nPlease explain if you would require any work visa sponsorship")
                     input: str = MenuHelper.InputStream()
                     if input == "-1":
                         terminateOperation = True
@@ -75,6 +119,7 @@ class ApplyForJob:
                 CompanyID=jobPosting.ID,
                 ApplicantID=ApplicantUserDBActions.ReturnIDUser(username=loggedUser.Username),
                 Status="Unreviewed",
+                StartDate=startDate,
                 GoodFitExplanation=goodFitExplanation,
                 SponsorshipRequirement=SponsorshipRequirement,
                 DateApplied=None
@@ -93,7 +138,7 @@ class ApplyForJob:
                         # TODO: FINISH PUSH OF THE APPLIED JOB INSTANCE TO THE DATABASE
                         pass
                     else:
-                        MenuHelper.WarnInvalidInput()
+                        break
                 except:
                     MenuHelper.WarnInvalidInput()
         except Exception as e:
