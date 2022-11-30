@@ -1,5 +1,4 @@
 from dataclasses import dataclass, field
-from model.Applicant.ApplicantProfile import ApplicantProfile
 from model.Applicant.ApplicantModelHelper import ApplicantModelHelper
 from datetime import datetime
 
@@ -13,7 +12,6 @@ class ApplicantUser:
     FirstName: str
     LastName: str
     pk: str = None
-    Profile: ApplicantProfile = None
     DateRegistered: datetime = field(default_factory=datetime.now)
     DateLastLogin: datetime = field(default_factory=datetime.now)
 

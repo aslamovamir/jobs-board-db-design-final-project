@@ -218,6 +218,9 @@ class DatabaseSetUp:
                     ApplicantID TEXT,
                     Status VARCHAR(50),
                     DateApplied TIMESTAMP,
+                    StartDate VARCHAR(50),
+                    GoodFitExplanation TEXT,
+                    SponsorshipRequirement TEXT,
                     FOREIGN KEY(JobPostingID) REFERENCES JobPosting(ID),
                     FOREIGN KEY(CompanyID) REFERENCES CompanyUser(ID),
                     FOREIGN KEY(ApplicantID) REFERENCES ApplicantUser(ID)

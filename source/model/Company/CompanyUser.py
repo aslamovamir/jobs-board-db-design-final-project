@@ -1,6 +1,5 @@
 from dataclasses import dataclass, field
 from model.Company.CompanyModelHelper import CompanyModelHelper
-from  model.Company.CompanyProfile import CompanyProfile
 from datetime import datetime
 
 
@@ -12,7 +11,6 @@ class CompanyUser:
     Username: str
     CompanyName: str
     Email: str
-    Profile: CompanyProfile = None
     DateRegistered: datetime = field(default_factory=datetime.now)
     DateLastLogin: datetime = field(default_factory=datetime.now)
 
