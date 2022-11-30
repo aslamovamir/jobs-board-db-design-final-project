@@ -12,9 +12,6 @@ class AppliedJobDBActions:
     # method to check if the applicant user already applied for the job posting
     def AppliedJobAlreadyCreated(applicantUsername: str, jobPostingID: str) -> bool:
         try:
-            DatabaseSetUp.CreateAppliedJobTable()
-
-
             # database connection object to the JobsBoard database
             DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
             # database cursor object to manipulate SQL queries
@@ -128,10 +125,9 @@ class AppliedJobDBActions:
                             DateApplied=dictItem['DateApplied']
                         )
                     )
-                
                 return output
             else:
-                return None
+                return []
         
         except Exception as e:
             MenuHelper.DisplayErrorException(exception=e, errorSource="AppliedJobDBActions::ReturnAppliedJobsApplicantUser")

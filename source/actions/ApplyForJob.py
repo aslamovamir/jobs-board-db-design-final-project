@@ -123,7 +123,7 @@ class ApplyForJob:
             # now create a new applied job object with the input parameters
             newAppliedJob: AppliedJob = AppliedJob(
                 JobPostingID=jobPosting.ID,
-                CompanyID=jobPosting.ID,
+                CompanyID=jobPosting.CompanyID,
                 ApplicantID=ApplicantUserDBActions.ReturnIDUser(username=loggedUser.Username),
                 Status="Unreviewed",
                 StartDate=startDate,

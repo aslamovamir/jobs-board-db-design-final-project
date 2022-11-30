@@ -121,7 +121,7 @@ class JobPostingDBActions:
                 
                 return output
             else:
-                return None
+                return []
         
         except Exception as e:
             MenuHelper.DisplayErrorException(exception=e, errorSource="JobPostingDBActions::ReturnJobPostingsCompanyUser")
@@ -164,7 +164,44 @@ class JobPostingDBActions:
                 
                 return output
             else:
-                return None
+                return []
+        
+        except Exception as e:
+            MenuHelper.DisplayErrorException(exception=e, errorSource="JobPostingDBActions::ReturnAllJobPostings")
+            return False
+
+    
+    # method to return all job postings currently stored in the database
+    def ReturnJobPostingWithID(ID: str) -> JobPosting:
+        try:
+            # database connection object to the JobsBoard database
+            DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
+            # database cursor object to manipulate SQL queries
+            DatabaseCursor = DatabaseConnection.cursor()
+
+            # query
+            DatabaseCursor.execute("""SELECT * FROM JobPosting WHERE ID = ?;""", (ID,))
+            # query results
+            records = DatabaseCursor.fetchall()
+
+            # for safety, close the database connection
+            DatabaseConnection.close()
+
+            if len(records) == 1:
+                # keys for the columns of the JobPosting table
+                keys: list() = ['pk', 'ID', 'CompanyID', 'PositionName', 'Pay', 'Location', 'Description', 'Department']
+                convertResult: list[dict()] = QueryHelper.ConvertTupleToDict(query=records, dictKeys=keys)
+                
+                return JobPosting(
+                    CompanyID=convertResult[0]['CompanyID'],
+                    PositionName=convertResult[0]['PositionName'],
+                    Pay=convertResult[0]['Pay'],
+                    Location=convertResult[0]['Location'],
+                    Description=convertResult[0]['Description'],
+                    Department=convertResult[0]['Department']
+                )
+            else:
+                raise Exception("\nFailure! There is no or more than 1 Job Posting with duplicate ID's in the JobPosting Table.\n")
         
         except Exception as e:
             MenuHelper.DisplayErrorException(exception=e, errorSource="JobPostingDBActions::ReturnAllJobPostings")

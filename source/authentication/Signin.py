@@ -22,7 +22,7 @@ class Signin:
     # signin method
     def Signin():
         # let the user know they need to select the type of user they want to sign up for
-        print("\nPlease indicate the type of user you want to sign in as.\n")
+        print("\nPlease indicate the type of user you want to sign in as.")
 
         # define menu options for the user
         options: list[str] = ['Applicant User', 'Company User']

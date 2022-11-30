@@ -288,7 +288,7 @@ class CompanyUserDBActions:
 
 
     # method to retrieve the row as CompanyProfile object for a user
-    def RetrieveProfile(loggedUser: CompanyUser) -> CompanyProfile:
+    def RetrieveProfile(companyUsername: str) -> CompanyProfile:
         try:
             # database connection object to the JobsBoard database
             DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
@@ -297,7 +297,7 @@ class CompanyUserDBActions:
 
             # first fetch the ID of the logged user
             try:
-                ID: str = CompanyUserDBActions.ReturnIDUser(loggedUser.Username)
+                ID: str = CompanyUserDBActions.ReturnIDUser(companyUsername)
             except Exception as e:
                 MenuHelper.DisplayErrorException(exception=e, errorSource="CompanyUserDBActions::RetrieveProfile::ReturnIDUser")
             
@@ -334,6 +334,48 @@ class CompanyUserDBActions:
 
         except Exception as e:
             MenuHelper.DisplayErrorException(exception=e, errorSource="CompanyUserDBActions::RetrieveProfile")
+
+    
+    # method to retrieve the row as CompanyProfile object for a user by its ID
+    def RetrieveProfileWithID(ID: str) -> CompanyProfile:
+        try:
+            # database connection object to the JobsBoard database
+            DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
+            # database cursor object to manipulate SQL queries
+            DatabaseCursor = DatabaseConnection.cursor()
+            
+            # now fetch the row
+            DatabaseCursor.execute("""SELECT * FROM CompanyProfile WHERE CompanyID = ?;""", (ID,))
+            # query results
+            records = DatabaseCursor.fetchall()
+
+            # for safety, close the database connection
+            DatabaseConnection.close()
+
+            if len(records) == 1:
+                # keys for the columns of the CompanyUser table
+                keys: list() = ['pk', 'CompanyID', 'About', 'Location', 'Industry', 'ServiceType', 'CompanyType', 
+                    'AnnualRevenue', 'EmployeeSize', 'FoundationDate', 'InternationalHires']
+                dictResult: dict() = QueryHelper.ConvertTupleToDict(query=records, dictKeys=keys)[0]
+
+                return CompanyProfile(
+                    CompanyID=dictResult['CompanyID'],
+                    About=dictResult['About'],
+                    Location=dictResult['Location'],
+                    Industry=dictResult['Industry'],
+                    ServiceType=dictResult['ServiceType'],
+                    CompanyType=dictResult['CompanyType'],
+                    AnnualRevenue=dictResult['AnnualRevenue'],
+                    EmployeeSize=dictResult['EmployeeSize'],
+                    FoundationDate=dictResult['FoundationDate'],
+                    InternationalHires=dictResult['InternationalHires']
+                )
+            else:
+                raise Exception("\nError! There are company profiles with duplicate CompanyID's.")
+
+
+        except Exception as e:
+            MenuHelper.DisplayErrorException(exception=e, errorSource="CompanyUserDBActions::RetrieveProfileWithID")
 
     
     # method to update profile of a company user

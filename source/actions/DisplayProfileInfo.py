@@ -36,7 +36,7 @@ class DisplayProfileInfo:
     def DisplayCompanyProfile(loggedUser: CompanyUser):
         # first retrive the user's profile from the database
         try:
-            userProfile: CompanyProfile = CompanyUserDBActions.RetrieveProfile(loggedUser=loggedUser)
+            userProfile: CompanyProfile = CompanyUserDBActions.RetrieveProfile(companyUsername=loggedUser.Username)
         except Exception as e:
             MenuHelper.DisplayErrorException(exception=e, errorSource="DisplayCompanyProfileInfo::RetrieveProfile")
         
@@ -53,5 +53,25 @@ class DisplayProfileInfo:
         print("Employee Size: ", userProfile.EmployeeSize)
         print("Foundation Date: ", userProfile.FoundationDate)
         print("International Hires: ", userProfile.InternationalHires)
+
+        MenuHelper.DefineSectionBreak()
+
+    
+    # method to retrieve and display company user profile provided
+    def DisplayCompanyProfileProvided(profile: CompanyProfile):
+        
+        # now we can display the profile
+        MenuHelper.DefineSectionBreak()
+
+        print("The company profile information:\n")
+        print("About: ", profile.About)
+        print("Location: ", profile.Location)
+        print("Industry: ", profile.Industry)
+        print("Service Type: ", profile.ServiceType)
+        print("Company Type: ", profile.CompanyType)
+        print("Annual Revenue: ", profile.AnnualRevenue)
+        print("Employee Size: ", profile.EmployeeSize)
+        print("Foundation Date: ", profile.FoundationDate)
+        print("International Hires: ", profile.InternationalHires)
 
         MenuHelper.DefineSectionBreak()
