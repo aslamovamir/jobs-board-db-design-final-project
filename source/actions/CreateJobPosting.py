@@ -23,6 +23,9 @@ def CreateJobPosting(loggedUser: CompanyUser) -> bool:
                 if MenuHelper.ValidateEmptyInput(input=input):
                     MenuHelper.WarnInvalidInput()
                     continue
+                if JobPostingDBActions.JobAlreadyCreated(companyUsername=loggedUser.Username, positionName=input):
+                    print("\nError! A position with this name already created. Please try a new one.")
+                    continue
                 positionName: str = input
                 break
             except:

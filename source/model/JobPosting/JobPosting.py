@@ -17,7 +17,7 @@ class JobPosting:
     def __init__(self, CompanyID: str, PositionName: str, 
         Pay: str, Location: str, Description: str, Department: str) -> None:
         
-        self.ID = JobPostingModelHelper.CreateJobPostingId(companyID=CompanyID)
+        self.ID = JobPostingModelHelper.CreateJobPostingId(companyID=CompanyID, positionName=PositionName)
         self.CompanyID = CompanyID
         self.PositionName = PositionName
         self.Pay = Pay
