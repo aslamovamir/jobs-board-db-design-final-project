@@ -143,8 +143,6 @@ class CompanyUserDBActions:
         DatabaseConnection.close()
 
         if len(records) == 1:
-            # TO_DO: CREATE A DB METHOD TO UPDATE THE DATELASTLOGIN COLUMN FOR THE USER
-
             # keys for the columns of the ApplicantUser table
             keys: list() = ['pk', 'ID', 'Username', 'CompanyName', 'Email', 'DateRegistered', 'DateLastLogin']
             dictResult: dict() = QueryHelper.ConvertTupleToDict(query=records, dictKeys=keys)[0]

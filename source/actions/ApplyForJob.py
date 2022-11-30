@@ -6,6 +6,7 @@ from database.ApplicantUserDBActions import ApplicantUserDBActions
 from database.CompanyUserDBActions import CompanyUserDBActions
 from database.JobPostingDBActions import JobPostingDBActions
 from actions.DisplayCreatedJobPostings import DisplayCreatedJobPostings
+from database.AppliedJobDBActions import AppliedJobDBActions
 
 
 # class for ApplyForJob
@@ -34,6 +35,12 @@ class ApplyForJob:
                 jobSelectedIndex: int = int(decision)
                 if jobSelectedIndex in range(1, len(allJobs)+1):
                     MenuHelper.DisplaySelectedOption(selectedOption=options[jobSelectedIndex-1])
+
+                    # now check to see if the user has already applied for this job
+                    if AppliedJobDBActions.AppliedJobAlreadyCreated(loggedUser.Username, jobPostingID=allJobs[jobSelectedIndex-1].ID):
+                        print("\nError! You have already applied for this job posting. Please select a new one.")
+                        continue
+
                     # now display all the information about this job
                     DisplayCreatedJobPostings.HelpDisplayDetailJobPosting(job=allJobs[jobSelectedIndex-1])
                     # now ask if they would like to apply for this job
@@ -42,9 +49,9 @@ class ApplyForJob:
                         # call the method to apply for this job
                         try:
                             if ApplyForJob.ApplyForJob(loggedUser=loggedUser, jobPosting=allJobs[jobSelectedIndex-1]):
-                                MenuHelper.InformSuccessOperation()
+                                print("You have successfully applied for this job posting.")
                             else:
-                                MenuHelper.InformFailureOperation()
+                                print("Application for this job failed.")
                         except Exception as e:
                             MenuHelper.DisplayErrorException(exception=e, errorSource="ApplyForJob::ApplyEntree:ApplyForJob")
                 else:
@@ -135,8 +142,17 @@ class ApplyForJob:
 
                     # ask for creation confirmation
                     if MenuHelper.ConfirmChanges():
-                        # TODO: FINISH PUSH OF THE APPLIED JOB INSTANCE TO THE DATABASE
-                        pass
+                        # now we attempt to push the applied job object to the database
+                        try:
+                            if AppliedJobDBActions.InsertNewAppliedJob(newAppliedJob=newAppliedJob):
+                                MenuHelper.InformSuccessOperation()
+                                return True
+                            else:
+                                MenuHelper.InformFailureOperation()
+                                return False
+                        except Exception as e:
+                            MenuHelper.DisplayErrorException(exception=e, errorSource="ApplyForJob::ApplyForJob::InsertNewAppliedJob")
+                            return False
                     else:
                         break
                 except:

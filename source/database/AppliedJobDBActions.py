@@ -136,3 +136,51 @@ class AppliedJobDBActions:
         except Exception as e:
             MenuHelper.DisplayErrorException(exception=e, errorSource="AppliedJobDBActions::ReturnAppliedJobsApplicantUser")
             return False
+
+    
+    # method to retrieve the position name of an applied job
+    def ReturnPositionNameAppliedJob(jobPostingID: str) -> str:
+        try:
+            # database connection object to the JobsBoard database
+            DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
+            # database cursor object to manipulate SQL queries
+            DatabaseCursor = DatabaseConnection.cursor()
+            # query
+            DatabaseCursor.execute("""SELECT PositionName FROM JobPosting WHERE ID = ?""", (jobPostingID,))
+            queryResult = DatabaseCursor.fetchall()
+
+            # for safety, close the database connection
+            DatabaseConnection.close()
+
+            if len(queryResult) == 1:
+                return queryResult[0][0]
+            else:
+                return None
+        
+        except Exception as e:
+            MenuHelper.DisplayErrorException(exception=e, errorSource="AppliedJobDBActions::ReturnPositionNameAppliedJob")
+            return False
+    
+
+    # method to retrieve the company name of an applied job
+    def ReturnCompanyNameAppliedJob(jobPostingID: str) -> str:
+        try:
+            # database connection object to the JobsBoard database
+            DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
+            # database cursor object to manipulate SQL queries
+            DatabaseCursor = DatabaseConnection.cursor()
+            # query
+            DatabaseCursor.execute("""SELECT CompanyName FROM CompanyUser WHERE ID = ?""", (jobPostingID,))
+            queryResult = DatabaseCursor.fetchall()
+
+            # for safety, close the database connection
+            DatabaseConnection.close()
+
+            if len(queryResult) == 1:
+                return queryResult[0][0]
+            else:
+                return None
+        
+        except Exception as e:
+            MenuHelper.DisplayErrorException(exception=e, errorSource="AppliedJobDBActions::ReturnPositionNameAppliedJob")
+            return False
