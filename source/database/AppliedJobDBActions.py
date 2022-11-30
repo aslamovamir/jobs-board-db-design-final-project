@@ -134,6 +134,51 @@ class AppliedJobDBActions:
             return False
 
     
+    # method to return all the applied jobs by job posting ID
+    def ReturnAppliedJobsByJobPostingID(jobPostingID: str) -> list[AppliedJob]:
+        try:
+            # database connection object to the JobsBoard database
+            DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
+            # database cursor object to manipulate SQL queries
+            DatabaseCursor = DatabaseConnection.cursor()
+
+            # query
+            DatabaseCursor.execute("""SELECT * FROM AppliedJob WHERE JobPostingID = ?;""", (jobPostingID,))
+            # query results
+            records = DatabaseCursor.fetchall()
+
+            # for safety, close the database connection
+            DatabaseConnection.close()
+
+            if len(records) != 0:
+                # keys for the columns of the JobPosting table
+                keys: list() = ['pk', 'ID', 'JobPostingID', 'CompanyID', 'ApplicantID', 'Status', 'DateApplied', 'StartDate', 
+                    'GoodFitExplanation', 'SponsorshipRequirement']
+                convertResult: list[dict()] = QueryHelper.ConvertTupleToDict(query=records, dictKeys=keys)
+                
+                output: list[AppliedJob] = []
+                for dictItem in convertResult:
+                    output.append(
+                        AppliedJob(
+                            JobPostingID=dictItem['JobPostingID'],
+                            CompanyID=dictItem['CompanyID'],
+                            ApplicantID=dictItem['ApplicantID'],
+                            Status=dictItem['Status'],
+                            StartDate=dictItem['StartDate'],
+                            GoodFitExplanation=dictItem['GoodFitExplanation'],
+                            SponsorshipRequirement=dictItem['SponsorshipRequirement'],
+                            DateApplied=dictItem['DateApplied']
+                        )
+                    )
+                return output
+            else:
+                return []
+        
+        except Exception as e:
+            MenuHelper.DisplayErrorException(exception=e, errorSource="AppliedJobDBActions::ReturnAppliedJobsApplicantUser")
+            return False
+
+    
     # method to retrieve the position name of an applied job
     def ReturnPositionNameAppliedJob(jobPostingID: str) -> str:
         try:

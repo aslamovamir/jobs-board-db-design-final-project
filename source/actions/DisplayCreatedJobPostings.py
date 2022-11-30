@@ -2,6 +2,7 @@ from model.Company.CompanyUser import CompanyUser
 from model.JobPosting.JobPosting import JobPosting
 from database.JobPostingDBActions import JobPostingDBActions
 from helpers.MenuHelper import MenuHelper
+from actions.DisplayApplicantsForJob import DisplayApplicantsForJob
 
 
 # class for diplay of created job postings
@@ -60,6 +61,25 @@ class DisplayCreatedJobPostings:
                     MenuHelper.DisplaySelectedOption(selectedOption=options[decision-1])
                     # now display all the information about this job
                     DisplayCreatedJobPostings.HelpDisplayDetailJobPosting(job=jobPostings[decision-1])
+
+                    # now ask to show all applicants for this job posting
+                    while True:
+                        try:
+                            print("\nWould you like to see all applicants who have applied for this job posting? (Y/N) ")
+                            input = MenuHelper.InputStream()
+                            if input == "-1":
+                                MenuHelper.InformMenuQuit()
+                                return
+                            elif input == "Y":
+                                DisplayApplicantsForJob.DisplayAllApplicantsForJob(loggedUsername=loggedUser.Username, jobPostingID=jobPostings[decision-1].ID)
+                                break
+                            elif input == "N":
+                                break
+                            else:
+                                MenuHelper.WarnInvalidInput()
+                        except:
+                            MenuHelper.WarnInvalidInput()
+
                 else:
                     MenuHelper.WarnInvalidInput()
             except:
