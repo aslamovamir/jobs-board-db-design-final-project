@@ -162,6 +162,9 @@ class DisplayApplicantsForJob:
                                                 except:
                                                     MenuHelper.WarnInvalidInput()
                                             
+                                            # now ask to schedule an interview with the applicant
+                                            # TODO
+                                            
                                         except Exception as e:
                                             MenuHelper.DisplayErrorException(exception=e, errorSource="DisplayAllApplicantsForJob::DisplayAllApplicantsForJob::")
                                     else:

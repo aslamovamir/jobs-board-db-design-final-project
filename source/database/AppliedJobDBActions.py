@@ -20,7 +20,7 @@ class AppliedJobDBActions:
             try:
                 applicantId: str = ApplicantUserDBActions.ReturnIDUser(username=applicantUsername)
             except:
-                raise Exception("\nFailure! Retrieve of company ID from company username failed.\n")
+                raise Exception("\nFailure! Retrieve of applicant ID from applicant username failed.\n")
 
             # query
             DatabaseCursor.execute("""SELECT * FROM AppliedJob WHERE ApplicantID = ? AND JobPostingID = ?;""", (applicantId, jobPostingID,))
