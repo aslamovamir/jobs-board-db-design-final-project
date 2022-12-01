@@ -31,7 +31,7 @@ class DisplayAppliedJobs:
         for i in range(len(appliedJobs)):
             print(f"\n\n{index}.")
             print("Position Name: ", AppliedJobDBActions.ReturnPositionNameAppliedJob(jobPostingID=appliedJobs[i].JobPostingID))
-            print("Company Name: ", AppliedJobDBActions.ReturnCompanyNameAppliedJob(jobPostingID=appliedJobs[i].CompanyID))
+            print("Company Name: ", AppliedJobDBActions.ReturnCompanyNameAppliedJob(companyID=appliedJobs[i].CompanyID))
             print("Status: ", appliedJobs[i].Status)
             print("Start Date: ", appliedJobs[i].StartDate)
             print("Good Fit Explanation: ", appliedJobs[i].GoodFitExplanation)
