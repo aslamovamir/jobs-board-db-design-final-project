@@ -172,7 +172,8 @@ class DisplayApplicantsForJob:
                                                         MenuHelper.InformMenuQuit()
                                                         break
                                                     elif input == "Y":
-                                                        ScheduleInterview(companyUsername=loggedUsername, applicantUsername=allAplicants[index-1].Username)
+                                                        ScheduleInterview(companyUsername=loggedUsername, applicantUsername=allAplicants[index-1].Username, 
+                                                            jobPostingID=allAppliedJobsInstances[index-1].JobPostingID)
                                                         break
                                                     elif input == "N":
                                                         MenuHelper.InformMenuQuit()

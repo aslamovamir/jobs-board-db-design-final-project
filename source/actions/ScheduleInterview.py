@@ -6,11 +6,11 @@ from model.Interview.Interview import Interview
 
 
 # function to schedule an interview between a company user and an applicant user
-def ScheduleInterview(companyUsername: str, applicantUsername: str) -> bool:
+def ScheduleInterview(companyUsername: str, applicantUsername: str, jobPostingID: str) -> bool:
     
     # first check if the company user has already scheduled an interview with this applicant user
     try:
-        if InterviewDBActions.InterviewAlreadyCreated(companyUsername=companyUsername, applicantUsername=applicantUsername):
+        if InterviewDBActions.InterviewAlreadyCreated(companyUsername=companyUsername, applicantUsername=applicantUsername, jobPostingID=jobPostingID):
             print("\nError! An interview has already been scheduled with this applicant.")
             return False
     except Exception as e:
@@ -59,6 +59,7 @@ def ScheduleInterview(companyUsername: str, applicantUsername: str) -> bool:
         newInterview: Interview = Interview(
             CompanyID=CompanyUserDBActions.ReturnIDUser(username=companyUsername),
             ApplicantID=ApplicantUserDBActions.ReturnIDUser(username=applicantUsername),
+            JobPostingID=jobPostingID,
             Location=location,
             MeetingTime=meetingTime
         )

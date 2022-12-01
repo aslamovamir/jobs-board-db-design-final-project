@@ -16,7 +16,7 @@ class Interview:
 
     # constructor
     def __init__(self, CompanyID: str, ApplicantID: str, JobPostingID: str, Location: str, MeetingTime: str) -> None:
-        self.ID = InterviewModelHelper.CreateInterviewId(companyID=CompanyID, applicantID=ApplicantID)
+        self.ID = InterviewModelHelper.CreateInterviewId(companyID=CompanyID, applicantID=ApplicantID, jobPostingID=JobPostingID)
         self.CompanyID = CompanyID
         self.ApplicantID = ApplicantID
         self.JobPostingID = JobPostingID

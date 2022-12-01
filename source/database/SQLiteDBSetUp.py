@@ -264,7 +264,8 @@ class DatabaseSetUp:
                     Location TEXT,
                     MeetingTime TEXT,
                     FOREIGN KEY(CompanyID) REFERENCES CompanyUser(ID),
-                    FOREIGN KEY(ApplicantID) REFERENCES ApplicantUser(ID)
+                    FOREIGN KEY(ApplicantID) REFERENCES ApplicantUser(ID),
+                    FOREIGN KEY(JobPostingID) REFERENCES JobPosting(ID)
                 );
             """
             )

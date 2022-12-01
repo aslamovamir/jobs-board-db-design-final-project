@@ -14,6 +14,7 @@ from actions.CreateJobPosting import CreateJobPosting
 from actions.DisplayCreatedJobPostings import DisplayCreatedJobPostings
 from actions.ApplyForJob import ApplyForJob
 from actions.DisplayAppliedJobs import DisplayAppliedJobs
+from actions.DisplayAllScheduledInterviews import DisplayInterviews
 
 
 # class for Signin
@@ -195,8 +196,8 @@ class Signin:
         MenuHelper.WelcomeApplicantUser(loggedUser=loggedUser)
 
         # menu options
-        options: list[str] = ["Show your account information", "Update your account", 
-            "Show your profile information", "Update your profile information", "Apply for a job", "Show all applied jobs", "Log out"]
+        options: list[str] = ["Show your account information", "Update your account", "Show your profile information", 
+            "Update your profile information", "Apply for a job", "Show all applied jobs", "Show all scheduled interviews", "Log out"]
 
         while True:
             try:
@@ -235,6 +236,10 @@ class Signin:
                     DisplayAppliedJobs.DisplayAppliedJobsApplicantUser(loggedUser=loggedUser)
 
                 elif decision == 7:
+                    MenuHelper.DisplaySelectedOption(selectedOption=options[decision-1])
+                    DisplayInterviews.DisplayAllInterviews(loggedUsername=loggedUser.Username)
+
+                elif decision == 8:
                     MenuHelper.DisplaySelectedOption(selectedOption=options[decision-1])
                     MenuHelper.AdieuApplicantUser(loggedUser=loggedUser)
                     break

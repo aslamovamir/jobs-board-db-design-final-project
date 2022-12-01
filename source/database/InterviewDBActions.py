@@ -34,7 +34,7 @@ class InterviewDBActions:
                 raise Exception("\nFailure! Retrieve of company ID from company username failed.\n")
 
             # query
-            DatabaseCursor.execute("""SELECT * FROM Interview WHERE ApplicantID = ? AND CompanyID = ? AND JobPostingID;""", (applicantId, companyId, jobPostingID))
+            DatabaseCursor.execute("""SELECT * FROM Interview WHERE ApplicantID = ? AND CompanyID = ? AND JobPostingID = ?;""", (applicantId, companyId, jobPostingID,))
 
             if len(DatabaseCursor.fetchall()) == 0:
                 # for safety, close the database connection
@@ -73,7 +73,7 @@ class InterviewDBActions:
                     newInterview.ApplicantID,
                     newInterview.JobPostingID,
                     newInterview.Location,
-                    newInterview.MeetingTime
+                    newInterview.MeetingTime,
                 )
             )
             
