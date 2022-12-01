@@ -12,7 +12,8 @@ from actions.DisplayCreatedJobPostings import DisplayCreatedJobPostings
 
 # class to display all applied jobs
 class DisplayAppliedJobs:
-
+    
+    # method to display all applied jobs of an applicant user
     def DisplayAppliedJobsApplicantUser(loggedUser: ApplicantUser):
         # let's retrieve all the applied jobs of the user from the database
         try:
@@ -69,4 +70,3 @@ class DisplayAppliedJobs:
                     MenuHelper.WarnInvalidInput()
             except:
                 MenuHelper.WarnInvalidInput()
-                break

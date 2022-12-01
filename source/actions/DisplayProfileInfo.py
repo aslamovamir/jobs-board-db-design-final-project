@@ -21,13 +21,36 @@ class DisplayProfileInfo:
         MenuHelper.DefineSectionBreak()
 
         print("Your profile information:\n")
-        print("Your Title: ", userProfile.Title)
-        print("Your About: ", userProfile.About)
+        print("Your title: ", userProfile.Title)
+        print("Your about: ", userProfile.About)
         print("Your gender: ", userProfile.Gender)
         print("Your ethnicity: ", userProfile.Ethnicity)
         print("Your disability status: ", userProfile.DisabilityStatus)
         print("Your location: ", userProfile.Location)
         print("Your phone number: ", userProfile.PhoneNumber)
+
+        MenuHelper.DefineSectionBreak()
+
+    
+    # method to display an applicant's profile to a company user
+    def DisplayApplicantProfileToCompany(applicantUser: ApplicantUser):
+        # first retrive the user's profile from the database
+        try:
+            userProfile: ApplicantProfile = ApplicantUserDBActions.RetrieveProfile(loggedUser=applicantUser)
+        except Exception as e:
+            MenuHelper.DisplayErrorException(exception=e, errorSource="DisplayApplicantProfileInfo::RetrieveProfile")
+        
+        # now we can display the profile
+        MenuHelper.DefineSectionBreak()
+
+        print("The applicant's profile information:\n")
+        print("Title: ", userProfile.Title)
+        print("About: ", userProfile.About)
+        print("Gender: ", userProfile.Gender)
+        print("Ethnicity: ", userProfile.Ethnicity)
+        print("Disability status: ", userProfile.DisabilityStatus)
+        print("Location: ", userProfile.Location)
+        print("Phone number: ", userProfile.PhoneNumber)
 
         MenuHelper.DefineSectionBreak()
 
