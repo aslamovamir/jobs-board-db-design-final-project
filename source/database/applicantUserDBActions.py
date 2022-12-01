@@ -335,6 +335,9 @@ class ApplicantUserDBActions:
                     Location=dictResult['Location'],
                     PhoneNumber=dictResult['PhoneNumber']
                 )
+            elif len(records) == 0:
+                print("\nError! You have not yet created a profile. Please select to update your profile to create one.\n")
+                return None
             else:
                 raise Exception("\nError! There are applicant profiles with duplicate ApplicantID's.")
 

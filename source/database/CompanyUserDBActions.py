@@ -328,9 +328,11 @@ class CompanyUserDBActions:
                     FoundationDate=dictResult['FoundationDate'],
                     InternationalHires=dictResult['InternationalHires']
                 )
+            elif len(records) == 0:
+                print("\nError! No profile has been created for this user. Please select to update company profile to create one.\n")
+                return None
             else:
                 raise Exception("\nError! There are company profiles with duplicate CompanyID's.")
-
 
         except Exception as e:
             MenuHelper.DisplayErrorException(exception=e, errorSource="CompanyUserDBActions::RetrieveProfile")

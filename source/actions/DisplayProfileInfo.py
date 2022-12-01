@@ -17,6 +17,9 @@ class DisplayProfileInfo:
         except Exception as e:
             MenuHelper.DisplayErrorException(exception=e, errorSource="DisplayApplicantProfileInfo::RetrieveProfile")
         
+        if userProfile == None:
+            return
+
         # now we can display the profile
         MenuHelper.DefineSectionBreak()
 
@@ -63,6 +66,9 @@ class DisplayProfileInfo:
         except Exception as e:
             MenuHelper.DisplayErrorException(exception=e, errorSource="DisplayCompanyProfileInfo::RetrieveProfile")
         
+        if userProfile == None:
+            return
+
         # now we can display the profile
         MenuHelper.DefineSectionBreak()
 

@@ -12,7 +12,7 @@ from actions.DisplayCreatedJobPostings import DisplayCreatedJobPostings
 
 # class to display all applied jobs
 class DisplayAppliedJobs:
-    
+
     # method to display all applied jobs of an applicant user
     def DisplayAppliedJobsApplicantUser(loggedUser: ApplicantUser):
         # let's retrieve all the applied jobs of the user from the database
@@ -26,6 +26,7 @@ class DisplayAppliedJobs:
             return
 
         # now display all applied jobs with details
+        MenuHelper.DefineSectionBreak()
         index: int = 1
         for i in range(len(appliedJobs)):
             print(f"\n\n{index}.")
@@ -36,7 +37,7 @@ class DisplayAppliedJobs:
             print("Good Fit Explanation: ", appliedJobs[i].GoodFitExplanation)
             print("Date Applied: ", appliedJobs[i].DateApplied)
             index += 1
-
+        MenuHelper.DefineSectionBreak()
         while True:
             try:
                 print("\nWould you like more information about the poster company or job posting? (Y/N) ")

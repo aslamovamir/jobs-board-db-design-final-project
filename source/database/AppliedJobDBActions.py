@@ -204,14 +204,14 @@ class AppliedJobDBActions:
     
 
     # method to retrieve the company name of an applied job
-    def ReturnCompanyNameAppliedJob(jobPostingID: str) -> str:
+    def ReturnCompanyNameAppliedJob(companyID: str) -> str:
         try:
             # database connection object to the JobsBoard database
             DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
             # database cursor object to manipulate SQL queries
             DatabaseCursor = DatabaseConnection.cursor()
             # query
-            DatabaseCursor.execute("""SELECT CompanyName FROM CompanyUser WHERE ID = ?""", (jobPostingID,))
+            DatabaseCursor.execute("""SELECT CompanyName FROM CompanyUser WHERE ID = ?""", (companyID,))
             queryResult = DatabaseCursor.fetchall()
 
             # for safety, close the database connection

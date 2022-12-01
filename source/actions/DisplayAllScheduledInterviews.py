@@ -20,11 +20,13 @@ class DisplayInterviews:
             return
 
         # now display all scheduled jobs with details
+        MenuHelper.DefineSectionBreak()
         index: int = 1
         for i in range(len(scheduledInterviews)):
             print(f"\n\n{index}.")
             print("Position Name: ", AppliedJobDBActions.ReturnPositionNameAppliedJob(jobPostingID=scheduledInterviews[i].JobPostingID))
-            print("Company Name: ", AppliedJobDBActions.ReturnCompanyNameAppliedJob(jobPostingID=scheduledInterviews[i].JobPostingID))
+            print("Company Name: ", AppliedJobDBActions.ReturnCompanyNameAppliedJob(companyID=scheduledInterviews[i].CompanyID))
             print("Location: ", scheduledInterviews[i].Location)
             print("Meeting Time: ", scheduledInterviews[i].MeetingTime)
             index += 1
+        MenuHelper.DefineSectionBreak()
