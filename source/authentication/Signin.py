@@ -108,6 +108,7 @@ class Signin:
                     )
                     
                     Signin.ShowMenuLoggedApplicantUser(loggedUser=loggedApplicantUser)
+                    print("\nSuccessfully signed off the account.\n")
 
                 else:
                     MenuHelper.InformFailureOperation()
@@ -172,6 +173,7 @@ class Signin:
                     )
                     
                     Signin.ShowMenuLoggedCompanyUser(loggedUser=loggedCompanyUser)
+                    print("\nSuccessfully signed off the account.\n")
                 
                 else:
                     MenuHelper.InformFailureOperation()
@@ -188,7 +190,6 @@ class Signin:
     # show menu options for the applicant user
     def ShowMenuLoggedApplicantUser(loggedUser: ApplicantUser):
         MenuHelper.DefineSectionBreak()
-        logoutSession: bool = False
 
         # welcome logged user
         MenuHelper.WelcomeApplicantUser(loggedUser=loggedUser)
@@ -233,9 +234,14 @@ class Signin:
                     MenuHelper.DisplaySelectedOption(selectedOption=options[decision-1])
                     DisplayAppliedJobs.DisplayAppliedJobsApplicantUser(loggedUser=loggedUser)
 
-                # TODO: IMPLEMENT LOGOUT
+                elif decision == 7:
+                    MenuHelper.DisplaySelectedOption(selectedOption=options[decision-1])
+                    MenuHelper.AdieuApplicantUser(loggedUser=loggedUser)
+                    break
+
                 elif decision == -1:
                     MenuHelper.InformMenuQuit()
+                    MenuHelper.AdieuApplicantUser(loggedUser=loggedUser)
                     break
 
                 else:
@@ -294,9 +300,14 @@ class Signin:
                     MenuHelper.DisplaySelectedOption(selectedOption=options[decision-1])
                     DisplayCreatedJobPostings.DisplayAllJobsCompanyUser(loggedUser=loggedUser)
                 
-                # TO_DO: IMPLEMENT LOGOUT
+                elif decision == 7:
+                    MenuHelper.DisplaySelectedOption(selectedOption=options[decision-1])
+                    MenuHelper.AdieuCompanyUser(loggedUser=loggedUser)
+                    break
+
                 elif decision == -1:
                     MenuHelper.InformMenuQuit()
+                    MenuHelper.AdieuCompanyUser(loggedUser=loggedUser)
                     break
 
                 else:

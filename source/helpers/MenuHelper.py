@@ -78,6 +78,18 @@ class MenuHelper:
         print(f"\nWelcome to your account, {loggedUser.Username}!\n")
     
 
+    # display adieu to the applicant user
+    def AdieuApplicantUser(loggedUser: ApplicantUser):
+        print(f"\nGood bye, {loggedUser.Username}!\n")
+        MenuHelper.DefineSectionBreak()
+
+
+    # display adieu to the company user
+    def AdieuCompanyUser(loggedUser: CompanyUser):
+        print(f"The account, {loggedUser.Username}, is logged out. Good bye!\n")
+        MenuHelper.DefineSectionBreak()
+
+
     # welcomes the company user
     def WelcomeCompanyUser(loggedUser: CompanyUser):
         print(f"\nWelcome to the company account, {loggedUser.Username}!\n")
