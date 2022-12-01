@@ -2,7 +2,6 @@ import sqlite3
 from database.ApplicantUserDBActions import ApplicantUserDBActions
 from database.CompanyUserDBActions import CompanyUserDBActions
 from helpers.MenuHelper import MenuHelper
-from database.SQLiteDBSetUp import DatabaseSetUp
 from model.Interview.Interview import Interview
 from database.QueryHelpers.QueryHelper import QueryHelper
 
@@ -13,9 +12,6 @@ class InterviewDBActions:
     # method to check if the company user has already scheduled an interview with the given applicant user
     def InterviewAlreadyCreated(companyUsername: str, applicantUsername: str) -> bool:
         try:
-            DatabaseSetUp.CreateInterviewTable()
-
-
             # database connection object to the JobsBoard database
             DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
             # database cursor object to manipulate SQL queries

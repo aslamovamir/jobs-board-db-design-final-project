@@ -4,6 +4,7 @@ from model.Applicant.ApplicantUser import ApplicantUser
 from database.AppliedJobDBActions import AppliedJobDBActions
 from database.ApplicantUserDBActions import ApplicantUserDBActions
 from actions.DisplayProfileInfo import DisplayProfileInfo
+from actions.ScheduleInterview import ScheduleInterview
 
 
 # class for the action to display all appicants for a particular job
@@ -163,7 +164,23 @@ class DisplayApplicantsForJob:
                                                     MenuHelper.WarnInvalidInput()
                                             
                                             # now ask to schedule an interview with the applicant
-                                            # TODO
+                                            while True:
+                                                try:
+                                                    print("\nWould you like to schedule an interview with the applicant? (Y/N)")
+                                                    input: str = MenuHelper.InputStream()
+                                                    if input == "-1":
+                                                        MenuHelper.InformMenuQuit()
+                                                        break
+                                                    elif input == "Y":
+                                                        ScheduleInterview(companyUsername=loggedUsername, applicantUsername=allAplicants[index-1].Username)
+                                                        break
+                                                    elif input == "N":
+                                                        MenuHelper.InformMenuQuit()
+                                                        break
+                                                    else:
+                                                        MenuHelper.WarnInvalidInput()
+                                                except:
+                                                    MenuHelper.WarnInvalidInput()
                                             
                                         except Exception as e:
                                             MenuHelper.DisplayErrorException(exception=e, errorSource="DisplayAllApplicantsForJob::DisplayAllApplicantsForJob::")
