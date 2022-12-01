@@ -225,3 +225,24 @@ class AppliedJobDBActions:
         except Exception as e:
             MenuHelper.DisplayErrorException(exception=e, errorSource="AppliedJobDBActions::ReturnPositionNameAppliedJob")
             return False
+
+    
+    # method to update the status of applied job
+    def UpdateStatusAppliedJob(appliedJob: AppliedJob, newStatus: str) -> bool:
+        try:
+            # database connection object to the JobsBoard database
+            DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
+            # database cursor object to manipulate SQL queries
+            DatabaseCursor = DatabaseConnection.cursor()
+            # query
+            DatabaseCursor.execute("""UPDATE AppliedJob SET Status = ? WHERE JobPostingID = ?;""", (newStatus, appliedJob.JobPostingID,))
+
+            # commit the query to the database
+            DatabaseConnection.commit()
+            # for safety, close the database connection
+            DatabaseConnection.close()
+            return True
+
+        except Exception as e:
+            MenuHelper.DisplayErrorException(exception=e, errorSource="AppliedJobDBActions::UpdateStatusAppliedJob")
+            return False
