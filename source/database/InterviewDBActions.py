@@ -5,13 +5,17 @@ from helpers.MenuHelper import MenuHelper
 from model.Interview.Interview import Interview
 from database.QueryHelpers.QueryHelper import QueryHelper
 
+from database.SQLiteDBSetUp import DatabaseSetUp
+
 
 # class for DB actions on the Interview table
 class InterviewDBActions:
 
     # method to check if the company user has already scheduled an interview with the given applicant user
-    def InterviewAlreadyCreated(companyUsername: str, applicantUsername: str) -> bool:
+    def InterviewAlreadyCreated(companyUsername: str, applicantUsername: str, jobPostingID) -> bool:
         try:
+            DatabaseSetUp.CreateInterviewTable()
+
             # database connection object to the JobsBoard database
             DatabaseConnection = sqlite3.connect('JobsBoardDB.db')
             # database cursor object to manipulate SQL queries
@@ -30,7 +34,7 @@ class InterviewDBActions:
                 raise Exception("\nFailure! Retrieve of company ID from company username failed.\n")
 
             # query
-            DatabaseCursor.execute("""SELECT * FROM Interview WHERE ApplicantID = ? AND CompanyID = ?;""", (applicantId, companyId,))
+            DatabaseCursor.execute("""SELECT * FROM Interview WHERE ApplicantID = ? AND CompanyID = ? AND JobPostingID;""", (applicantId, companyId, jobPostingID))
 
             if len(DatabaseCursor.fetchall()) == 0:
                 # for safety, close the database connection
@@ -60,12 +64,14 @@ class InterviewDBActions:
                 ID,
                 CompanyID,
                 ApplicantID,
+                JobPostingID,
                 Location,
                 MeetingTime
-                ) VALUES (?, ?, ?, ?, ?);""", (
+                ) VALUES (?, ?, ?, ?, ?, ?);""", (
                     newInterview.ID,
                     newInterview.CompanyID,
                     newInterview.ApplicantID,
+                    newInterview.JobPostingID,
                     newInterview.Location,
                     newInterview.MeetingTime
                 )
@@ -107,7 +113,7 @@ class InterviewDBActions:
 
             if len(records) != 0:
                 # keys for the columns of the Intrview table
-                keys: list() = ['pk', 'ID', 'CompanyID', 'ApplicantID', 'Location', 'MeetingTime']
+                keys: list() = ['pk', 'ID', 'CompanyID', 'ApplicantID', "JobPostingID", 'Location', 'MeetingTime']
                 convertResult: list[dict()] = QueryHelper.ConvertTupleToDict(query=records, dictKeys=keys)
                 
                 output: list[Interview] = []
@@ -116,6 +122,7 @@ class InterviewDBActions:
                         Interview(
                             CompanyID=dictItem['CompanyID'],
                             ApplicantID=dictItem['ApplicantID'],
+                            JobPostingID=dictItem['JobPostingID'],
                             Location=dictItem['Location'],
                             MeetingTime=dictItem['MeetingTime']
                         )

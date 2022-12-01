@@ -250,6 +250,9 @@ class DatabaseSetUp:
             # database cursor object to manipulate SQL queries
             DatabaseCursor = DatabaseConnection.cursor()
 
+            DatabaseCursor.execute("""DROP TABLE Interview;""")
+            DatabaseConnection.commit()
+
             # query to create a new table for the Company Profile
             DatabaseCursor.execute("""
                 CREATE TABLE Interview (
@@ -257,6 +260,7 @@ class DatabaseSetUp:
                     ID TEXT,
                     CompanyID TEXT,
                     ApplicantID TEXT,
+                    JobPostingID TEXT,
                     Location TEXT,
                     MeetingTime TEXT,
                     FOREIGN KEY(CompanyID) REFERENCES CompanyUser(ID),
