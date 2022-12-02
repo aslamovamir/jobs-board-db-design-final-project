@@ -5,7 +5,6 @@ Final Project
 # Copyright
 Copyright: © JobsBoard, November 2022.  
 All rights reserved.  
-For any queries, consult author and engineer: Amir Aslamov.  
 
 # About
 © JobsBoard is a commercial app designed to help job-seekers to find jobs and companies to find job applicants for their job openings. 
