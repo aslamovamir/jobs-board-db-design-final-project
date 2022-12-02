@@ -7,7 +7,7 @@ class MenuHelper:
 
     # helps to print a line to distinguish between different sections in program
     def DefineSectionBreak():
-        print("----------------------------------------------------------------------------------------------")
+        print("------------------------------------------------------------------------------------------------------------------------------------------------")
     
 
     # takes in a list of otions and prints in a formatted way
