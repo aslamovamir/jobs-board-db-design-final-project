@@ -234,10 +234,11 @@ class UpdateProfile:
         except Exception as e:
             MenuHelper.DisplayErrorException(exception=e, errorSource="UpdateProfile::UpdateCompanyProfile::CompanytUserDBActions::CheckUserHasProfile")
 
+        print("USER HAS A PROFILE")
 
         if userHasProfile:
             # if the user already has a profile, we fetch the origingal profile
-            newProfile: CompanyProfile = CompanyUserDBActions.RetrieveProfile(loggedUser=loggedUser)
+            newProfile: CompanyProfile = CompanyUserDBActions.RetrieveProfile(companyUsername=loggedUser.Username)
         else:
             # default initial profile object with parameters initialized to None
             newProfile: CompanyProfile = CompanyProfile(

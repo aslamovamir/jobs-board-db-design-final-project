@@ -234,6 +234,7 @@ class CompanyUserDBActions:
             DatabaseConnection.close()
 
             if len(queryResult) == 1:
+                print("Got ID!")
                 return queryResult[0][0]
             else:
                 return None
