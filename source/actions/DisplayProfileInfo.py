@@ -43,6 +43,10 @@ class DisplayProfileInfo:
         except Exception as e:
             MenuHelper.DisplayErrorException(exception=e, errorSource="DisplayApplicantProfileInfo::RetrieveProfile")
         
+        if userProfile == None:
+            print("\nThis user has not created a profile yet.\n")
+            return
+
         # now we can display the profile
         MenuHelper.DefineSectionBreak()
 
