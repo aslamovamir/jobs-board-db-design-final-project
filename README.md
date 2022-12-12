@@ -4,7 +4,7 @@ Final Project
 
 # Copyright
 Copyright: © JobsBoard, November 2022.  
-Engineer/Developer: Amir Aslamov. 
+Engineer/Developer: Amir Aslamov.   
 All rights reserved.  
 
 # About
